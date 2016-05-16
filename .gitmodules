@@ -1,0 +1,3 @@
+[submodule "packages/miraclegrow"]
+	path = packages/miraclegrow
+	url = https://59bef4a4f7178790f4a97080c4c8709e0bfa2c46@github.com/okgrow/miraclegrow.git
