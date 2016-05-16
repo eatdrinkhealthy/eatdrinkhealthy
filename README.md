@@ -1,5 +1,12 @@
 # eatdrinkhealthy
----
+
+### Setting up the app
+
+When you first clone the repo, follow these steps:
+
+* Set up miraclegrow
+ * `git submodule init`
+ * `git submodule update`
 
 ### Useful links
 
