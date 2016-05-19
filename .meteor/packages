@@ -19,5 +19,5 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 okgrow:miraclegrow
 accounts-ui
-mrt:accounts-facebook-cordova
 less
+accounts-facebook

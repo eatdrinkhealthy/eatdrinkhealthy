@@ -1,4 +1,5 @@
 accounts-base@1.2.7
+accounts-facebook@1.0.9
 accounts-oauth@1.1.12
 accounts-ui@1.1.9
 accounts-ui-unstyled@1.1.12
@@ -86,7 +87,6 @@ mongo-id@1.0.4
 mongo-livedata@1.0.12
 mquandalle:jade@0.4.9
 mquandalle:jade-compiler@0.4.5
-mrt:accounts-facebook-cordova@0.0.2
 npm-mongo@1.4.43
 numeral:numeral@1.5.3_1
 oauth@1.1.10
