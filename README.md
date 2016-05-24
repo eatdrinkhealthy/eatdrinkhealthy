@@ -7,8 +7,8 @@ When you first clone the repo, follow these steps:
 * Set up miraclegrow
  * `git submodule init`
  * `git submodule update`
-* Edit your `.gitignore`
- * add `staging.json` and `production.json`
+* `cp settings.json.example settings.json`
+* `meteor --settings settings.json`
 
 ### Useful links
 
