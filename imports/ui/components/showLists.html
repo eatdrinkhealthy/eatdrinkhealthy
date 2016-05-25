@@ -1,0 +1,19 @@
+<template name="showLists">
+  <div id="showLists">
+    {{#autoForm collection=Lists id="insertList" type="insert"}}
+      {{> afQuickField name='title'}}
+      {{> afQuickField name='description' rows=4}}
+      <button type="Submit">Create List</button>
+    {{/autoForm}}
+  <ul> 
+    {{#each list}}
+    <li>
+      {{title}}
+      {{#if description}}
+      <br>{{description}}
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+  </div>
+</template>
