@@ -1,6 +1,12 @@
 <template name="profile">
   <div id="profile">
-    <div class="pitch" style="color: #444;">A platform to find, share, and discuss healthy places to shop and eat.</div>
+    {{#if currentUser}}
+      {{> showLists}}
+    {{else}}
+      <div class="pitch">A platform to find, share, and discuss healthy places to shop and eat.</div>
+      <div class="coming-soon">Coming Soon</div>
+      <div class="ios-icon"></div>
+    {{/if}}
     {{> loginButtons}}
   </div>
 </template>
