@@ -1,0 +1,14 @@
+<template name="sidebar">
+  <div class="sidebar">
+    {{#if currentUser}}
+      {{> profile}}
+      {{> showLists}}
+    {{else}}
+      <div class="logo"></div>
+      <div class="pitch">A platform to find, share, and discuss healthy places to shop and eat.</div>
+      <div class="coming-soon">Coming Soon</div>
+      {{> loginButtons}}
+    {{/if}}
+    <div class="ios-icon"></div>
+  </div>
+</template>

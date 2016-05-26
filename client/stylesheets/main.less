@@ -8,6 +8,7 @@
 
 //tools - globally used mixins and functions. It’s important not to output any CSS in the first 2 layers.
 @import "tools/box-model.import.less";
+@import "tools/gradient-bg.import.less";
 
 //generic – reset and/or normalize styles, box-sizing definition, etc. This is the first layer which generates actual CSS.
 @import "generic/normalize.import.less";
@@ -22,11 +23,14 @@
 
 
 //components – specific UI components. This is where majority of our work takes place and our UI components are often composed of Objects and Components
-@import "components/logo.import.less";
-@import "components/pitch.import.less";
+@import "components/map.import.less";
+@import "components/sidebar.import.less";
 @import "components/coming-soon.import.less";
 @import "components/ios-icon.import.less";
+@import "components/logo.import.less";
 @import "components/profile.import.less";
-@import "components/map.import.less";
+@import "components/list.import.less";
+@import "components/list-item.import.less";
+@import "components/login-buttons.import.less";
 
 //trumps – utilities and helper classes with ability to override anything which goes before in the triangle, eg. hide helper class

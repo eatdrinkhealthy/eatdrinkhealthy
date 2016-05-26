@@ -1,0 +1,18 @@
+.list-item {
+  .box-model(100%, 60px, 20px 0, 0);
+  &__title {
+    float: left;
+    cursor: pointer;
+    &:hover {
+      color: @edh-blue;
+    }
+  }
+  &__count {
+    .box-model(auto, 22px, 0 10px 10px, 0);
+    .gradient-bg();
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    float: right;
+  }
+}

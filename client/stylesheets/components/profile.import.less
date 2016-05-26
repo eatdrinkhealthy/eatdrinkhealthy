@@ -1,27 +1,33 @@
-#profile {
-  background-color: white;
-  width: 400px;
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
-  padding: 5px;
-  z-index: 1000;
-  box-shadow: 0px 0px 4px rgba(0,0,0,0.4);
-  @media (max-width: 600px) {
-    display: none;
-  }
-}
-
-#login-buttons {
-  #login-buttons-facebook {
-    background-color: rgb(65, 88, 148);
-    height: 45px;
-    width: 100%;
-    text-align: center;
-    display: block;
-    line-height: 45px;
-    color: white;
+.profile {
+  .box-model(100%, 200px, 60px 40px, 0);
+  .gradient-bg();
+  position: relative;
+  color: white;
+  &__picture {
+    .box-model(80px, 80px, 0, 0 30px);
     border-radius: 50px;
+    background: url(/images/avatar.png) center center no-repeat;
+    background-size: cover;
+    float: left;
+  }
+  &__name {
+    .box-model(auto, 40px, 8px 0, 0);
+    float: left;
+    font-size: 20px;
+    font-weight: 600px;
+  }
+  &__reviews {
+    .box-model(100px, 40px, 8px 0, 0);
+    float: left;
+    font-size: 16px;
+  }
+  &__settings {
+    .box-model(20px, 20px, 0, 0);
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: url(/images/logout.png) center center no-repeat;
+    background-size: contain;
+    cursor: pointer;
   }
 }
