@@ -1,40 +1,18 @@
 import "./map.html";
+
 import { Template } from "meteor/templating";
+import { Tracker } from "meteor/tracker";
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
   const location = {
-    // downtown Toronto
+    // default to downtown Toronto
+    // TODO: default to city set in profile (perhaps facebook location aka city)
     latitude: 43.650033,
     longitude: -79.391594
   };
 
-  if (Geolocation.latLng() != null) {
-    location.latitude = Geolocation.latLng().lat;
-    location.longitude = Geolocation.latLng().lng;
-  }
-
-  const mapOptions = {
-    zoom: 15,
-    disableDefaultUI: true,
-    zoomControl: true,
-    zoomControlOptions: {
-      position: google.maps.ControlPosition.RIGHT_BOTTOM
-    },
-    center: {
-      lat: location.latitude,
-      lng: location.longitude
-    }
-  };
-
-  function resizeHeight() {
-    const height = window.innerHeight;
-    $("#map").css("height", height);
-  }
-  window.onresize = function() {
-    resizeHeight();
-  };
-  resizeHeight();
-
+  // map styling
+  // TODO: find out how to import these, seems to break map on iOS only
   const customMapType = new google.maps.StyledMapType([
     {
       featureType: "landscape.man_made",
@@ -159,7 +137,41 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   const customMapTypeId = "custom_style";
 
+  const mapOptions = {
+    zoom: 15,
+    disableDefaultUI: true,
+    zoomControl: true,
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_BOTTOM
+    },
+    center: {
+      lat: location.latitude,
+      lng: location.longitude
+    }
+  };
+
+  // responsive map
+  function resizeHeight() {
+    const height = window.innerHeight;
+    $("#map").css("height", height);
+  }
+  window.onresize = function() {
+    resizeHeight();
+  };
+  resizeHeight();
+
+  // init map, pass in mapOptions, set style and give it an id that we set
   map = new google.maps.Map(document.getElementById("map"), mapOptions);
   map.mapTypes.set(customMapTypeId, customMapType);
   map.setMapTypeId(customMapTypeId);
+
+  // check for updates to geolocation (device location), move map to that location
+  Tracker.autorun(() => {
+    const geolocation = Geolocation.latLng();
+    if (geolocation != null) {
+      location.latitude = Geolocation.latLng().lat;
+      location.longitude = Geolocation.latLng().lng;
+      map.panTo(new google.maps.LatLng(location.latitude, location.longitude));
+    }
+  });
 });
