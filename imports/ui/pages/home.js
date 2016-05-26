@@ -1,8 +1,9 @@
 import "./home.html";
 
 // Components used inside the template
-import "../components/profile.js";
+import "../components/sidebar.js";
 import "../components/map/map.js";
+import "../components/profile.js";
 import "../components/showLists.js";
 
 import { Meteor } from "meteor/meteor";

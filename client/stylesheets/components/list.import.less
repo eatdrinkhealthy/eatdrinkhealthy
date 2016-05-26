@@ -1,0 +1,29 @@
+.list {
+  .box-model(80%, auto, 0 20px 0 0, 40px auto);
+  color: @edh-grey;  
+  &__title {
+    .box-model(auto, 50px, 0, 0 0 20px 0);
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: 1px solid @edh-grey;
+  }  
+  &__create {
+    color: @edh-blue;
+    margin: 40px auto 46px;
+    text-align: center;
+    cursor: pointer;
+  }
+  &__new-list {
+    .box-model(100%, 40px, 0, 30px auto 0);
+    input {
+      margin: 0;
+      width: 68%;
+      float: left;
+    }
+    button {
+      margin: 0;
+      width: 30%;
+      float: right;
+    }
+  }
+}

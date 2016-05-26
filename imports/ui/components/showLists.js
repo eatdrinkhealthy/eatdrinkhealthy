@@ -8,12 +8,31 @@ Template.showLists.onCreated(function createShowLists() {
   this.autorun(() => {
     this.subscribe("lists");
   });
+  $(".list__new-list").hide();
+});
+
+Template.showLists.onRendered(() => {
+  $(".list__new-list").hide();
+});
+
+Template.showLists.events({
+  "click [data-action=create-list]": () => {
+    $(".list__new-list").fadeIn(200);
+    $(".list__create").hide();
+  },
+  "click [data-action=save-list]": () => {
+    $(".list__new-list").hide();
+    $(".list__create").fadeIn(200);
+  }
 });
 
 Template.showLists.helpers({
   list: () => Lists.find(),
   Lists() {
     return Lists;
+  },
+  venueCount() {
+    return this.venues.length;
   }
 });
 

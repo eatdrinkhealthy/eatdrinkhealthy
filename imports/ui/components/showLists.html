@@ -1,19 +1,32 @@
 <template name="showLists">
   <div id="showLists">
-    {{#autoForm collection=Lists id="insertList" type="insert"}}
-      {{> afQuickField name='title'}}
-      {{> afQuickField name='description' rows=4}}
-      <button type="Submit">Create List</button>
-    {{/autoForm}}
-  <ul> 
-    {{#each list}}
-    <li>
-      {{title}}
-      {{#if description}}
-      <br>{{description}}
+    <div class="list">
+      
+      <div class="list__title">MY LISTS</div>
+      
+      {{#if list.count}}
+        {{#each list}}
+        <div class="list-item">
+          <div class="list-item__title">
+            {{title}} 
+          </div> 
+          <div class="list-item__count">
+            {{venueCount}}
+          </div>
+        </div>
+        {{/each}}
+      {{else}}
+        <div class="list__empty">You have no lists yet!</div>
       {{/if}}
-    </li>
-    {{/each}}
-  </ul>
+      
+      {{#autoForm collection=Lists id="insertList" type="insert" class="list__new-list"}}
+        {{> afFieldInput name='title'}} <button type="submit" data-action="save-list">Save</button>
+      {{/autoForm}}
+      
+      <div class="list__create" data-action="create-list">
+        Create a new list
+      </div>  
+      
+    </div>
   </div>
 </template>
