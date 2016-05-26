@@ -42,7 +42,7 @@ AutoForm.hooks({
       insert(doc) {
         const newList = doc;
         const user = Meteor.user();
-        newList.author = user._id;  // eslint-disable-line no-underscore-dangle
+        newList.author = user._id; // eslint-disable-line no-underscore-dangle
         newList.dateCreated = new Date();
         newList.venues = [];
         return doc;
