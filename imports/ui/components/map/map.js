@@ -165,10 +165,12 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   map.mapTypes.set(customMapTypeId, customMapType);
   map.setMapTypeId(customMapTypeId);
 
-  // check for updates to geolocation (device location), move map to that location
+  // get device location on first load, and pan map to that location
+  let initialGeolocation = null;
   Tracker.autorun(() => {
-    const geolocation = Geolocation.latLng();
-    if (geolocation != null) {
+    const currentGeolocation = Geolocation.latLng();
+    if (currentGeolocation !== null && initialGeolocation === null) {
+      initialGeolocation = currentGeolocation;
       location.latitude = Geolocation.latLng().lat;
       location.longitude = Geolocation.latLng().lng;
       map.panTo(new google.maps.LatLng(location.latitude, location.longitude));
