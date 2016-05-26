@@ -1,32 +1,32 @@
-import "./showLists.html";
+import "./lists.html";
 import { Lists } from "../../api/lists/lists.js";
 
 import { Template } from "meteor/templating";
 import { AutoForm } from "meteor/aldeed:autoform";
 
-Template.showLists.onCreated(function createShowLists() {
+Template.lists.onCreated(function createLists() {
   this.autorun(() => {
     this.subscribe("lists");
   });
-  $(".list__new-list").hide();
+  $(".lists__new-list").hide();
 });
 
-Template.showLists.onRendered(() => {
-  $(".list__new-list").hide();
+Template.lists.onRendered(() => {
+  $(".lists__new-list").hide();
 });
 
-Template.showLists.events({
+Template.lists.events({
   "click [data-action=create-list]": () => {
-    $(".list__new-list").fadeIn(200);
-    $(".list__create").hide();
+    $(".lists__new-list").fadeIn(200);
+    $(".lists__create").hide();
   },
   "click [data-action=save-list]": () => {
-    $(".list__new-list").hide();
-    $(".list__create").fadeIn(200);
+    $(".lists__new-list").hide();
+    $(".lists__create").fadeIn(200);
   }
 });
 
-Template.showLists.helpers({
+Template.lists.helpers({
   list: () => Lists.find(),
   Lists() {
     return Lists;

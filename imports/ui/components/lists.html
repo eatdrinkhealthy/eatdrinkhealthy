@@ -1,0 +1,28 @@
+<template name="lists">
+  <div class="lists">
+    <div class="lists__title">MY LISTS</div>
+    
+    {{#if list.count}}
+      {{#each list}}
+      <div class="lists-item">
+        <div class="lists-item__title">
+          {{title}} 
+        </div> 
+        <div class="lists-item__count">
+          {{venueCount}}
+        </div>
+      </div>
+      {{/each}}
+    {{else}}
+      <div class="lists__empty">You have no lists yet!</div>
+    {{/if}}
+    
+    {{#autoForm collection=Lists id="insertList" type="insert" class="lists__new-list"}}
+      {{> afFieldInput name='title'}} <button type="submit" data-action="save-list">Save</button>
+    {{/autoForm}}
+    
+    <div class="lists__create" data-action="create-list">
+      Create a new list
+    </div>  
+  </div>
+</template>
