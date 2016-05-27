@@ -8,7 +8,25 @@
   z-index: 1000;
   box-shadow: 0px 0px 4px rgba(0,0,0,0.4);
   overflow-y: auto;
-  @media (max-width: 600px) {
-    display: none;
+  -webkit-transition: all 400ms;
+  transition: all 400ms;
+  &.hidden {
+    margin-left: -400px;
+  }
+}
+
+.toggle-sidebar {
+  position: fixed;
+  top: 16px;
+  left: 10px;
+  z-index: 2000;
+  color: white;
+  padding: 0px 10px;
+  -webkit-transition: all 400ms;
+  transition: all 400ms;
+  &.closed {
+    color: black;
+    background-color: white;
+    border-radius: 20px;
   }
 }

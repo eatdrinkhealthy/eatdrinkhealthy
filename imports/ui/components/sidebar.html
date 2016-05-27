@@ -1,4 +1,5 @@
 <template name="sidebar">
+  <div class="toggle-sidebar">toggle sidebar</div>
   <div class="sidebar">
     {{#if currentUser}}
       {{> profile}}
@@ -10,5 +11,6 @@
       {{> loginButtons}}
     {{/if}}
     <div class="ios-icon"></div>
+
   </div>
 </template>
