@@ -1,5 +1,23 @@
 <template name="list">
   <div class="list">
-    {{list.title}}
+    <div class="list__title">{{list.title}}</div>
+    
+    {{#if list.description}}
+    <div class="list__description">{{list.description}}</div>
+    {{else}}
+    <div class="list__description list__description--add">add description</div>
+    {{/if}}
+    
+    <div class="list__count">{{venueCount}}</div>
+    
+    {{#each list.venues}}
+    <div class="list__venue">{{this}}</div>
+    {{/each}}
+    
+    {{#if owner}}
+    <button class="list__share">Share this list</button>
+    {{/if}}
+    
+    <div class="ios-icon"></div>
   </div>  
 </template>

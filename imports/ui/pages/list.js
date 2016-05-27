@@ -16,5 +16,17 @@ Template.list.onCreated(function createList() {
 
 Template.list.helpers({
   listId: () => FlowRouter.current().params._id,
-  list: () => Lists.findOne()
+  list: () => Lists.findOne(),
+  owner: () => {
+    const list = Lists.findOne();
+    if (list) {
+      return list.author === Meteor.user()._id;
+    }
+  },
+  venueCount: () => {
+    const list = Lists.findOne();
+    if (list) {
+      return list.venues.length;
+    }
+  }
 });

@@ -23,6 +23,10 @@ Template.lists.events({
   "click [data-action=save-list]": () => {
     $(".lists__new-list").hide();
     $(".lists__create").fadeIn(200);
+  },
+  "click .lists-item__title": function findThis() {
+    const route = "/list/" + this._id;
+    FlowRouter.go(route);
   }
 });
 

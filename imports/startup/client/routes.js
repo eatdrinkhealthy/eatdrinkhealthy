@@ -8,6 +8,8 @@ import "../../ui/layouts/layout.js";
 import "../../ui/pages/home.js";
 import "../../ui/pages/list.js";
 
+BlazeLayout.setRoot("body");
+
 FlowRouter.route("/", {
   action() {
     BlazeLayout.render("layout", {
