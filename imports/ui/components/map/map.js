@@ -4,7 +4,9 @@ import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
-  const location = {
+  let initialGeolocation = null;
+
+  const defaultLocation = {
     // default to downtown Toronto
     // TODO: default to city set in profile (perhaps facebook location aka city)
     latitude: 43.650033,
@@ -145,8 +147,8 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
       position: google.maps.ControlPosition.RIGHT_BOTTOM
     },
     center: {
-      lat: location.latitude,
-      lng: location.longitude
+      lat: defaultLocation.latitude,
+      lng: defaultLocation.longitude
     }
   };
 
@@ -166,7 +168,6 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   map.setMapTypeId(customMapTypeId);
 
   // get device location on first load, and pan map to that location
-  let initialGeolocation = null;
   Tracker.autorun(() => {
     const currentGeolocation = Geolocation.latLng();
     if (currentGeolocation !== null && initialGeolocation === null) {
