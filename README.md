@@ -10,16 +10,20 @@ When you first clone the repo, follow these steps:
 * `cp settings.json.example settings.json`
 * `meteor --settings settings.json`
 
-### Signing in with Facebook from iOS build
+### Fake Facebook OAuth for testing
 
-You must run your app explicitly pointing to a server. The easiest way to do this, is to point to staging. You can also serve your app locally via ngrok
+We use the [dropz:facebook-fake](https://github.com/workflow/meteor-facebook-fake) package,
+and we add a fake Facebook service configuration, so in development mode you shouldn't
+need to configure the OAuth provider or use a tunneling app like ngrok.
 
-* via Staging
- * `meteor run ios-device --mobile-server https://eatdrinkhealthy-staging.meteorapp.com/ --settings settings.json`
-* via Localhost
- * download ngrok (https://ngrok.com/download)
- * run ngrok `./ngrok http 3000`
- * `meteor run ios-device --mobile-server https://c518d338.ngrok.io --settings settings.json` (use https)
+NOTE: there's a bug in Meteor 1.3.2.4 with this: 
+https://github.com/meteor/meteor/issues/5589#issuecomment-222549580
+
+Workaround: If you do `meteor reset` you will need to run `meteor run ios-device ...` twice, it won't work the first time.
+
+### Running on iOS simulator or device
+
+`meteor run ios-device --mobile-server http://localhost:3000 --settings settings.json`
 
 ### Useful links
 
