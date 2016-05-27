@@ -1,42 +1,57 @@
-// import { HTTP } from "meteor/http";
+import { HTTP } from "meteor/http";
+import { EJSON } from "meteor/ejson";
 import { Meteor } from "meteor/meteor";
+import { check } from "meteor/check";
 
-Meteor.publish("getPlaces", function (lat, lng, filter) {
-  // var self = this;
+Meteor.publish("nearbyPlaces", function (latitude, longitude) {
+  console.log(latitude);
+  check(latitude, Number);
+  check(longitude, Number);
 
-  // var subHandle = Places.find(filter || {}).observeChanges({
-  //   added: function (id, fields) {
-  //     self.added("testdata", id, fields);
-  //   }
-  // });
+  let self = this;
 
-  // self.ready();
-
-  // self.onStop(function () {
-  //   subHandle.stop();
-  // });
+  const latLng = `${latitude},${longitude}`;
 
 
-
-  // loop over results from GET
-    this.added("places", "1", {thing: "1", thang: "2"});
+  console.log(latLng);
 
 
+  HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
+    params: {
+      client_id: "1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30",
+      client_secret: "U1B0UHK22EW5PMKKZIK0AF1LPN32B4M35S4N41HXCH4WTRFW",
+      v: "20130815",
+      ll: latLng,
+      query: "sushi"
+    }
+  },
+  function (error, result) {
+    if (!error) {
+      console.log("all good!", result);
 
-  this.ready();
+      let JSONresponse = EJSON.parse(result.content);
+      console.log("this is my json response", JSONresponse);
+
+      _.each(JSONresponse.response.venues, function(venue) {
+        console.log("my man, my venue", venue);
+        self.added("places", venue.id, venue);
+      });
+      console.log("I'M READY BABY!");
+      self.ready();
+
+    } else {
+      console.log(error);
+    }
+
+  });
+  
+
+  
 
   // return Places;
 
 
 });
-
-// HTTP.call("GET", "https://api.foursquare.com/v2/venues/search",
-//   {data: {some: "json", stuff: 1}},
-//   function (error, result) {
-//     if (!error) {
-//       Session.set("twizzled", true);
-//     }
-//   });
 
 // https://api.foursquare.com/v2/venues/search
 //   ?client_id=1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30
@@ -44,3 +59,5 @@ Meteor.publish("getPlaces", function (lat, lng, filter) {
 //   &v=20130815
 //   &ll=40.7,-74
 //   &query=sushi
+
+// https://api.foursquare.com/v2/venues/search?client_id=1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30&client_secret=U1B0UHK22EW5PMKKZIK0AF1LPN32B4M35S4N41HXCH4WTRFW&v=20130815&ll=40.7,-74&query=sushi
