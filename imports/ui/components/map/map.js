@@ -155,7 +155,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     const height = window.innerHeight;
     $("#map").css("height", height);
   }
-  window.onresize = function() {
+  window.onresize = function () {
     resizeHeight();
   };
   resizeHeight();
