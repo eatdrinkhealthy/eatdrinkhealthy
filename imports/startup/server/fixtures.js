@@ -3,8 +3,7 @@ import { Lists } from "../../api/lists/lists.js";
 
 // Insert some list items if there is nothing in the db on startup.
 Meteor.startup(() => {
-  /*
-  if (Lists.find().count() === 0) {
+  if (Lists.find().count() === 0 && Meteor.users.find().count() > 0) {
     const newLists = [
       {
         title: "Vegan Shops",
@@ -28,10 +27,9 @@ Meteor.startup(() => {
         title: list.title,
         description: list.description,
         venues: list.venues,
-        author: Meteor.users.findOne()._id, // eslint-disable-line no-underscore-dangle
+        author: Meteor.users.findOne()._id,
         dateCreated: new Date()
       });
     });
   }
-  */
 });
