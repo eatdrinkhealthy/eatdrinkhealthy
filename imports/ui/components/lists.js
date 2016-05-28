@@ -17,16 +17,16 @@ Template.lists.onRendered(() => {
 
 Template.lists.events({
   "click [data-action=create-list]": () => {
-    $(".lists__new-list").fadeIn(200);
+    $(".lists__new-list").fadeIn(200).focus();
     $(".lists__create").hide();
   },
   "click [data-action=save-list]": () => {
     $(".lists__new-list").hide();
     $(".lists__create").fadeIn(200);
   },
-  "click .lists-item__title": function findThis() {
-    const route = "/list/" + this._id;
-    FlowRouter.go(route);
+  "click .lists-item__title": function goToList() {
+    const newPath = FlowRouter.path("list", { _id: this._id });
+    FlowRouter.go(newPath);
   }
 });
 
@@ -46,7 +46,7 @@ AutoForm.hooks({
       insert(doc) {
         const newList = doc;
         const user = Meteor.user();
-        newList.author = user._id; // eslint-disable-line no-underscore-dangle
+        newList.author = user._id;
         newList.dateCreated = new Date();
         newList.venues = [];
         return doc;

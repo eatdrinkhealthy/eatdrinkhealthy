@@ -1,23 +1,60 @@
 <template name="list">
   <div class="list">
-    <div class="list__title">{{list.title}}</div>
     
-    {{#if list.description}}
-    <div class="list__description">{{list.description}}</div>
-    {{else}}
-    <div class="list__description list__description--add">add description</div>
+    {{#if owner}}
+      <div class="list__edit" data-action="edit-list">…</div>
     {{/if}}
     
+    <div class="list__close" data-action="close-list">&#215;</div>
+    
+    <div class="list__title" data-action="edit-list-title">{{list.title}}</div>
+    
+    {{#if owner}}
+      <input class="list__title list__title--edit" data-action="save-list-title" value="{{list.title}}">
+    {{/if}}
+    
+    {{#if list.description}}
+      <div class="list__description" data-action="edit-list-description">{{list.description}}</div>
+    {{else}}
+      {{#if owner}}
+        <div class="list__description list__description--add" data-action="edit-list-description">add description</div>
+      {{/if}}
+    {{/if}}
+    
+    {{#if owner}}
+      <input class="list__description list__description--edit" data-action="save-list-description" value="{{list.description}}">
+    {{/if}}
+
     <div class="list__count">{{venueCount}}</div>
     
+    <hr>
     {{#each list.venues}}
-    <div class="list__venue">{{this}}</div>
+    <div class="list-item">
+      <div class="list-item__title">St. Lawrence Market</div>
+      <div class="list-item__description">{{this}}</div>
+      <div class="list-item__rating">ø ø ø ø</div>
+      <div class="list-item__address">2960 Dundas Street, North Toronto</div>
+      <div class="list-item__arrow">»</div>
+    </div>
+    <hr>
+    {{else}}
+      {{#if owner}}
+        <div class="list__empty">Looks like you have no venues in this list yet! Why not add some?</div>
+      {{else}}
+        <div class="list__empty">Woops, this list is empty! Not too much to look at eh?</div>
+      {{/if}}
     {{/each}}
     
     {{#if owner}}
-    <button class="list__share">Share this list</button>
+      <button class="list__share" data-action="share-list">Share this list</button>
+      <button class="list__delete list__delete--hide" data-action="delete-list">Delete this list</button>
     {{/if}}
+    
+    {{#unless currentUser}}
+      {{> loginButtons}}
+    {{/unless}}
     
     <div class="ios-icon"></div>
   </div>  
+  {{> shareModal}}
 </template>

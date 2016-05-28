@@ -22,3 +22,5 @@ accounts-ui-unstyled
 less
 accounts-facebook
 mdg:geolocation
+mdg:validated-method
+zenorocha:clipboard

@@ -65,6 +65,7 @@ localstorage@1.0.9
 logging@1.0.12
 matb33:collection-hooks@0.8.1
 mdg:geolocation@1.3.0
+mdg:validated-method@1.1.0
 mdg:validation-error@0.1.0
 meteor@1.1.14
 meteor-base@1.0.4
@@ -141,4 +142,5 @@ webapp@1.2.8
 webapp-hashing@1.0.9
 wizonesolutions:canonical@0.0.5
 xolvio:cucumber@0.20.3_1
+zenorocha:clipboard@1.5.10
 zimme:active-route@2.3.2

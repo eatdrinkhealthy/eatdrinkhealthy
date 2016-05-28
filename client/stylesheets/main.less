@@ -18,11 +18,13 @@
 //elements – styling for bare HTML elements (like H1, A, etc.). These come with default styling from the browser so we can redefine them here.
 @import "elements/html.import.less";
 @import "elements/body.import.less";
+@import "elements/hr.import.less";
 
 //objects – class-based selectors which define undecorated design patterns, for example media object known from OOCSS
 
 
 //components – specific UI components. This is where majority of our work takes place and our UI components are often composed of Objects and Components
+@import "components/login-buttons.import.less";
 @import "components/map.import.less";
 @import "components/sidebar.import.less";
 @import "components/coming-soon.import.less";
@@ -33,6 +35,6 @@
 @import "components/lists-item.import.less";
 @import "components/list.import.less";
 @import "components/list-item.import.less";
-@import "components/login-buttons.import.less";
+@import "components/share-modal.import.less";
 
 //trumps – utilities and helper classes with ability to override anything which goes before in the triangle, eg. hide helper class

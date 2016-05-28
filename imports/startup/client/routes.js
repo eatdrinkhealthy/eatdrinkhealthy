@@ -11,6 +11,7 @@ import "../../ui/pages/list.js";
 BlazeLayout.setRoot("body");
 
 FlowRouter.route("/", {
+  name: "home",
   action() {
     BlazeLayout.render("layout", {
       yield: "home"
@@ -19,6 +20,7 @@ FlowRouter.route("/", {
 });
 
 FlowRouter.route("/list/:_id", {
+  name: "list",
   action() {
     BlazeLayout.render("layout", {
       yield: "list"
