@@ -4,7 +4,15 @@ import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 
+markersArray = [];
+
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  this.autorun(() => {
+    if (this.subscriptionsReady()) {
+      plotMarkers();
+    }
+  });
+
   let initialGeolocation = null;
 
   // map styling
@@ -151,7 +159,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     const height = window.innerHeight;
     $("#map").css("height", height);
   }
-  window.onresize = function() {
+  window.onresize = function () {
     resizeHeight();
   };
   resizeHeight();
@@ -168,11 +176,11 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   // Set Marker style
   markers = {};
-  let mapMarker = new google.maps.MarkerImage("/images/map-marker.png",
+  let mapMarker = new google.maps.MarkerImage("/images/pinMarker.png",
     null,
     null,
     null,
-    new google.maps.Size(26, 35)
+    new google.maps.Size(31, 39)
   );
 
   let marker = new google.maps.Marker({
@@ -181,6 +189,39 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     title: "office!",
     icon: mapMarker
   });
+
+  plotMarkers = function () {
+    _.each(Places.find().fetch(), function(place) {
+        var location = new google.maps.LatLng(place.location.lat, place.location.lng);
+        addMarker(location, place.name, place.id);
+    });
+  };
+
+  // Add a marker to the map and push to the array for comparison.
+  addMarker = function (location, name, id) {
+    if (!markers[id]) {
+      markers[id] = true;
+      let marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: name,
+        icon: mapMarker
+      });
+      
+      // store markers in array to clear during filter actions
+      markersArray.push(marker);
+
+      // Set up info window for marker
+      let contentString = id;
+      let infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.open(map,marker);
+      });
+    }
+  };
+
 
   // get device location on first load, and pan map to that location
   Tracker.autorun(() => {
