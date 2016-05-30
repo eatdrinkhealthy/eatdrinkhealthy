@@ -142,7 +142,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   const customMapTypeId = "custom_style";
 
   const mapOptions = {
-    zoom: 15,
+    zoom: 16,
     disableDefaultUI: true,
     zoomControl: true,
     zoomControlOptions: {
@@ -183,13 +183,6 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     new google.maps.Size(31, 39)
   );
 
-  let marker = new google.maps.Marker({
-    position: new google.maps.LatLng("43.6544342", "-79.3935486"),
-    map: map,
-    title: "office!",
-    icon: mapMarker
-  });
-
   plotMarkers = function () {
     _.each(Places.find().fetch(), function(place) {
         var location = new google.maps.LatLng(place.location.lat, place.location.lng);
@@ -207,17 +200,17 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
         title: name,
         icon: mapMarker
       });
-      
+
       // store markers in array to clear during filter actions
       markersArray.push(marker);
 
       // Set up info window for marker
-      let contentString = id;
+      let contentString = name;
       let infowindow = new google.maps.InfoWindow({
         content: contentString
       });
-      google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map,marker);
+      google.maps.event.addListener(marker, "click", () => {
+        infowindow.open(map, marker);
       });
     }
   };
