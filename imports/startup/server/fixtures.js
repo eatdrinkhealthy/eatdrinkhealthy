@@ -7,17 +7,17 @@ Meteor.startup(() => {
     {
       title: "Vegan Shops",
       description: "A list of my favourite local vegan shops.",
-      venues: ["8732gyruu3a", "3da8gyui3", "a398yhiuda"],
+      venues: ["4b6c4f7cf964a5209f2f2ce3", "4c0d39fec700c9b6a116a2dd", "54fd7b9d498ed10df2a3c248"],
     },
     {
       title: "Vegetarian Shops",
       description: "A list of my favourite local vegetarian shops.",
-      venues: ["8732gyruu3a", "3da8gyui3", "a398yhiuda"],
+      venues: ["4b6c4f7cf964a5209f2f2ce3", "4c0d39fec700c9b6a116a2dd", "54fd7b9d498ed10df2a3c248"],
     },
     {
       title: "Gluten-Free Restaurants",
       description: "A list of my favourite local Gluten-Free restaurants.",
-      venues: ["8732gyruu3a", "3da8gyui3", "a398yhiuda"],
+      venues: ["4b6c4f7cf964a5209f2f2ce3", "4c0d39fec700c9b6a116a2dd", "54fd7b9d498ed10df2a3c248"],
     }
   ];
 
