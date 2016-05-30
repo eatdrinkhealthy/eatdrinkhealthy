@@ -2,14 +2,12 @@ import "./map.html";
 
 import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
+import { ReactiveVar } from "meteor/reactive-var";
+
+markersArray = [];
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
-  const location = {
-    // default to downtown Toronto
-    // TODO: default to city set in profile (perhaps facebook location aka city)
-    latitude: 43.650033,
-    longitude: -79.391594
-  };
+  let initialGeolocation = null;
 
   // map styling
   // TODO: find out how to import these, seems to break map on iOS only
@@ -138,15 +136,15 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   const customMapTypeId = "custom_style";
 
   const mapOptions = {
-    zoom: 15,
+    zoom: 16,
     disableDefaultUI: true,
     zoomControl: true,
     zoomControlOptions: {
       position: google.maps.ControlPosition.RIGHT_BOTTOM
     },
     center: {
-      lat: location.latitude,
-      lng: location.longitude
+      lat: mapCenterLocation.get().latitude,
+      lng: mapCenterLocation.get().longitude
     }
   };
 
@@ -165,8 +163,53 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   map.mapTypes.set(customMapTypeId, customMapType);
   map.setMapTypeId(customMapTypeId);
 
+  // When a user drags the map - call at end of drag
+  google.maps.event.addListener(map, "dragend", () => {
+    mapCenterLocation.set({ latitude: map.getCenter().lat(), longitude: map.getCenter().lng() });
+  });
+
+  // Set Marker style
+  markers = {};
+  const mapMarker = new google.maps.MarkerImage("/images/pinMarker.png",
+    null,
+    null,
+    null,
+    new google.maps.Size(31, 39)
+  );
+
+  // Add a marker to the map and push to the array for comparison.
+  function addMarker(location, name, id) {
+    if (!markers[id]) {
+      markers[id] = true;
+      const marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: name,
+        icon: mapMarker
+      });
+
+      // store markers in array to clear during filter actions
+      markersArray.push(marker);
+
+      // Set up info window for marker
+      const contentString = name;
+      const infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+      google.maps.event.addListener(marker, "click", () => {
+        infowindow.open(map, marker);
+      });
+    }
+  }
+
+  function plotMarkers() {
+    _.each(Places.find().fetch(), (place) => {
+      const location = new google.maps.LatLng(place.location.lat, place.location.lng);
+      addMarker(location, place.name, place.id);
+    });
+  }
+
   // get device location on first load, and pan map to that location
-  let initialGeolocation = null;
   Tracker.autorun(() => {
     const currentGeolocation = Geolocation.latLng();
     if (currentGeolocation !== null && initialGeolocation === null) {
@@ -174,6 +217,30 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
       location.latitude = Geolocation.latLng().lat;
       location.longitude = Geolocation.latLng().lng;
       map.panTo(new google.maps.LatLng(location.latitude, location.longitude));
+      // set mapCenterLocation for the subscription to run again
+      mapCenterLocation.set({ latitude: location.latitude, longitude: location.longitude });
     }
+  });
+
+  this.autorun(() => {
+    if (this.subscriptionsReady()) {
+      plotMarkers();
+    }
+  });
+});
+
+Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  const defaultLocation = {
+    // default to downtown Toronto
+    // TODO: default to city set in profile (perhaps facebook location aka city)
+    latitude: 43.650033,
+    longitude: -79.391594
+  };
+  mapCenterLocation = new ReactiveVar(defaultLocation);
+  this.autorun(() => {
+    this.subscribe("nearbyPlaces",
+      mapCenterLocation.get().latitude,
+      mapCenterLocation.get().longitude
+    );
   });
 });
