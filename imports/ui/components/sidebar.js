@@ -7,7 +7,7 @@ import { Template } from "meteor/templating";
 // import { FlowRouter } from "meteor/kadira:flow-router";
 
 Template.sidebar.events({
-  "click .toggle-sidebar": function () {
+  "click .toggle-sidebar": function () { // eslint-disable-line object-shorthand, func-names
     if ($(".sidebar").hasClass("hidden")) {
       $(".sidebar").removeClass("hidden");
       $(".toggle-sidebar").removeClass("closed");
