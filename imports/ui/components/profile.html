@@ -1,8 +1,10 @@
 <template name="profile">
   <div class="profile">
     <div class="profile__picture"></div>
-    <div class="profile__name">{{currentUser.profile.name}}</div>
-    <div class="profile__reviews">46 Reviews</div>
+    <div class="profile__details">
+      <div class="profile__name">{{currentUser.profile.name}}</div>
+      <div class="profile__reviews">46 Reviews</div>
+    </div>
     <div class="profile__settings" data-action="logout-user"></div>
   </div>
 </template>

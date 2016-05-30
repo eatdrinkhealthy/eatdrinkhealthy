@@ -1,25 +1,24 @@
 .profile {
-  .box-model(100%, 200px, 60px 40px, 0);
-  .gradient-bg();
+  .box-model(100%, 200px, 60px 0 60px 14%, 0);
+  .gradient-bg(-40%, 140%);
   position: relative;
   color: white;
   &__picture {
-    .box-model(80px, 80px, 0, 0 30px);
+    .box-model(80px, 80px, 0, 0 20px 0 0);
     border-radius: 50px;
     background: url(/images/avatar.png) center center no-repeat;
     background-size: cover;
     float: left;
   }
-  &__name {
+  &__details {
     .box-model(auto, 40px, 8px 0, 0);
     float: left;
     font-size: 20px;
     font-weight: 600px;
   }
   &__reviews {
-    .box-model(100px, 40px, 8px 0, 0);
-    float: left;
     font-size: 16px;
+    font-weight: 600px;
   }
   &__settings {
     .box-model(20px, 20px, 0, 0);
