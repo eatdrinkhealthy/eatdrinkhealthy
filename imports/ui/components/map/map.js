@@ -7,12 +7,6 @@ import { ReactiveVar } from "meteor/reactive-var";
 markersArray = [];
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
-  this.autorun(() => {
-    if (this.subscriptionsReady()) {
-      plotMarkers();
-    }
-  });
-
   let initialGeolocation = null;
 
   // map styling
@@ -176,25 +170,18 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   // Set Marker style
   markers = {};
-  let mapMarker = new google.maps.MarkerImage("/images/pinMarker.png",
+  const mapMarker = new google.maps.MarkerImage("/images/pinMarker.png",
     null,
     null,
     null,
     new google.maps.Size(31, 39)
   );
 
-  plotMarkers = function () {
-    _.each(Places.find().fetch(), function(place) {
-        var location = new google.maps.LatLng(place.location.lat, place.location.lng);
-        addMarker(location, place.name, place.id);
-    });
-  };
-
   // Add a marker to the map and push to the array for comparison.
-  addMarker = function (location, name, id) {
+  function addMarker(location, name, id) {
     if (!markers[id]) {
       markers[id] = true;
-      let marker = new google.maps.Marker({
+      const marker = new google.maps.Marker({
         position: location,
         map: map,
         title: name,
@@ -205,16 +192,22 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
       markersArray.push(marker);
 
       // Set up info window for marker
-      let contentString = name;
-      let infowindow = new google.maps.InfoWindow({
+      const contentString = name;
+      const infowindow = new google.maps.InfoWindow({
         content: contentString
       });
       google.maps.event.addListener(marker, "click", () => {
         infowindow.open(map, marker);
       });
     }
-  };
+  }
 
+  function plotMarkers() {
+    _.each(Places.find().fetch(), (place) => {
+      const location = new google.maps.LatLng(place.location.lat, place.location.lng);
+      addMarker(location, place.name, place.id);
+    });
+  }
 
   // get device location on first load, and pan map to that location
   Tracker.autorun(() => {
@@ -228,6 +221,12 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
       mapCenterLocation.set({ latitude: location.latitude, longitude: location.longitude });
     }
   });
+
+  this.autorun(() => {
+    if (this.subscriptionsReady()) {
+      plotMarkers();
+    }
+  });
 });
 
 Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
@@ -239,6 +238,9 @@ Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callbac
   };
   mapCenterLocation = new ReactiveVar(defaultLocation);
   this.autorun(() => {
-    this.subscribe("nearbyPlaces", mapCenterLocation.get().latitude, mapCenterLocation.get().longitude);
+    this.subscribe("nearbyPlaces",
+      mapCenterLocation.get().latitude,
+      mapCenterLocation.get().longitude
+    );
   });
 });
