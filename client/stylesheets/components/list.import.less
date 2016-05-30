@@ -105,13 +105,13 @@
   }
   
   &__edit {
-    .box-model(18px, 18px, 0, 0);
+    .box-model(24px, 18px, 0, 0);
     position: absolute;
     top: 20px;
     color: @edh-grey;
     left: calc(~"50% - 190px");
-    line-height: 3px;
-    font-size: 25px;
+    font-size: 16px;
+    line-height: 20px;
     cursor: pointer;
     @media (max-width: 500px){
       left: 20px;
@@ -124,8 +124,9 @@
   &__close {
     .box-model(18px, 18px, 0, 0);
     position: absolute;
-    top: 10px;
+    top: 20px;
     font-size: 30px;
+    line-height: 18px;
     color: @edh-grey;
     right: calc(~"50% - 190px");
     cursor: pointer;
