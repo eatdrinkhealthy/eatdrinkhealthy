@@ -7,6 +7,10 @@
     width: 100%;
     padding: 80px 20px;
   }
+  @media (max-width: 300px){
+    width: 100%;
+    padding: 80px 10px;
+  }
     
   &--blur {
     -webkit-filter: blur(4px);
@@ -20,6 +24,7 @@
     font-size: 26px;
     text-align: center;
     color: @edh-dark-grey;
+    .ellipsis();
     @media (max-width: 400px){
       font-size: 21px;
       padding: 9px 0;
@@ -87,6 +92,15 @@
     }
     &--show {
       display: block;
+    }
+  }
+  
+  &__share,
+  &__delete {
+    @media (max-width: 200px) {
+      width: 100%;
+      padding: 0;
+      text-align: center;
     }
   }
   

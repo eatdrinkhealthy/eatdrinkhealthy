@@ -16,10 +16,18 @@
   }
   &__new-list {
     .box-model(100%, 40px, 0, 30px auto 0);
+    @media (max-width: 300px){
+      height: auto;
+    }
     input {
       margin: 0;
       width: 68%;
       float: left;
+      @media (max-width: 300px){
+        float: none;
+        width: 100%;
+        margin-bottom: 5px;
+      }
     }
     button {
       margin: 0;
@@ -27,6 +35,11 @@
       float: right;
       padding: 0;
       text-align: center;
+      @media (max-width: 300px){
+        float: none;
+        width: 100%;
+        margin-bottom: 20px;
+      }
     }
   }
 }

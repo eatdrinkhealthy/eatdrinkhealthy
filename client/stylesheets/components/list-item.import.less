@@ -4,14 +4,17 @@
   color: @edh-grey;
   cursor: pointer;
   
+  &__title,
+  &__description,
+  &__rating,
+  &__address {
+    width: 80%;
+    .ellipsis();
+  }
+  
   &__title {
     font-size: 18px;
     color: @edh-dark-grey;
-  }
-  
-  &__description,
-  &__address {
-    font-size: 14px;
   }
   
   &__rating {
@@ -20,8 +23,8 @@
   
   &__arrow {
     .box-model(26px, 26px, 0, 0);
-    border-radius: 20px;
     text-align: center;
+    border-radius: 20px;
     position: absolute;
     font-size: 24px;
     right: 10px;

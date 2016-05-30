@@ -118,5 +118,15 @@ Template.list.events({
   },
   "click [data-action=close-list]": () => {
     FlowRouter.go("/");
+  },
+  "keydown [data-action=save-list-title]": (event) => {
+    if (event.keyCode === 13) {
+      $("[data-action=save-list-title]").trigger("blur");
+    }
+  },
+  "keydown [data-action=save-list-description]": (event) => {
+    if (event.keyCode === 13) {
+      $("[data-action=save-list-description]").trigger("blur");
+    }
   }
 });

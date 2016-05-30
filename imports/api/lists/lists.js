@@ -5,24 +5,21 @@ export const Lists = new Mongo.Collection("lists");
 
 listsSchema = new SimpleSchema({
   title: {
-    type: String,
-    max: 100
+    type: String
   },
   description: {
     type: String,
-    optional: true,
-    max: 200
+    optional: true
   },
   venues: {
     type: [String],
-    optional: true,
-    min: 0
+    optional: true
   },
   author: {
-    type: String,
+    type: String
   },
   dateCreated: {
-    type: Date,
+    type: Date
   }
 });
 

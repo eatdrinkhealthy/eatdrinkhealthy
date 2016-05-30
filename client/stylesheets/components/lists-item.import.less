@@ -1,10 +1,15 @@
 .lists-item {
   .box-model(100%, 60px, 20px 0, 0);
   &__title {
+    width: 70%;
+    .ellipsis();
     float: left;
     cursor: pointer;
     &:hover {
       color: @edh-blue;
+    }
+    @media (max-width: 300px) {
+      width: 100%;
     }
   }
   &__count {
@@ -14,5 +19,8 @@
     color: white;
     text-align: center;
     float: right;
+    @media (max-width: 300px) {
+      display: none;
+    }
   }
 }
