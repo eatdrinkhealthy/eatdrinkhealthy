@@ -25,6 +25,14 @@ Workaround: If you do `meteor reset` you will need to run `meteor run ios-device
 
 `meteor run ios-device --mobile-server http://localhost:3000 --settings settings.json`
 
+### Generating sample lists
+
+If you want to have some pregenerated lists, simply do the following
+
+* `meteor shell`
+* `addSampleLists(<USER_ID>);` Where `USER_ID` is the id of the user you would like to generate lists for
+
+
 ### Useful links
 
  * [Trello Board](https://trello.com/b/iihSpSKj/eat-drink-healthy)
