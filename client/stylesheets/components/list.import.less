@@ -25,7 +25,7 @@
     text-align: center;
     color: @edh-dark-grey;
     .ellipsis();
-    @media (max-width: 400px){
+    @media (max-width: @mobile-portrait){
       font-size: 21px;
       padding: 9px 0;
     }
@@ -41,12 +41,18 @@
     }
   }
   
+  &__owner {
+    color: @edh-grey;
+    font-size: 11px;
+    text-align: center;
+  }
+    
   &__description {
     width: 100%;
     text-align: center;
     padding: 8px;
-    //height: 40px;
-    color: @edh-grey;
+    margin-top: 20px;
+    color: @edh-dark-grey;
     &--edit {
       display: none;
       background: #f6f6f6;
@@ -77,6 +83,11 @@
     .box-model(100%, 80px, 30px, 10px auto 40px);
     text-align: center;
     color: @edh-grey;
+    span {
+      color: @edh-blue;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
   
   &__share {

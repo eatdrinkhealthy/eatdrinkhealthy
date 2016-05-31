@@ -5,13 +5,14 @@
       <div class="list__edit" data-action="edit-list">Edit</div>
     {{/if}}
     
-    <div class="list__close" data-action="close-list">&#215;</div>
+    <div class="list__close" data-action="go-home">&#215;</div>
     
     <div class="list__title" data-action="edit-list-title">{{list.title}}</div>
-    
     {{#if owner}}
       <input class="list__title list__title--edit" data-action="save-list-title" value="{{list.title}}">
     {{/if}}
+    
+    <div class="list__owner">made by {{listCreator}}</div>
     
     {{#if list.description}}
       <div class="list__description" data-action="edit-list-description">{{list.description}}</div>
@@ -30,16 +31,16 @@
     <hr>
     {{#each list.venues}}
     <div class="list-item">
-      <div class="list-item__title">St. Lawrence Market</div>
-      <div class="list-item__description">{{this}}</div>
-      <div class="list-item__rating">ø ø ø ø</div>
-      <div class="list-item__address">2960 Dundas Street, North Toronto</div>
-      <div class="list-item__arrow">»</div>
+      <div class="list-item__title">{{name}}</div>
+      <div class="list-item__description">{{category}}</div>
+      <div class="list-item__rating">{{{rating}}}</div>
+      <div class="list-item__address">{{address}}</div>
+      <div class="list-item__arrow">&#187;</div>
     </div>
     <hr>
     {{else}}
       {{#if owner}}
-        <div class="list__empty">Looks like you have no venues in this list yet! Why not add some?</div>
+        <div class="list__empty">Looks like you have no venues in this list yet! Why not <span data-action="go-home">add some?</span></div>
       {{else}}
         <div class="list__empty">Woops, this list is empty! Not too much to look at eh?</div>
       {{/if}}

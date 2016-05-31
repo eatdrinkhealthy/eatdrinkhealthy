@@ -13,7 +13,7 @@ export const updateListTitle = new ValidatedMethod({
 
   run({ listId, newTitle }) {
     const list = Lists.findOne(listId);
-    if (list && !this.userId === list.author) {
+    if (list && !this.userId === list.userId) {
       throw new Meteor.Error("Lists.methods.updateTitle.notLoggedIn",
         "User must own the list to update it.");
     }
@@ -34,7 +34,7 @@ export const updateListDescription = new ValidatedMethod({
 
   run({ listId, newDescription }) {
     const list = Lists.findOne(listId);
-    if (list && !this.userId === list.author) {
+    if (list && !this.userId === list.userId) {
       throw new Meteor.Error("Lists.methods.updateTitle.notLoggedIn",
         "User must own the list to update it.");
     }
@@ -55,7 +55,7 @@ export const addVenueToList = new ValidatedMethod({
 
   run({ listId, venueId }) {
     const list = Lists.findOne(listId);
-    if (list && !this.userId === list.author) {
+    if (list && !this.userId === list.userId) {
       throw new Meteor.Error("Lists.methods.updateTitle.notLoggedIn",
         "User must own the list to update it.");
     }
@@ -76,7 +76,7 @@ export const removeVenueFromList = new ValidatedMethod({
 
   run({ listId, venueId }) {
     const list = Lists.findOne(listId);
-    if (list && !this.userId === list.author) {
+    if (list && !this.userId === list.userId) {
       throw new Meteor.Error("Lists.methods.updateTitle.notLoggedIn",
         "User must own the list to update it.");
     }
@@ -96,7 +96,7 @@ export const removeList = new ValidatedMethod({
 
   run({ listId }) {
     const list = Lists.findOne(listId);
-    if (list && !this.userId === list.author) {
+    if (list && !this.userId === list.userId) {
       throw new Meteor.Error("Lists.methods.updateTitle.notLoggedIn",
         "User must own the list to update it.");
     }

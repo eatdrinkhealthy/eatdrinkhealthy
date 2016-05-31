@@ -46,7 +46,8 @@ AutoForm.hooks({
       insert(doc) {
         const newList = doc;
         const user = Meteor.user();
-        newList.author = user._id;
+        newList.author = user.profile.name;
+        newList.userId = user._id;
         newList.dateCreated = new Date();
         newList.venues = [];
         return doc;
