@@ -18,5 +18,5 @@ Template.shareModal.events({
 });
 
 Template.shareModal.helpers({
-  listUrl: () => "edh.co/list/" + FlowRouter.current().params._id
+  listUrl: () => `${window.location.host}/list/${FlowRouter.current().params._id}`
 });

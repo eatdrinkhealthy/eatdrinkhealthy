@@ -18,6 +18,9 @@ listsSchema = new SimpleSchema({
   author: {
     type: String
   },
+  userId: {
+    type: String
+  },
   dateCreated: {
     type: Date
   }
@@ -30,9 +33,9 @@ Lists.allow({
     return userId;
   },
   update(userId, doc) {
-    return doc.author === userId;
+    return doc.userId === userId;
   },
   remove(userId, doc) {
-    return doc.author === userId;
+    return doc.userId === userId;
   }
 });

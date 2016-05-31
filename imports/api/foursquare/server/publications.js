@@ -62,6 +62,39 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude) {
   });
 });
 
+Meteor.publish("listVenues", function listVenues(venueIds) {
+  // const venues = {};
+  check(venueIds, Array);
+  const self = this;
+  venueIds.forEach((venueId) => {
+    const url = `https://api.foursquare.com/v2/venues/${venueId}`;
+    HTTP.call("GET", url, {
+      params: {
+        client_id: "1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30",
+        client_secret: "U1B0UHK22EW5PMKKZIK0AF1LPN32B4M35S4N41HXCH4WTRFW",
+        v: "20130815"
+      }
+    },
+    (error, result) => {
+      if (!error) {
+        const JSONresponse = EJSON.parse(result.content);
+        const name = JSONresponse.response.venue.name;
+        const category = JSONresponse.response.venue.categories[0].name;
+        const rating = JSONresponse.response.venue.rating;
+        const location = JSONresponse.response.venue.location;
+        venue = {
+          name,
+          category,
+          rating,
+          location
+        };
+        self.added("places", venueId, venue);
+      }
+    });
+  });
+  self.ready();
+});
+
 // * * * SAMPLE Foursquare calls
 
 // https://api.foursquare.com/v2/venues/search
