@@ -10,7 +10,8 @@ import {
   updateListTitle,
   updateListDescription,
   removeVenueFromList,
-  removeList
+  removeList,
+  findListCreator
 } from "../../api/lists/methods.js";
 
 // components
@@ -20,7 +21,7 @@ import "../components/shareModal.js";
 function isOwner() {
   const list = Lists.findOne();
   const user = Meteor.user();
-  return list && user && user._id === list.author;
+  return list && user && user._id === list.userId;
 }
 
 Template.list.onCreated(function createList() {
@@ -39,15 +40,11 @@ Template.list.helpers({
   list: () => Lists.findOne(),
   owner: () => {
     const list = Lists.findOne();
-    return list ? list.author === Meteor.user()._id : false;
+    return list ? list.userId === Meteor.user()._id : false;
   },
   listCreator: () => {
     const list = Lists.findOne();
-    if (list) {
-      const user = Meteor.users.findOne({ _id: list.author });
-      return user ? user.profile.name : "";
-    }
-    return false;
+    return list ? list.author : "";
   },
   venueCount: () => {
     const list = Lists.findOne();

@@ -3,7 +3,7 @@ import { check } from "meteor/check";
 import { Lists } from "../lists.js";
 
 Meteor.publish("lists", function publishLists() {
-  return Lists.find({ author: this.userId });
+  return Lists.find({ userId: this.userId });
 });
 
 Meteor.publish("list", (listId) => {

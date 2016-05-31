@@ -22,13 +22,14 @@ Meteor.startup(() => {
   ];
 
   Meteor.users.find().fetch().forEach((user) => {
-    if (Lists.find({ author: user._id }).count() === 0) {
+    if (Lists.find({ userId: user._id }).count() === 0) {
       newLists.forEach((list) => {
         Lists.insert({
           title: list.title,
           description: list.description,
           venues: list.venues,
-          author: user._id,
+          author: user.profile.name,
+          userId: user._id,
           dateCreated: new Date()
         });
       });
