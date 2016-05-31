@@ -170,12 +170,13 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   // Set Marker style
   markers = {};
-  const mapMarker = new google.maps.MarkerImage("/images/pinMarker.png",
-    null,
-    null,
-    null,
-    new google.maps.Size(31, 39)
-  );
+  const mapMarker = {
+    url: "/images/pinMarker3x.png",
+    size: new google.maps.Size(31, 39),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(15, 39),
+    scaledSize: new google.maps.Size(31, 39)
+  };
 
   // Add a marker to the map and push to the array for comparison.
   function addMarker(location, name, id) {

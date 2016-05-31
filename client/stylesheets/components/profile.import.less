@@ -3,7 +3,7 @@
   .gradient-bg(-40%, 140%);
   position: relative;
   color: white;
-  @media (max-width: 400px) {
+  @media (max-width: @mobile-portrait) {
     .box-model(100%, auto, 60px 0 20px, 0);
     float: none;
     margin: 0 auto;
@@ -14,7 +14,7 @@
     background: url(/images/avatar.png) center center no-repeat;
     background-size: cover;
     float: left;
-    @media (max-width: 400px) {
+    @media (max-width: @mobile-portrait) {
       float: none;
       margin: 0 auto;
     }
@@ -23,7 +23,7 @@
     .box-model(50%, 80px, 0, 0);
     float: left;
     line-height: 20px;
-    @media (max-width: 400px) {
+    @media (max-width: @mobile-portrait) {
       .box-model(80%, 80px, 0, 0 auto);
       float: none;
       text-align: center;
