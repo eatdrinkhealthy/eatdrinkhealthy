@@ -22,6 +22,12 @@ function isOwner() {
   const user = Meteor.user();
   return list && user && user._id === list.author
 }
+function removeListClient(instance) {
+  if (isOwner()) {
+    removeList.call({ listId: instance.listId });
+    FlowRouter.go("home");
+  }
+}
 
 Template.list.onCreated(function createList() {
   this.listId = FlowRouter.current().params._id;
@@ -57,24 +63,70 @@ Template.list.events({
     }
   },
   "blur [data-action=save-list-title]": (event, instance) => {
+    const currentTitle = $("[data-action=edit-list-title]")[0].innerText;
     const newTitle = $("[data-action=save-list-title]")[0].value;
-    updateListTitle.call({
-      listId: instance.listId,
-      newTitle
-    }, () => {
+    if (!newTitle) {
       $("[data-action=save-list-title]").hide();
       $("[data-action=edit-list-title]").show();
-    });
+      $("[data-action=save-list-title]")[0].value = currentTitle;
+      $(".alert--fail").fadeIn(400);
+      Meteor.setTimeout(() => {
+        $(".alert--fail").fadeOut(400);
+      }, 2000);
+    } else if (!(currentTitle === newTitle) && newTitle) {
+      updateListTitle.call({
+        listId: instance.listId,
+        newTitle
+      }, (error) => {
+        $("[data-action=save-list-title]").hide();
+        $("[data-action=edit-list-title]").show();
+        if (error) {
+          $("[data-action=save-list-title]")[0].value = currentTitle;
+          $(".alert--fail").fadeIn(400);
+          Meteor.setTimeout(() => {
+            $(".alert--fail").fadeOut(400);
+          }, 2000);
+        } else {
+          $(".alert--success").fadeIn(400);
+          Meteor.setTimeout(() => {
+            $(".alert--success").fadeOut(400);
+          }, 2000);
+        }
+      });
+    } else {
+      $("[data-action=save-list-title]").hide();
+      $("[data-action=edit-list-title]").show();
+    }
   },
   "blur [data-action=save-list-description]": (event, instance) => {
+    const currentDescription = $("[data-action=edit-list-description]")[0].innerText;
     const newDescription = $("[data-action=save-list-description]")[0].value;
-    updateListDescription.call({
-      listId: instance.listId,
-      newDescription
-    }, () => {
+    const hasPromptText = (currentDescription === "add description");
+    const isUnique = !(newDescription === currentDescription) && !hasPromptText;
+    const isNew = !(newDescription === "") && hasPromptText;
+    if (isUnique || isNew) {
+      updateListDescription.call({
+        listId: instance.listId,
+        newDescription
+      }, (error) => {
+        $("[data-action=save-list-description]").hide();
+        $("[data-action=edit-list-description]").show();
+        if (error) {
+          $(".alert--fail").fadeIn(400);
+          Meteor.setTimeout(() => {
+            $(".alert--fail").fadeOut(400);
+          }, 2000);
+        } else {
+          $(".alert--success").fadeIn(400);
+          Meteor.setTimeout(() => {
+            $(".alert--success").fadeOut(400);
+          }, 2000);
+        }
+      });
+    } else {
       $("[data-action=save-list-description]").hide();
       $("[data-action=edit-list-description]").show();
-    });
+    }
   },
   "click [data-action=share-list]": () => {
     $(".list").addClass("list--blur");
@@ -105,11 +157,19 @@ Template.list.events({
     // Toggle Settings Button
     $("[data-action=edit-list]").toggleClass("list__edit--red");
   },
-  "click [data-action=delete-list]": (event, instance) => {
-    if (isOwner() && confirm("Are you sure you want to delete this list?")) { // eslint-disable-line
-      removeList.call({ listId: instance.listId });
-      FlowRouter.go("/");
+  "click [data-action=delete-list]": () => {
+    $(".confirmation").fadeIn(200);
+    $(".confirmation").addClass("delete-list-confirmation");
+  },
+  "click .confirmation__yes": (event, instance) => {
+    if ($(".confirmation").hasClass("delete-list-confirmation")) {
+      removeListClient(instance);
+      $(".confirmation").removeClass().addClass("confirmation");
     }
+  },
+  "click .confirmation__cancel": () => {
+    $(".confirmation").fadeOut(200);
+    $(".confirmation").removeClass("delete-list-confirmation");
   },
   "click .list-item__arrow--delete": function hello(event, instance) {
     if (isOwner()) {
