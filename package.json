@@ -2,9 +2,14 @@
   "name": "eatdrinkhealthy",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "test": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests",
+    "test-watch": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests --watch"
   },
   "dependencies": {
     "meteor-node-stubs": "~0.2.0"
+  },
+  "devDependencies": {
+    "chimp": "^0.35.0"
   }
 }

@@ -42,8 +42,8 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude) {
 
   HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
     params: {
-      client_id: "1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30",
-      client_secret: "U1B0UHK22EW5PMKKZIK0AF1LPN32B4M35S4N41HXCH4WTRFW",
+      client_id: Meteor.settings.foursquare.client_id,
+      client_secret: Meteor.settings.foursquare.client_secret,
       v: "20130815", // api version
       ll: latLng,
       limit: "50",
@@ -70,8 +70,8 @@ Meteor.publish("listVenues", function listVenues(venueIds) {
     const url = `https://api.foursquare.com/v2/venues/${venueId}`;
     HTTP.call("GET", url, {
       params: {
-        client_id: "1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30",
-        client_secret: "U1B0UHK22EW5PMKKZIK0AF1LPN32B4M35S4N41HXCH4WTRFW",
+        client_id: Meteor.settings.foursquare.client_id,
+        client_secret: Meteor.settings.foursquare.client_secret,
         v: "20130815"
       }
     },
