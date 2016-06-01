@@ -50,8 +50,8 @@ We don't currently have mobile app-specific tests, though we could add them in
 the future, Chimp supports [Appium](http://appium.io/).
 
 1. Start the app
-1. Run Chimp in *watch* mode:
-    `chimp --ddp=http://localhost:3000 --path=tests --watch`
+1. Run tests: `npm test`
+1. Run Chimp in *watch* mode: `npm run test-watch`
 
 Unit tests can be added using files named `*.test.js` and run with `meteor test`.
 
