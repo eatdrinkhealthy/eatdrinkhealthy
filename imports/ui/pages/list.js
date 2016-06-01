@@ -63,15 +63,15 @@ Template.list.helpers({
     const score = venue ? venue.rating : 0;
     switch (Math.round(score)) {
       case 1: case 2:
-        return "<span>&#10029; &#10025; &#10025; &#10025; &#10025;</span>";
+        return "<span>&#10022; &#10023; &#10023; &#10023; &#10023;</span>";
       case 3: case 4:
-        return "<span>&#10029; &#10029; &#10025; &#10025; &#10025;</span>";
+        return "<span>&#10022; &#10022; &#10023; &#10023; &#10023;</span>";
       case 5: case 6:
-        return "<span>&#10029; &#10029; &#10029; &#10025; &#10025;</span>";
+        return "<span>&#10022; &#10022; &#10022; &#10023; &#10023;</span>";
       case 7: case 8:
-        return "<span>&#10029; &#10029; &#10029; &#10029; &#10025;</span>";
+        return "<span>&#10022; &#10022; &#10022; &#10022; &#10023;</span>";
       case 9: case 10:
-        return "<span>&#10029; &#10029; &#10029; &#10029; &#10029;</span>";
+        return "<span>&#10022; &#10022; &#10022; &#10022; &#10022;</span>";
       default:
         return "";
     }
