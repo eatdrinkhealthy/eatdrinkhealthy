@@ -10,8 +10,7 @@ import {
   updateListTitle,
   updateListDescription,
   removeVenueFromList,
-  removeList,
-  findListCreator
+  removeList
 } from "../../api/lists/methods.js";
 
 // components
