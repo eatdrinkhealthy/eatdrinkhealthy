@@ -1,6 +1,7 @@
-App.configurePlugin("com.phonegap.plugins.facebookconnect", {
-  APP_ID: "990554037725165",
-  APP_NAME: "Eat Drink Healthy"
+App.info({
+  id: "co.EatDrinkHealthy.EatDrinkHealthy",
+  name: "eatdrinkhealthy",
+  version: "0.0.1"
 });
 
 // App.setPreference("StatusBarOverlaysWebView", "true");
