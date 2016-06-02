@@ -2,9 +2,32 @@
 
   <div id="map"></div>
 
-  <div class="filter">
-    <input type="checkbox" name="filter" value="glutenFree"> gluten Free<br>
-    <input type="checkbox" name="filter" value="juiceBar"> juice bar<br>
+  <div class="show-filter">Filter</div>
+
+  <div class="filter filter-closed">
+
+    <div class="filter-header"> 
+      <h4>Filter</h4>
+      <div class="close-filter-container">
+        <div class="close-filter"></div>
+      </div>
+    </div>
+
+    <div class="push-filter-items"></div>
+    
+    {{#each filters}}
+      <div class="filter-item">
+        <label>{{name}}</label>
+        <div class="toggle-container">
+          <div class="toggle">
+            <input type="checkbox" class="check" name="filter" value="{{value}}">
+            <b class="b switch"></b>
+            <b class="b track"></b>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+
   </div>
 
 </template>

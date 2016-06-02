@@ -22,17 +22,6 @@ const categories = {
   market: "50be8ee891d4fa8dcc7199a7"
 };
 
-let categoryString;
-let setFirstCategory = false;
-_.each(categories, (category) => {
-  if (!setFirstCategory) {
-    categoryString = category;
-    setFirstCategory = true;
-  } else {
-    categoryString = `${categoryString},${category}`;
-  }
-});
-
 Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter) {
   check(latitude, Number);
   check(longitude, Number);
@@ -40,6 +29,45 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
 
   const self = this;
   const latLng = `${latitude},${longitude}`;
+
+  let categoryString;
+  let setFirstCategory = false;
+
+
+  console.log(filter);
+
+  // check if filters are set
+  if (filter.length === 0) {
+    console.log("no filters set!");
+
+    _.each(categories, (category) => {
+      if (!setFirstCategory) {
+        categoryString = category;
+        setFirstCategory = true;
+      } else {
+        categoryString = `${categoryString},${category}`;
+      }
+    });
+  } else {
+    // cross reference [filter] with list of all categories.
+
+    console.log("filters set!");
+
+    _.each(categories, (category, key) => {
+      // only add when part of [filter] array
+
+      if (_.indexOf(filter, key) !== -1) {
+        if (!setFirstCategory) {
+          categoryString = category;
+          setFirstCategory = true;
+        } else {
+          categoryString = `${categoryString},${category}`;
+        }
+      }
+    });
+  }
+
+  console.log("* * * * * Category String", categoryString);
 
   HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
     params: {
