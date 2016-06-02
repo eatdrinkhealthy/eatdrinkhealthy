@@ -1,11 +1,17 @@
 import "./shareModal.html";
 
+import { $ } from "meteor/jquery";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { FlowRouter } from "meteor/kadira:flow-router";
 
-Template.shareModal.onCreated(() => {
-  new Clipboard("[data-action=copy-to-clipboard]");
+Template.shareModal.onRendered(() => {
+  if (Meteor.isCordova) {
+    $("[data-action=copy-to-clipboard]").hide();
+    $(".share-modal").css({ height: "140px" });
+  } else {
+    new Clipboard("[data-action=copy-to-clipboard]");
+  }
 });
 
 Template.shareModal.events({

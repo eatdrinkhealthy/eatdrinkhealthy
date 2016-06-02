@@ -10,14 +10,17 @@
     
     {{#if currentUser}}
     <div class="add-business">
+      {{#if userLists}}
       <div class="add-business__title">Add this to</div>
       <select class="add-business__lists">
         {{#each userLists}}
           <option value="{{this._id}}">{{this.title}}</option>
         {{/each}}
       </select>
-      <div class="add-business__create">Create new list</div>
       <button class="add-business__save">Save</button>
+      {{else}}
+      <div class="add-business__woops">You have no lists yet.</div>
+      {{/if}}
     </div>
     {{/if}}
     
@@ -47,7 +50,12 @@
         <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
       </div>
       {{/each}}
+      <!--
+      {{#if tip}}
       <div class="place__view-all">View all reviews...</div>
+      {{/if}}
+    -->
     </div>
   </div> 
+  {{> validation}} 
 </template>

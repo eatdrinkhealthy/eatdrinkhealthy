@@ -3,7 +3,9 @@ import { Lists } from "../../api/lists/lists.js";
 
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
-import { Session } from "meteor/session";
+import { validationSuccess, validationFail } from "../components/validation.js";
+
+// components
 
 // methods
 import {
@@ -16,7 +18,6 @@ Template.place.onCreated(function createPlace() {
     this.subscribe("venue", this.venueId);
     this.subscribe("lists");
   });
-  Session.set("allReviews", false);
 });
 
 Template.place.helpers({
@@ -83,8 +84,8 @@ Template.place.helpers({
   tipsCount: () => {
     const venue = Places.findOne();
     if (venue && venue.tips) {
-      const tips = venue.tips.count;
-      return tips;
+      const count = venue.tips.count;
+      return count;
     }
     return false;
   },
@@ -92,11 +93,7 @@ Template.place.helpers({
     const venue = Places.findOne();
     if (venue && venue.tips) {
       const tips = venue.tips.groups[0].items;
-      if (Session.get("allReviews")) {
-        return tips;
-      } else {
-        return tips.slice(-3);
-      }
+      return tips;
     }
     return false;
   },
@@ -104,7 +101,11 @@ Template.place.helpers({
     const user = Meteor.user();
     if (user) {
       const lists = Lists.find({ userId: user._id });
-      return lists;
+      if (lists.count()) {
+        return lists;
+      } else {
+        return false;
+      }
     }
     return false;
   }
@@ -119,11 +120,13 @@ Template.place.events({
   },
   "click .add-business__save": (event, instance) => {
     const listId = $(".add-business__lists option:selected").val();
-    addVenueToList.call({ listId, venueId: instance.venueId });
-    $(".add-business").toggle();
-  },
-  "click .place__view-all": () => {
-    Session.set("allReviews", true);
-    $(".place__view-all").hide();
+    addVenueToList.call({ listId, venueId: instance.venueId }, (error) => {
+      $(".add-business").toggle();
+      if (error) {
+        validationFail();
+      } else {
+        validationSuccess();
+      }
+    });
   }
 });
