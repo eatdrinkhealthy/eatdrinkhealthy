@@ -33,13 +33,8 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
   let categoryString;
   let setFirstCategory = false;
 
-
-  console.log(filter);
-
   // check if filters are set
   if (filter.length === 0) {
-    console.log("no filters set!");
-
     _.each(categories, (category) => {
       if (!setFirstCategory) {
         categoryString = category;
@@ -50,12 +45,8 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
     });
   } else {
     // cross reference [filter] with list of all categories.
-
-    console.log("filters set!");
-
     _.each(categories, (category, key) => {
       // only add when part of [filter] array
-
       if (_.indexOf(filter, key) !== -1) {
         if (!setFirstCategory) {
           categoryString = category;
@@ -66,8 +57,6 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
       }
     });
   }
-
-  console.log("* * * * * Category String", categoryString);
 
   HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
     params: {
