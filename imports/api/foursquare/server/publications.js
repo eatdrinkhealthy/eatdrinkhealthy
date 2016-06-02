@@ -33,9 +33,10 @@ _.each(categories, (category) => {
   }
 });
 
-Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude) {
+Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter) {
   check(latitude, Number);
   check(longitude, Number);
+  check(filter, Array);
 
   const self = this;
   const latLng = `${latitude},${longitude}`;

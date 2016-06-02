@@ -6,6 +6,26 @@ import { ReactiveVar } from "meteor/reactive-var";
 
 markersArray = [];
 
+Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  const defaultLocation = {
+    // default to downtown Toronto
+    // TODO: default to city set in profile (perhaps facebook location aka city)
+    latitude: 43.650033,
+    longitude: -79.391594
+  };
+
+  mapCenterLocation = new ReactiveVar(defaultLocation);
+  filter = new ReactiveVar([]);
+
+  this.autorun(() => {
+    this.subscribe("nearbyPlaces",
+      mapCenterLocation.get().latitude,
+      mapCenterLocation.get().longitude,
+      filter.get()
+    );
+  });
+});
+
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
   let initialGeolocation = null;
 
@@ -230,18 +250,16 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   });
 });
 
-Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
-  const defaultLocation = {
-    // default to downtown Toronto
-    // TODO: default to city set in profile (perhaps facebook location aka city)
-    latitude: 43.650033,
-    longitude: -79.391594
-  };
-  mapCenterLocation = new ReactiveVar(defaultLocation);
-  this.autorun(() => {
-    this.subscribe("nearbyPlaces",
-      mapCenterLocation.get().latitude,
-      mapCenterLocation.get().longitude
-    );
-  });
+Template.map.events({
+  "click input[name='filter']": (event) => {
+    const setFilters = filter.get();
+
+    if (event.target.checked && _.indexOf(setFilters, event.target.checked) === -1) {
+      setFilters.push(event.target.value);
+    } else {
+      setFilters.pop(event.target.value);
+    }
+
+    filter.set(setFilters);
+  }
 });
