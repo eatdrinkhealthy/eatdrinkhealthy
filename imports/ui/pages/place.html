@@ -1,3 +1,61 @@
 <template name="place">
-  Coming Soon.
+  <div class="place">
+    <div class="place__nav"> 
+      <div class="place__close">&#8592;</div>
+      <div class="place__title">{{name}}</div>
+      {{#if currentUser}}
+      <div class="place__add">&#9825;</div>
+      {{/if}}
+    </div> 
+    
+    {{#if currentUser}}
+    <div class="add-business">
+      {{#if userLists}}
+      <div class="add-business__title">Add this to</div>
+      <select class="add-business__lists">
+        {{#each userLists}}
+          <option value="{{this._id}}">{{this.title}}</option>
+        {{/each}}
+      </select>
+      <button class="add-business__save">Save</button>
+      {{else}}
+      <div class="add-business__woops">You have no lists yet.</div>
+      {{/if}}
+    </div>
+    {{/if}}
+    
+    {{#if photo}}
+    <div class="place__photo"><img src="{{photo}}"></div>
+    {{else}}
+    <div style="height: 60px"></div>
+    {{/if}}
+    
+    <div class="place__info">
+      <div class="place__heading">Info</div>
+      <p>
+        {{address}}
+        <br>
+        {{phone}}
+      </p>
+      
+      {{#if description}}
+      <div class="place__heading">Description</div>
+      <p>{{description}}</p>
+      {{/if}}
+      
+      <div class="place__heading">Reviews</div>
+      <div class="place__rating">{{{rating}}} ({{tipsCount}})</div>
+      {{#each tip}}
+      <div class="place__tip">
+        <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
+      </div>
+      {{/each}}
+      <!--
+      {{#if tip}}
+      <div class="place__view-all">View all reviews...</div>
+      {{/if}}
+    -->
+    </div>
+  </div> 
+  {{> validation}} 
 </template>
