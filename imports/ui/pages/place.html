@@ -1,3 +1,66 @@
 <template name="place">
-  Coming Soon.
+  <div class="place fade-in">
+    {{#if place}}
+      <div class="place-container fade-in">
+        <div class="place__nav"> 
+          <div class="place__close"></div>
+          <div class="place__title">{{place.name}}</div>
+          {{#if currentUser}}
+          <div class="place__add"></div>
+          {{/if}}
+        </div> 
+        
+        {{#if currentUser}}
+        <div class="add-business">
+          {{#if userLists}}
+          <div class="add-business__title">Add this to</div>
+          <select class="add-business__lists">
+            {{#each userLists}}
+              <option value="{{this._id}}">{{this.title}}</option>
+            {{/each}}
+          </select>
+          <button class="add-business__save">Save</button>
+          {{else}}
+          <div class="add-business__woops">You have no lists yet.</div>
+          {{/if}}
+        </div>
+        {{/if}}
+        
+        {{#if place.photo}}
+        <div class="place__photo"><img src="{{photo place.photo}}"></div>
+        {{else}}
+        <div style="height: 60px"></div>
+        {{/if}}
+        
+        <div class="place__info">
+          <div class="place__heading">Info</div>
+          <p>
+            {{address place.location}}
+            <br>
+            {{place.contact.formattedPhone}}
+          </p>
+          
+          {{#if place.page.pageInfo.description}}
+          <div class="place__heading">Description</div>
+          <p>{{place.page.pageInfo.description}}</p>
+          {{/if}}
+          
+          <div class="place__heading">Reviews</div>
+          <div class="place__rating">
+            {{{rating place.rating}}}
+            <div class="tips-count">({{tipsCount place.tips}})</div>
+          </div>
+
+          {{#each tip}}
+          <div class="place__tip">
+            <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    {{else}}
+      {{> loading}}
+    {{/if}} <!-- end if place -->
+  </div> 
+  {{> validation}} 
 </template>

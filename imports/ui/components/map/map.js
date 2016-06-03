@@ -289,7 +289,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
       markersArray.push(marker);
 
       // Set up info window for marker
-      const contentString = name;
+      const contentString = `<a href="${FlowRouter.path("/place/:_id", { _id: id })}">${name}</a>`;
       const infowindow = new google.maps.InfoWindow({
         content: contentString
       });

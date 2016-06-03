@@ -111,3 +111,40 @@ Meteor.publish("listVenues", function listVenues(venueIds) {
   });
   self.ready();
 });
+
+Meteor.publish("venue", function venues(venueId) {
+  check(venueId, String);
+  const url = `https://api.foursquare.com/v2/venues/${venueId}`;
+  HTTP.call("GET", url, {
+    params: {
+      client_id: Meteor.settings.foursquare.client_id,
+      client_secret: Meteor.settings.foursquare.client_secret,
+      v: "20130815"
+    }
+  },
+  (error, result) => {
+    if (!error) {
+      const JSONresponse = EJSON.parse(result.content);
+      const name = JSONresponse.response.venue.name;
+      const category = JSONresponse.response.venue.categories[0].name;
+      const rating = JSONresponse.response.venue.rating;
+      const location = JSONresponse.response.venue.location;
+      const contact = JSONresponse.response.venue.contact;
+      const page = JSONresponse.response.venue.page;
+      const photo = JSONresponse.response.venue.bestPhoto;
+      const tips = JSONresponse.response.venue.tips;
+      venue = {
+        name,
+        category,
+        rating,
+        location,
+        contact,
+        page,
+        photo,
+        tips
+      };
+      this.added("places", venueId, venue);
+    }
+  });
+  this.ready();
+});
