@@ -50,12 +50,13 @@
     }
   }
   &__close {
-    .box-model(18px, 18px, 0, 0);
+    .box-model(25px, 25px, 0, 0);
     position: absolute;
     top: 17px;
     left: calc(~"50% - 180px");
-    font-size: 22px;
-    line-height: 18px;
+    background-image: url("/images/back-white.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
     cursor: pointer;
     @media (max-width: @mobile-places){
       left: 20px;
@@ -65,13 +66,15 @@
     }
   }
   &__add {
-    .box-model(18px, 18px, 0, 0);
+    .box-model(25px, 25px, 0, 0);
     position: absolute;
     top: 17px;
     right: calc(~"50% - 180px");
-    font-size: 16px;
-    line-height: 18px;
+    background-image: url("/images/heart-white.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
     cursor: pointer;
+    margin-top: -3px;
     @media (max-width: @mobile-places){
       right: 20px;
     }
@@ -137,6 +140,10 @@
     color: @edh-blue;
     margin: 10px 0 0 60px;
     font-size: 14px;
+  }
+  select {
+    -webkit-appearance: initial;
+    background-color: pink;
   }
 }
 
