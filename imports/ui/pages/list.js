@@ -8,6 +8,7 @@ import { AutoForm } from "meteor/aldeed:autoform";
 import { validationSuccess, validationFail } from "../components/validation.js";
 import { removeVenueFromList, removeList } from "../../api/lists/methods.js";
 import { Lists } from "../../api/lists/lists.js";
+import { createStars } from "../components/createStars.js";
 
 // components
 import "../components/shareModal.js";
@@ -47,7 +48,7 @@ Template.list.helpers({
   place: function findVenue() {
     return Places.findOne({ _id: this.toString() });
   },
-  rating: (score) => Math.round(score / 2),
+  rating: (score) => createStars(score),
   address: (location) => {
     let address = "";
     if (location) {

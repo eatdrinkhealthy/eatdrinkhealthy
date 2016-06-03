@@ -6,6 +6,7 @@ import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { validationSuccess, validationFail } from "../components/validation.js";
 import { addVenueToList } from "../../api/lists/methods.js";
+import { createStars } from "../components/createStars.js";
 
 Template.place.onCreated(function createPlace() {
   this.venueId = FlowRouter.current().params._id;
@@ -17,7 +18,7 @@ Template.place.onCreated(function createPlace() {
 
 Template.place.helpers({
   place: () => Places.findOne(),
-  rating: (score) => Math.round(score / 2),
+  rating: (score) => createStars(score),
   address: (location) => {
     let address = "";
     if (location) {
