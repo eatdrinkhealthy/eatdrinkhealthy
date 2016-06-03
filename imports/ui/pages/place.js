@@ -21,14 +21,7 @@ Template.place.onCreated(function createPlace() {
 });
 
 Template.place.helpers({
-  name: () => {
-    const venue = Places.findOne();
-    return venue ? venue.name : "";
-  },
-  category: () => {
-    const venue = Places.findOne();
-    return venue ? venue.category : "";
-  },
+  place: () => Places.findOne(),
   rating: () => {
     const venue = Places.findOne();
     const score = venue ? venue.rating : 0;
@@ -47,47 +40,20 @@ Template.place.helpers({
         return "";
     }
   },
-  address: () => {
-    const venue = Places.findOne();
-    if (venue) {
-      const street = venue.location.address.replace(/,/g, "");
-      const postalCode = venue.location.postalCode;
-      const city = venue.location.city;
-      const formatedAddress = `${street}, ${postalCode}, ${city}`;
-      return formatedAddress;
-    }
-    return false;
+  address: (location) => {
+    const street = location.address.replace(/,/g, "") || "";
+    const postalCode = location.postalCode || "";
+    const city = location.city || "";
+    const formatedAddress = `${street}, ${postalCode}, ${city}`;
+    return formatedAddress;
   },
-  description: () => {
-    const venue = Places.findOne();
-    if (venue && venue.page && venue.page.pageInfo && venue.page.pageInfo.description) {
-      return venue.page.pageInfo.description;
+  photo: (photo) => `${photo.prefix}${photo.width}x${photo.height}${photo.suffix}`,
+  tipsCount: (tips) => {
+    let tipsCount = "";
+    if (tips) {
+      tipsCount = tips.count;
     }
-    return false;
-  },
-  phone: () => {
-    const venue = Places.findOne();
-    if (venue && venue.contact && venue.contact.formattedPhone) {
-      return venue.contact.formattedPhone;
-    }
-    return false;
-  },
-  photo: () => {
-    const venue = Places.findOne();
-    if (venue && venue.photo) {
-      const photo = venue.photo;
-      const formattedUrl = `${photo.prefix}${photo.width}x${photo.height}${photo.suffix}`;
-      return formattedUrl;
-    }
-    return false;
-  },
-  tipsCount: () => {
-    const venue = Places.findOne();
-    if (venue && venue.tips) {
-      const count = venue.tips.count;
-      return count;
-    }
-    return false;
+    return tipsCount;
   },
   tip: () => {
     const venue = Places.findOne();
@@ -99,15 +65,15 @@ Template.place.helpers({
   },
   userLists: () => {
     const user = Meteor.user();
+    let returnedLists;
+
     if (user) {
       const lists = Lists.find({ userId: user._id });
       if (lists.count()) {
-        return lists;
-      } else {
-        return false;
+        returnedLists = lists;
       }
     }
-    return false;
+    return returnedLists;
   }
 });
 
