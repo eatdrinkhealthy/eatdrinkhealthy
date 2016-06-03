@@ -1,43 +1,35 @@
 <template name="list">
   <div class="list">
     
-    {{#if owner}}
-      <div class="list__edit" data-action="edit-list">Edit</div>
-    {{/if}}
-    
-    <div class="list__close" data-action="go-home">&#215;</div>
-    
-    <div class="list__title" data-action="edit-list-title">{{list.title}}</div>
-    {{#if owner}}
-      <input class="list__title list__title--edit" data-action="save-list-title" value="{{list.title}}">
-    {{/if}}
-    
-    <div class="list__owner">made by {{listCreator}}</div>
-    
-    {{#if list.description}}
-      <div class="list__description" data-action="edit-list-description">{{list.description}}</div>
-    {{else}}
+    <div class="list__nav">
       {{#if owner}}
-        <div class="list__description list__description--add" data-action="edit-list-description">add description</div>
+      <div class="list__edit">Edit</div>
       {{/if}}
-    {{/if}}
+      <div class="list__close" data-action="go-home">&#215;</div>
+    </div>
     
-    {{#if owner}}
-      <input class="list__description list__description--edit" data-action="save-list-description" value="{{list.description}}">
-    {{/if}}
+    {{#autoForm collection=Lists id="updateListInfo" type="update" doc=list}}
+      {{> afFieldInput name='title' class="list__title"}}
+      <div class="list__owner">made by {{list.author}}</div>
+      {{> afFieldInput name='description' class="list__description" placeholder="add description"}}
+    {{/autoForm}}
 
-    <div class="list__count">{{venueCount}}</div>
+    <div class="list__count">{{list.venues.length}}</div>
     
     <hr>
     {{#each list.venues}}
-    <div class="list-item">
-      <div class="list-item__title">{{name}}</div>
-      <div class="list-item__description">{{category}}</div>
-      <div class="list-item__rating">{{{rating}}}</div>
-      <div class="list-item__address">{{address}}</div>
-      <div class="list-item__arrow">&#187;</div>
-    </div>
-    <hr>
+      {{#if place}}
+        <div class="list-item">
+          <div class="list-item__title">{{place.name}}</div>
+          <div class="list-item__description">{{place.category}}</div>
+          <div class="list-item__rating">{{{rating place.rating}}}</div>
+          <div class="list-item__address">{{address place.location}}</div>
+          <div class="list-item__arrow">&#187;</div>
+        </div>
+        <hr>
+      {{else}}
+        <div class="loading"> ... </div>
+      {{/if}}
     {{else}}
       {{#if owner}}
         <div class="list__empty">Looks like you have no venues in this list yet! Why not <span data-action="go-home">add some?</span></div>
@@ -47,8 +39,8 @@
     {{/each}}
     
     {{#if owner}}
-      <button class="list__share" data-action="share-list">Share this list</button>
-      <button class="list__delete list__delete--hide" data-action="delete-list">Delete this list</button>
+      <button class="list__share">Share this list</button>
+      <button class="list__delete list__delete--hide">Delete this list</button>
     {{/if}}
     
     {{#unless currentUser}}

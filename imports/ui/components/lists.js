@@ -1,6 +1,8 @@
 import "./lists.html";
 import { Lists } from "../../api/lists/lists.js";
 
+import { $ } from "meteor/jquery";
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { AutoForm } from "meteor/aldeed:autoform";
 
@@ -17,7 +19,7 @@ Template.lists.onRendered(() => {
 
 Template.lists.events({
   "click [data-action=create-list]": () => {
-    $(".lists__new-list").fadeIn(200).focus();
+    $(".lists__new-list").fadeIn(200);
     $(".lists__create").hide();
   },
   "click [data-action=save-list]": () => {
