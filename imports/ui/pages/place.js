@@ -7,6 +7,7 @@ import { Template } from "meteor/templating";
 import { validationSuccess, validationFail } from "../components/validation.js";
 import { addVenueToList } from "../../api/lists/methods.js";
 import { createStars } from "../components/createStars.js";
+import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
 
 Template.place.onCreated(function createPlace() {
   this.venueId = FlowRouter.current().params._id;

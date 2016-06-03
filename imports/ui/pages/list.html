@@ -15,7 +15,7 @@
     {{/autoForm}}
 
     <div class="list__count">{{list.venues.length}}</div>
-    
+
     <hr>
     {{#each list.venues}}
       {{#if place}}
@@ -28,7 +28,7 @@
         </div>
         <hr>
       {{else}}
-        <div class="loading"> ... </div>
+        {{> loading}}
       {{/if}}
     {{else}}
       {{#if owner}}
@@ -42,14 +42,14 @@
       <button class="list__share">Share this list</button>
       <button class="list__delete list__delete--hide">Delete this list</button>
     {{/if}}
-    
+
     {{#unless currentUser}}
       {{> loginButtons}}
     {{/unless}}
-    
+
     <div class="ios-icon"></div>
-  </div>  
+  </div>
   {{> shareModal}}
-  {{> validation}}  
-  
+  {{> validation}}
+
 </template>

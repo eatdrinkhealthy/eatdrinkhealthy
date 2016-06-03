@@ -9,6 +9,7 @@ import { validationSuccess, validationFail } from "../components/validation.js";
 import { removeVenueFromList, removeList } from "../../api/lists/methods.js";
 import { Lists } from "../../api/lists/lists.js";
 import { createStars } from "../components/createStars.js";
+import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
 
 // components
 import "../components/shareModal.js";
