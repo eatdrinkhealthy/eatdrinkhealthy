@@ -117,8 +117,8 @@ Meteor.publish("venue", function venues(venueId) {
   const url = `https://api.foursquare.com/v2/venues/${venueId}`;
   HTTP.call("GET", url, {
     params: {
-      client_id: "1N0C5KTWP05QQRKEKHPNVOI4IKAXCJDRFNZDY0QKHBFABA30",
-      client_secret: "U1B0UHK22EW5PMKKZIK0AF1LPN32B4M35S4N41HXCH4WTRFW",
+      client_id: Meteor.settings.foursquare.client_id,
+      client_secret: Meteor.settings.foursquare.client_secret,
       v: "20130815"
     }
   },
