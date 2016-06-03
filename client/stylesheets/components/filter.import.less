@@ -15,12 +15,13 @@
     display: block;
     height: 30px;
     position: relative;
-    margin-bottom: 20px;
     .close-filter {
-      width: 30px;
-      height: 30px;
-      background-color: pink;
+      width: 15px;
+      height: 15px;
+      background-image: url("/images/close-dark.png");
+      background-size: 100%;
       float: right;
+      margin-top: 5px;
     }
   }
   .filter-item {
@@ -100,24 +101,27 @@
 
 .show-filter {
   position: fixed;
-  top: 25px;
-  right: 25px;
+  top: 12px;
+  right: 10px;
   z-index: 1000;
-  background-color: white;
-  color: #444;
+  .gradient-bg(-40%, 140%);
+  color: white;
   padding: 2px 12px;
-  border-radius: 50px;
+  border-radius: 4px;
   cursor: pointer;
+  font-weight: bold;
+  height: 35px;
+  line-height: 30px
 }
 
 .filter-header {
-  height: 65px;
+  height: 60px;
   position: fixed;
   background-color: white;
   z-index: 2000;
-  width: 277px;
+  width: 267px;
   margin: -20px;
-  padding: 20px;
+  padding: 10px 20px;
   border-bottom: 1px solid #eee;
   h4 {
     display: inline;
