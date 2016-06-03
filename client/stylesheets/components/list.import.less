@@ -107,27 +107,20 @@
       cursor: pointer;
     }
   }
-  
-  &__share {
-    display: block;
-    margin: 80px auto 60px;
-  }
-  
-  &__delete {
-    display: none;
-    margin: 80px auto 60px;
-    border: 1px solid @edh-red;
-    &--show {
-      display: block;
-    }
-  }
-  
+
   &__share,
   &__delete {
+    display: block;
+    margin: 80px auto 60px;
     @media (max-width: 200px) {
       width: 100%;
       padding: 0;
       text-align: center;
     }
   }
+  
+  &__delete {
+    border: 1px solid @edh-red;
+  }
+    
 }

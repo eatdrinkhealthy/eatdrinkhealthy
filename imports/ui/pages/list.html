@@ -3,7 +3,11 @@
     
     <div class="list__nav">
       {{#if owner}}
-      <div class="list__edit">Edit</div>
+        {{#if editMode}}
+        <div class="list__edit list__edit--red">Done</div>
+        {{else}}
+        <div class="list__edit">Edit</div>
+        {{/if}}
       {{/if}}
       <div class="list__close" data-action="go-home">&#215;</div>
     </div>
@@ -24,7 +28,11 @@
           <div class="list-item__description">{{place.category}}</div>
           <div class="list-item__rating">{{{rating place.rating}}}</div>
           <div class="list-item__address">{{address place.location}}</div>
+          {{#if editMode}}
+          <div class="list-item__arrow list-item__arrow--delete">–</div>
+          {{else}}
           <div class="list-item__arrow">&#187;</div>
+          {{/if}}
         </div>
         <hr>
       {{else}}
@@ -39,8 +47,11 @@
     {{/each}}
     
     {{#if owner}}
+      {{#if editMode}}
+      <button class="list__delete">Delete this list</button>
+      {{else}}
       <button class="list__share">Share this list</button>
-      <button class="list__delete list__delete--hide">Delete this list</button>
+      {{/if}}
     {{/if}}
 
     {{#unless currentUser}}

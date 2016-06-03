@@ -4,6 +4,7 @@ import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 import { FlowRouter } from "meteor/kadira:flow-router";
+import { ReactiveVar } from "meteor/reactive-var";
 import { AutoForm } from "meteor/aldeed:autoform";
 import { validationSuccess, validationFail } from "../components/validation.js";
 import { removeVenueFromList, removeList } from "../../api/lists/methods.js";
@@ -22,6 +23,7 @@ function isOwner() {
 }
 
 Template.list.onCreated(function createList() {
+  editMode = new ReactiveVar(false);
   this.listId = FlowRouter.current().params._id;
   this.autorun(() => {
     this.subscribe("list", this.listId);
@@ -61,6 +63,9 @@ Template.list.helpers({
     }
     return address;
   },
+  editMode: () => {
+    return editMode.get();
+  }
 });
 
 Template.list.events({
@@ -88,7 +93,7 @@ Template.list.events({
     $(".list").addClass("list--blur");
     $(".share-modal").fadeIn(200);
   },
-  "click": (event) => {
+  "click .list": (event) => {
     const isNotShareModal = !$(event.target).is(".share-modal");
     const isNotShareButton = !$(event.target).is(".list__share");
     if (isNotShareModal && isNotShareButton) {
@@ -110,24 +115,11 @@ Template.list.events({
   },
   "click .list__edit": () => {
     // Toggle Enter venue and delete venue buttons
-    if ($(".list-item__arrow").hasClass("list-item__arrow--delete")) {
-      $(".list-item__arrow").text("»");
+    if (editMode.get()){
+      editMode.set(false);
     } else {
-      $(".list-item__arrow").text("–");
+      editMode.set(true);
     }
-    $(".list-item__arrow").toggleClass("list-item__arrow--delete");
-
-    // Toggle Settings Button
-    if ($(".list__edit").text() === "Edit") {
-      $(".list__edit").text("Done");
-    } else {
-      $(".list__edit").text("Edit");
-    }
-    $(".list__edit").toggleClass("list__edit--red");
-
-    // Toggle Share and Delete Button
-    $(".list__share").toggle();
-    $(".list__delete").toggleClass("list__delete--show");
   },
   "click [data-action=go-home]": () => {
     FlowRouter.go("/");
