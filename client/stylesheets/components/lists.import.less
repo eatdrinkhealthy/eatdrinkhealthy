@@ -1,6 +1,9 @@
 .lists {
-  .box-model(80%, auto, 0 10px 0 0, 40px auto);
+  .box-model(80%, auto, 0 10px 0 0, 240px auto 40px);
   color: @edh-grey;  
+  @media (max-width: @mobile-portrait){
+    margin-top: 300px;
+  }
   &__title {
     .box-model(auto, 50px, 0, 0 0 20px 0);
     font-weight: 700;
