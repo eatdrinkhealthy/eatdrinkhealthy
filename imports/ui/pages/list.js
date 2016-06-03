@@ -137,7 +137,67 @@ AutoForm.hooks({
   updateListInfo: {
     before: {
       update: (doc) => {
-        return doc;
+        /*
+          To keep the submitions to a minimum, we only want to submit when a valid change
+          has happened. Unfortunately this needs a LOT of tests...
+          I will comment each step of this proccess prefucely and hopefully make it clear
+          as to what the logic is. Get some popcorn and buckle up, it's gonna be a bumpy ride!
+         */
+
+        // Prerequisites:
+          // submit is true if we will submit the form, false if we cancel it.
+          // oldTitle and oldDescription are the values before the change.
+        let submit = false;
+        const oldTitle = Session.get("currentTitle");
+        const oldDescription = Session.get("currentDescription");
+
+        // Checking if there is even a set value for title.
+        if (doc.$set && doc.$set.title) {
+          // If the title is the same lets not submit our form, if its different then submit it.
+          if (doc.$set.title === oldTitle) {
+            submit = false;
+          } else {
+            submit = true;
+          }
+        }
+
+        // Let's check if there is a set value for the description
+        if (doc.$set && doc.$set.description) {
+          // If the description is the same lets not submit, if its different then submit it.
+          if (doc.$set.description === oldDescription) {
+            // But if we already want to submit, that means the title has changed.
+            // So if submit is already true, then lets keep it that way.
+            if (submit !== true) {
+              submit = false;
+            }
+          } else {
+            submit = true;
+          }
+        }
+
+        // Now check if there is an unset value for the description
+        if (doc.$unset && doc.$unset.description === "") {
+          // If its the same cancel the submittion, if not send it on.
+          if (doc.$unset.description === oldDescription) {
+            // But if we already want to submit, that means the title has changed.
+            // So if submit is already true, then lets keep it that way.
+            if (submit !== true) {
+              submit = false;
+            }
+          } else {
+            submit = true;
+          }
+        }
+
+        // Test for unsetting a title, dont allow it, reset form, throw an alert, and don't submit!
+        if (doc.$unset && doc.$unset.title === "") {
+          submit = false;
+          validationFail();
+          $(".list__title").val(Session.get("currentTitle"));
+          $(".list__description").val(Session.get("currentDescription"));
+        }
+
+        return submit ? doc : false;
       }
     },
     onSuccess: () => validationSuccess(),
