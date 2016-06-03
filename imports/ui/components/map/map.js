@@ -6,6 +6,102 @@ import { ReactiveVar } from "meteor/reactive-var";
 
 markersArray = [];
 
+function clearMarkers() {
+  // remove all markers
+  for (i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(null);
+  }
+  markersArray = [];
+  markers = {};
+}
+
+const Filters = [
+  {
+    name: "Gluten Free",
+    value: "glutenFree"
+  },
+  {
+    name: "Juice Bars",
+    value: "juiceBar"
+  },
+  {
+    name: "Salad Places",
+    value: "saladPlace"
+  },
+  {
+    name: "Vegan / Vegetarian",
+    value: "veganVegeRestaurant"
+  },
+  {
+    name: "Bakeries",
+    value: "bakery"
+  },
+  {
+    name: "Cafés",
+    value: "cafe"
+  },
+  {
+    name: "Coffee Shops",
+    value: "coffeeShop"
+  },
+  {
+    name: "Restaurants",
+    value: "restaurant"
+  },
+  {
+    name: "Farmers Markets",
+    value: "farmersMarket"
+  },
+  {
+    name: "Butchers",
+    value: "butcher"
+  },
+  {
+    name: "Health Food Stores",
+    value: "healthFoodStore"
+  },
+  {
+    name: "Organic Grocery Stores",
+    value: "organicGrocery"
+  },
+  {
+    name: "Grocery Stores",
+    value: "grocery"
+  },
+  {
+    name: "Supermarkets",
+    value: "supermarket"
+  },
+  {
+    name: "Fruit & Vege Stores",
+    value: "fruitVegeStore"
+  },
+  {
+    name: "Markets",
+    value: "market"
+  }
+];
+
+Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  const defaultLocation = {
+    // default to downtown Toronto
+    // TODO: default to city set in profile (perhaps facebook location aka city)
+    latitude: 43.650033,
+    longitude: -79.391594
+  };
+
+  mapCenterLocation = new ReactiveVar(defaultLocation);
+  filter = new ReactiveVar([]);
+
+  this.autorun(() => {
+    this.subscribe("nearbyPlaces",
+      mapCenterLocation.get().latitude,
+      mapCenterLocation.get().longitude,
+      filter.get()
+    );
+  });
+});
+
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
   let initialGeolocation = null;
 
@@ -230,18 +326,28 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   });
 });
 
-Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
-  const defaultLocation = {
-    // default to downtown Toronto
-    // TODO: default to city set in profile (perhaps facebook location aka city)
-    latitude: 43.650033,
-    longitude: -79.391594
-  };
-  mapCenterLocation = new ReactiveVar(defaultLocation);
-  this.autorun(() => {
-    this.subscribe("nearbyPlaces",
-      mapCenterLocation.get().latitude,
-      mapCenterLocation.get().longitude
-    );
-  });
+
+// [saladPlace, glutenFree, juiceBar]
+Template.map.events({
+  "click input[name='filter']": (event) => {
+    const setFilters = filter.get();
+    if (event.target.checked && _.indexOf(setFilters, event.target.value) === -1) {
+      setFilters.push(event.target.value);
+    } else {
+      setFilters.pop(event.target.value);
+    }
+    filter.set(setFilters);
+    clearMarkers();
+  },
+  "click .close-filter": () => {
+    $(".filter").addClass("filter-closed");
+  },
+  "click .show-filter": () => {
+    $(".filter").removeClass("filter-closed");
+  }
+
+});
+
+Template.map.helpers({
+  filters: () => Filters
 });
