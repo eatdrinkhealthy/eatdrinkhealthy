@@ -1,5 +1,5 @@
 <template name="list">
-  <div class="list">
+  <div class="list fade-in">
     
     <div class="list__nav">
       {{#if owner}}
@@ -15,11 +15,11 @@
     {{/autoForm}}
 
     <div class="list__count">{{list.venues.length}}</div>
-    
+
     <hr>
     {{#each list.venues}}
       {{#if place}}
-        <div class="list-item">
+        <div class="list-item fade-in">
           <div class="list-item__title">{{place.name}}</div>
           <div class="list-item__description">{{place.category}}</div>
           <div class="list-item__rating">{{{rating place.rating}}}</div>
@@ -28,7 +28,7 @@
         </div>
         <hr>
       {{else}}
-        <div class="loading"> ... </div>
+        {{> loading}}
       {{/if}}
     {{else}}
       {{#if owner}}
@@ -42,14 +42,14 @@
       <button class="list__share">Share this list</button>
       <button class="list__delete list__delete--hide">Delete this list</button>
     {{/if}}
-    
+
     {{#unless currentUser}}
       {{> loginButtons}}
     {{/unless}}
-    
+
     <div class="ios-icon"></div>
-  </div>  
+  </div>
   {{> shareModal}}
-  {{> validation}}  
-  
+  {{> validation}}
+
 </template>

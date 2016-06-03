@@ -46,7 +46,11 @@
           {{/if}}
           
           <div class="place__heading">Reviews</div>
-          <div class="place__rating">{{{rating place.rating}}} ({{tipsCount place.tips}})</div>
+          <div class="place__rating">
+            {{{rating place.rating}}}
+            <div class="tips-count">({{tipsCount place.tips}})</div>
+          </div>
+
           {{#each tip}}
           <div class="place__tip">
             <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
@@ -55,7 +59,7 @@
         </div>
       </div>
     {{else}}
-      <div class="loading"> ... </div>
+      {{> loading}}
     {{/if}} <!-- end if place -->
   </div> 
   {{> validation}} 
