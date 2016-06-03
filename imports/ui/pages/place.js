@@ -21,7 +21,7 @@ Template.place.helpers({
   address: (location) => {
     let address = "";
     if (location) {
-      const street = location.address.replace(/,/g, "") || "";
+      const street = location.address ? location.address.replace(/,/g, "") : "";
       const postalCode = location.postalCode || "";
       const city = location.city || "";
       const formattedAddress = `${street}, ${postalCode}, ${city}`;

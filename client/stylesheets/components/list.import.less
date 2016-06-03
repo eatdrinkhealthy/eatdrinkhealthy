@@ -3,12 +3,11 @@
   padding: 0 calc(~"50% - 200px");
   background: white;
   position: relative;
-  @media (max-width: 500px){
+  @media (max-width: @mobile-portrait){
     width: 100%;
     padding: 0 20px;
   }
   @media (max-width: 300px){
-    width: 100%;
     padding: 0 10px;
   }
   
@@ -17,6 +16,10 @@
     height: 60px;
     background: white;
     position: fixed;
+    @media (max-width: @mobile-portrait) {
+      left: 0;
+      width: 100%;
+    }
   }
   
   &__edit {
