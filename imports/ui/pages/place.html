@@ -3,7 +3,11 @@
     {{#if place}}
       <div class="place-container fade-in">
         <div class="place__nav"> 
-          <div class="place__close"></div>
+          {{#if cordova}}
+          <div class="place__back"></div>
+          {{else}}
+          <div class="place__close">map</div>
+          {{/if}}
           <div class="place__title">{{place.name}}</div>
           {{#if currentUser}}
           <div class="place__add"></div>

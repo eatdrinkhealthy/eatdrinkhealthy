@@ -1,13 +1,17 @@
 import "./profile.html";
 
-// import { Meteor } from "meteor/meteor";
-// import { ReactiveVar } from "meteor/reactive-var";
-// import { ReactiveDict } from "meteor/reactive-dict";
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
-// import { FlowRouter } from "meteor/kadira:flow-router";
 
 Template.profile.helpers({
-
+  photoUrl: () => {
+    const user = Meteor.user();
+    let url = "/images/avatar.png";
+    if (user && user.profile.picture) {
+      url = user.profile.picture;
+    }
+    return url;
+  }
 });
 
 Template.profile.events({

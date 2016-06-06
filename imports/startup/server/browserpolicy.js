@@ -1,6 +1,8 @@
 import { BrowserPolicy } from "meteor/browser-policy-common";
 
 BrowserPolicy.content.allowOriginForAll("https://maps.googleapis.com");
+BrowserPolicy.content.allowOriginForAll("https://scontent.xx.fbcdn.net");
+BrowserPolicy.content.allowOriginForAll("http://graph.facebook.com");
 BrowserPolicy.content.allowOriginForAll("https://csi.gstatic.com");
 BrowserPolicy.content.allowOriginForAll("https://maps.gstatic.com");
 BrowserPolicy.content.allowOriginForAll("https://irs0.4sqi.net");

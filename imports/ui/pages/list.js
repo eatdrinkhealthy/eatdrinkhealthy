@@ -1,7 +1,6 @@
 import "./list.html";
 import { $ } from "meteor/jquery";
 import { Meteor } from "meteor/meteor";
-import { Session } from "meteor/session";
 import { Template } from "meteor/templating";
 import { FlowRouter } from "meteor/kadira:flow-router";
 import { ReactiveVar } from "meteor/reactive-var";
@@ -48,24 +47,20 @@ Template.list.helpers({
   Lists: () => Lists,
   list: () => Lists.findOne(),
   owner: () => isOwner(),
-  place: function findVenue() {
-    return Places.findOne({ _id: this.toString() });
-  },
+  place: () => Places.findOne({ _id: this.toString() }),
   rating: (score) => createStars(score),
   address: (location) => {
     let address = "";
     if (location) {
-      const street = location.address ? location.address.replace(/,/g, "") : "";
-      const postalCode = location.postalCode || "";
+      const street = location.address ? location.address.replace(/,/g, "") + ", " : "";
+      const postalCode = location.postalCode ? location.postalCode + ", " : "";
       const city = location.city || "";
-      const formattedAddress = `${street}, ${postalCode}, ${city}`;
+      const formattedAddress = `${street}${postalCode}${city}`;
       address = formattedAddress;
     }
     return address;
   },
-  editMode: () => {
-    return editMode.get();
-  }
+  editMode: () => editMode.get()
 });
 
 Template.list.events({
@@ -74,11 +69,18 @@ Template.list.events({
     FlowRouter.go(newPath);
   },
   "focus #updateListInfo": () => {
-    Session.set("currentTitle", $(".list__title").val());
-    Session.set("currentDescription", $(".list__description").val());
+    oldForm = $("#updateListInfo").serialize();
+    oldTitle = $("#updateListInfo").serializeArray().filter(o => o.name === "title")[0].value;
   },
   "blur #updateListInfo": () => {
-    $("#updateListInfo").submit();
+    const newForm = $("#updateListInfo").serialize();
+    const newTitle = $("#updateListInfo").serializeArray().filter(o => o.name === "title")[0].value;
+    if (oldForm !== newForm && newTitle !== "") {
+      $("#updateListInfo").submit();
+    } else if (newTitle === "") {
+      $("#updateListInfo .list__title").val(oldTitle);
+      validationFail();
+    }
   },
   "keydown #updateListInfo input": (event) => {
     if (event.keyCode === 13) {
@@ -114,12 +116,7 @@ Template.list.events({
     }
   },
   "click .list__edit": () => {
-    // Toggle Enter venue and delete venue buttons
-    if (editMode.get()){
-      editMode.set(false);
-    } else {
-      editMode.set(true);
-    }
+    editMode.set(!editMode.get());
   },
   "click [data-action=go-home]": () => {
     FlowRouter.go("/");
@@ -128,76 +125,7 @@ Template.list.events({
 
 AutoForm.hooks({
   updateListInfo: {
-    before: {
-      update: (doc) => {
-        /*
-          To keep the submitions to a minimum, we only want to submit when a valid change
-          has happened. Unfortunately this needs a LOT of tests...
-          I will comment each step of this proccess prefucely and hopefully make it clear
-          as to what the logic is. Get some popcorn and buckle up, it's gonna be a bumpy ride!
-         */
-
-        // Prerequisites:
-          // submit is true if we will submit the form, false if we cancel it.
-          // oldTitle and oldDescription are the values before the change.
-        let submit = false;
-        const oldTitle = Session.get("currentTitle");
-        const oldDescription = Session.get("currentDescription");
-
-        // Checking if there is even a set value for title.
-        if (doc.$set && doc.$set.title) {
-          // If the title is the same lets not submit our form, if its different then submit it.
-          if (doc.$set.title === oldTitle) {
-            submit = false;
-          } else {
-            submit = true;
-          }
-        }
-
-        // Let's check if there is a set value for the description
-        if (doc.$set && doc.$set.description) {
-          // If the description is the same lets not submit, if its different then submit it.
-          if (doc.$set.description === oldDescription) {
-            // But if we already want to submit, that means the title has changed.
-            // So if submit is already true, then lets keep it that way.
-            if (submit !== true) {
-              submit = false;
-            }
-          } else {
-            submit = true;
-          }
-        }
-
-        // Now check if there is an unset value for the description
-        if (doc.$unset && doc.$unset.description === "") {
-          // If its the same cancel the submittion, if not send it on.
-          if (doc.$unset.description === oldDescription) {
-            // But if we already want to submit, that means the title has changed.
-            // So if submit is already true, then lets keep it that way.
-            if (submit !== true) {
-              submit = false;
-            }
-          } else {
-            submit = true;
-          }
-        }
-
-        // Test for unsetting a title, dont allow it, reset form, throw an alert, and don't submit!
-        if (doc.$unset && doc.$unset.title === "") {
-          submit = false;
-          validationFail();
-          $(".list__title").val(Session.get("currentTitle"));
-          $(".list__description").val(Session.get("currentDescription"));
-        }
-
-        return submit ? doc : false;
-      }
-    },
     onSuccess: () => validationSuccess(),
-    onError: () => {
-      validationFail();
-      $(".list__title").val(Session.get("currentTitle"));
-      $(".list__description").val(Session.get("currentDescription"));
-    }
+    onError: () => validationFail()
   }
 });

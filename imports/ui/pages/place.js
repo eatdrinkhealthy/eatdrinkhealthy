@@ -18,15 +18,16 @@ Template.place.onCreated(function createPlace() {
 });
 
 Template.place.helpers({
+  cordova: () => Meteor.isCordova,
   place: () => Places.findOne(),
   rating: (score) => createStars(score),
   address: (location) => {
     let address = "";
     if (location) {
-      const street = location.address ? location.address.replace(/,/g, "") : "";
-      const postalCode = location.postalCode || "";
+      const street = location.address ? location.address.replace(/,/g, "") + ", " : "";
+      const postalCode = location.postalCode ? location.postalCode + ", " : "";
       const city = location.city || "";
-      const formattedAddress = `${street}, ${postalCode}, ${city}`;
+      const formattedAddress = `${street}${postalCode}${city}`;
       address = formattedAddress;
     }
     return address;
@@ -62,8 +63,13 @@ Template.place.helpers({
 });
 
 Template.place.events({
+  "click .place__back": () => {
+    if (Meteor.isCordova) {
+      history.back();
+    }
+  },
   "click .place__close": () => {
-    history.back();
+    FlowRouter.go("home");
   },
   "click .place__add": () => {
     $(".add-business").toggle();
@@ -78,5 +84,15 @@ Template.place.events({
         validationSuccess();
       }
     });
+  },
+  "click .place": (event) => {
+    const isNotAddBusiness = !$(event.target).is(".add-business");
+    const isNotAddButton = !$(event.target).is(".place__add");
+    if (isNotAddBusiness && isNotAddButton) {
+      $(".add-business").fadeOut(200);
+    }
+  },
+  "click .add-business": (event) => {
+    event.stopPropagation();
   }
 });

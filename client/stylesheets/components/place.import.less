@@ -49,12 +49,12 @@
       padding: 9px 0;
     }
   }
-  &__close {
+  &__close, 
+  &__back {
     .box-model(25px, 25px, 0, 0);
     position: absolute;
     top: 17px;
     left: calc(~"50% - 305px");
-    background-image: url("/images/back-white.png");
     background-size: 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -64,6 +64,13 @@
     @media (max-width: 200px){
       left: 10px;
     }
+  }
+  &__back {
+    background-image: url("/images/back-white.png");
+  }
+  &__close {
+    // please add assets for back
+    // background-image: url("/images/back-white.png");
   }
   &__add {
     .box-model(25px, 25px, 0, 0);
