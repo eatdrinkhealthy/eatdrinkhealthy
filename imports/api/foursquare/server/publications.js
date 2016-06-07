@@ -2,6 +2,7 @@ import { HTTP } from "meteor/http";
 import { EJSON } from "meteor/ejson";
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
+import { _ } from "meteor/underscore";
 
 const categories = {
   glutenFree: "4c2cd86ed066bed06c3c5209",
@@ -63,10 +64,10 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
       client_id: Meteor.settings.foursquare.client_id,
       client_secret: Meteor.settings.foursquare.client_secret,
       v: "20130815", // api version
-      m: "foursquare",
       ll: latLng,
       limit: "50",
-      radius: "800", // in meters
+      intent: "browse",
+      radius: "1000", // in meters
       categoryId: categoryString,
     },
   },
@@ -79,8 +80,6 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
         self.added("places", venue.id, venue);
       });
       self.ready();
-    } else {
-      console.log(error);
     }
   });
 });
