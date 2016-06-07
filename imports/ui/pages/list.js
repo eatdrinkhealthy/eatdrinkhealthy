@@ -33,16 +33,6 @@ Template.list.onCreated(function createList() {
   });
 });
 
-Template.list.onRendered(function renderList() {
-  const list = Lists.findOne();
-  const user = Meteor.user();
-  this.autorun(() => {
-    if (list && user && user._id !== list.userId) {
-      $("#updateListInfo :input").prop("disabled", true);
-    }
-  });
-});
-
 Template.list.helpers({
   Lists: () => Lists,
   list: () => Lists.findOne(),
@@ -62,7 +52,7 @@ Template.list.helpers({
     }
     return address;
   },
-  editMode: () => editMode.get()
+  editMode: () => editMode.get(),
 });
 
 Template.list.events({
@@ -89,7 +79,6 @@ Template.list.events({
   },
   "keydown #updateListInfo input": (event) => {
     if (event.keyCode === 13) {
-      $("#updateListInfo").submit();
       $("#updateListInfo input").trigger("blur");
     }
   },
@@ -131,12 +120,12 @@ Template.list.events({
     Meteor.defer(() => {
       FlowRouter.go("home");
     });
-  }
+  },
 });
 
 AutoForm.hooks({
   updateListInfo: {
     onSuccess: () => validationSuccess(),
-    onError: () => validationFail()
-  }
+    onError: () => validationFail(),
+  },
 });
