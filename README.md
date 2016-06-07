@@ -55,6 +55,22 @@ the future, Chimp supports [Appium](http://appium.io/).
 
 Unit tests can be added using files named `*.test.js` and run with `meteor test`.
 
+### Submitting to iTunes Connect for TestFlight and App Store Submission
+
+1. Under Product -> Edit Scheme
+1. From the left column click `Archive`
+1. confirm that `Release` is selected from the dropdown
+1. Click close
+1. Set Target device to "Generic iOS device"
+1. Under Product -> Archive
+1. click validate, confirm it passes
+1. Upload to App Store
+
+##### GOTCHAS
+
+1. Make sure `team` under the app `targets` is set
+
+
 ### Useful links
 
  * [Trello Board](https://trello.com/b/iihSpSKj/eat-drink-healthy)
