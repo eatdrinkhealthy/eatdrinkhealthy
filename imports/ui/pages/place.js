@@ -4,6 +4,7 @@ import { Lists } from "../../api/lists/lists.js";
 import { $ } from "meteor/jquery";
 import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
+import { FlowRouter } from "meteor/kadira:flow-router";
 import { validationSuccess, validationFail } from "../components/validation.js";
 import { addVenueToList } from "../../api/lists/methods.js";
 import { createStars } from "../components/createStars.js";
@@ -69,7 +70,10 @@ Template.place.events({
     }
   },
   "click .place__close": () => {
-    FlowRouter.go("home");
+    // Meteor.defer is here to fix a meteor bug "Error: Must be attached"
+    Meteor.defer(() => {
+      FlowRouter.go("home");
+    });
   },
   "click .place__add": () => {
     $(".add-business").toggle();

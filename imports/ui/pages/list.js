@@ -47,7 +47,9 @@ Template.list.helpers({
   Lists: () => Lists,
   list: () => Lists.findOne(),
   owner: () => isOwner(),
-  place: () => Places.findOne({ _id: this.toString() }),
+  place: function findPlace() {
+    return Places.findOne({ _id: this.toString() });
+  },
   rating: (score) => createStars(score),
   address: (location) => {
     let address = "";
@@ -66,7 +68,10 @@ Template.list.helpers({
 Template.list.events({
   "click .list-item": function goToVenue() {
     const newPath = FlowRouter.path("place", { _id: this.toString() });
-    FlowRouter.go(newPath);
+    // Meteor.defer is here to fix a meteor bug "Error: Must be attached"
+    Meteor.defer(() => {
+      FlowRouter.go(newPath);
+    });
   },
   "focus #updateListInfo": () => {
     oldForm = $("#updateListInfo").serialize();
@@ -106,7 +111,10 @@ Template.list.events({
   "click .list__delete": (event, instance) => {
     if (isOwner() && confirm("Are you sure you want to delete this list?")) {
       removeList.call({ listId: instance.listId });
-      FlowRouter.go("home");
+      // Meteor.defer is here to fix a meteor bug "Error: Must be attached"
+      Meteor.defer(() => {
+        FlowRouter.go("home");
+      });
     }
   },
   "click .list-item__arrow--delete": function hello(event, instance) {
@@ -119,7 +127,10 @@ Template.list.events({
     editMode.set(!editMode.get());
   },
   "click [data-action=go-home]": () => {
-    FlowRouter.go("/");
+    // Meteor.defer is here to fix a meteor bug "Error: Must be attached"
+    Meteor.defer(() => {
+      FlowRouter.go("home");
+    });
   }
 });
 

@@ -53,9 +53,8 @@
   &__back {
     .box-model(25px, 25px, 0, 0);
     position: absolute;
-    top: 17px;
     left: calc(~"50% - 305px");
-    background-size: 100%;
+    background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
     @media (max-width: @mobile-places){
@@ -67,10 +66,13 @@
   }
   &__back {
     background-image: url("/images/back-white.png");
+    top: 17px;
   }
   &__close {
-    // please add assets for back
-    // background-image: url("/images/back-white.png");
+    // please change asset!
+    background-image: url("/images/pinMarker3x.png");
+    top: 12px;
+    left: 24px;
   }
   &__add {
     .box-model(25px, 25px, 0, 0);
@@ -118,8 +120,9 @@
   }
   
   &__rating {
-    color: @edh-gold;
-    font-size: 18px;
+    color: @edh-grey;
+    font-size: 16px;
+    line-height: 30px;
     margin: 5px auto 10px;
   }
   
