@@ -66,6 +66,10 @@ Unit tests can be added using files named `*.test.js` and run with `meteor test`
 1. click validate, confirm it passes
 1. Upload to App Store
 
+[Uploading Your App to iTunes Connect](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/UploadingYourApptoiTunesConnect/UploadingYourApptoiTunesConnect.html#//apple_ref/doc/uid/TP40012582-CH36-SW2)
+
+[Configure Your Xcode Project for Distribution](https://developer.apple.com/library/ios/documentation/IDEs/Conceptual/AppDistributionGuide/ConfiguringYourApp/ConfiguringYourApp.html#//apple_ref/doc/uid/TP40012582-CH28-SW7)
+
 ##### GOTCHAS
 
 1. Make sure `team` under the app `targets` is set
