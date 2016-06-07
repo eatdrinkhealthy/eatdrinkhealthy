@@ -2,6 +2,7 @@ import { HTTP } from "meteor/http";
 import { EJSON } from "meteor/ejson";
 import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
+import { _ } from "meteor/underscore";
 
 const categories = {
   glutenFree: "4c2cd86ed066bed06c3c5209",
@@ -19,7 +20,7 @@ const categories = {
   grocery: "4bf58dd8d48988d118951735",
   supermarket: "52f2ab2ebcbc57f1066b8b46",
   fruitVegeStore: "52f2ab2ebcbc57f1066b8b1c",
-  market: "50be8ee891d4fa8dcc7199a7"
+  market: "50be8ee891d4fa8dcc7199a7",
 };
 
 Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter) {
@@ -65,14 +66,17 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
       v: "20130815", // api version
       ll: latLng,
       limit: "50",
-      radius: "800", // in meters
-      categoryId: categoryString
-    }
+      intent: "browse",
+      radius: "1000", // in meters
+      categoryId: categoryString,
+    },
   },
   (error, result) => {
     if (!error) {
       const JSONresponse = EJSON.parse(result.content);
+
       _.each(JSONresponse.response.venues, (venue) => {
+        // console.log(venue);
         self.added("places", venue.id, venue);
       });
       self.ready();
@@ -89,8 +93,8 @@ Meteor.publish("listVenues", function listVenues(venueIds) {
       params: {
         client_id: Meteor.settings.foursquare.client_id,
         client_secret: Meteor.settings.foursquare.client_secret,
-        v: "20130815"
-      }
+        v: "20130815",
+      },
     },
     (error, result) => {
       if (!error) {
@@ -99,11 +103,11 @@ Meteor.publish("listVenues", function listVenues(venueIds) {
         const category = JSONresponse.response.venue.categories[0].name;
         const rating = JSONresponse.response.venue.rating;
         const location = JSONresponse.response.venue.location;
-        venue = {
+        const venue = {
           name,
           category,
           rating,
-          location
+          location,
         };
         self.added("places", venueId, venue);
       }
@@ -119,8 +123,8 @@ Meteor.publish("venue", function venues(venueId) {
     params: {
       client_id: Meteor.settings.foursquare.client_id,
       client_secret: Meteor.settings.foursquare.client_secret,
-      v: "20130815"
-    }
+      v: "20130815",
+    },
   },
   (error, result) => {
     if (!error) {
@@ -133,7 +137,8 @@ Meteor.publish("venue", function venues(venueId) {
       const page = JSONresponse.response.venue.page;
       const photo = JSONresponse.response.venue.bestPhoto;
       const tips = JSONresponse.response.venue.tips;
-      venue = {
+
+      const venue = {
         name,
         category,
         rating,
@@ -141,8 +146,9 @@ Meteor.publish("venue", function venues(venueId) {
         contact,
         page,
         photo,
-        tips
+        tips,
       };
+
       this.added("places", venueId, venue);
     }
   });
