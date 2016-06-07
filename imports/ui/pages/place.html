@@ -3,10 +3,14 @@
     {{#if place}}
       <div class="place-container fade-in">
         <div class="place__nav"> 
-          <div class="place__close"></div>
+          {{#if cordova}}
+            <div class="place__back"></div>
+          {{else}}
+            <div class="place__close"></div>
+          {{/if}}
           <div class="place__title">{{place.name}}</div>
           {{#if currentUser}}
-          <div class="place__add"></div>
+            <div class="place__add"></div>
           {{/if}}
         </div> 
         
@@ -21,15 +25,15 @@
           </select>
           <button class="add-business__save">Save</button>
           {{else}}
-          <div class="add-business__woops">You have no lists yet.</div>
+            <div class="add-business__woops">You have no lists yet.</div>
           {{/if}}
         </div>
         {{/if}}
         
         {{#if place.photo}}
-        <div class="place__photo"><img src="{{photo place.photo}}"></div>
+          <div class="place__photo"><img src="{{photo place.photo}}"></div>
         {{else}}
-        <div style="height: 60px"></div>
+          <div style="height: 60px"></div>
         {{/if}}
         
         <div class="place__info">
@@ -41,8 +45,8 @@
           </p>
           
           {{#if place.page.pageInfo.description}}
-          <div class="place__heading">Description</div>
-          <p>{{place.page.pageInfo.description}}</p>
+            <div class="place__heading">Description</div>
+            <p>{{place.page.pageInfo.description}}</p>
           {{/if}}
           
           <div class="place__heading">Reviews</div>
@@ -52,9 +56,9 @@
           </div>
 
           {{#each tip}}
-          <div class="place__tip">
-            <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
-          </div>
+            <div class="place__tip">
+              <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
+            </div>
           {{/each}}
         </div>
       </div>

@@ -12,11 +12,21 @@
       <div class="list__close" data-action="go-home">&#215;</div>
     </div>
     
-    {{#autoForm collection=Lists id="updateListInfo" type="update" doc=list}}
-      {{> afFieldInput name='title' class="list__title"}}
-      <div class="list__owner">made by {{list.author}}</div>
-      {{> afFieldInput name='description' class="list__description" placeholder="add description"}}
-    {{/autoForm}}
+    {{#if owner}}
+      {{#autoForm collection=Lists id="updateListInfo" type="update" doc=list}}
+        {{> afFieldInput name='title' class="list__title"}}
+        <div class="list__owner">made by {{list.author}}</div>
+        {{> afFieldInput name='description' class="list__description" placeholder="add description"}}
+      {{/autoForm}}
+    {{else}}
+      {{#autoForm collection=Lists id="updateListInfo" type="update" doc=list}}
+        {{> afFieldInput name='title' class="list__title" disabled=true}}
+        <div class="list__owner">made by {{list.author}}</div>
+        {{#if list.description}}
+          {{> afFieldInput name='description' class="list__description" disabled=true }}
+        {{/if}}
+      {{/autoForm}}
+    {{/if}}
 
     <div class="list__count">{{list.venues.length}}</div>
 
