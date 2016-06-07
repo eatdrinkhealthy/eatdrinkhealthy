@@ -44,8 +44,8 @@ Template.list.helpers({
   address: (location) => {
     let address = "";
     if (location) {
-      const street = location.address ? location.address.replace(/,/g, "") + ", " : "";
-      const postalCode = location.postalCode ? location.postalCode + ", " : "";
+      const street = location.address ? `${location.address.replace(/,/g, "")}, ` : "";
+      const postalCode = location.postalCode ? `${location.postalCode}, ` : "";
       const city = location.city || "";
       const formattedAddress = `${street}${postalCode}${city}`;
       address = formattedAddress;
