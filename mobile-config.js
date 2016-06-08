@@ -2,7 +2,7 @@
 App.info({
   id: "co.EatDrinkHealthy.EatDrinkHealthy",
   name: "Eat Drink Healthy",
-  description: "Eat Drink Healthy, helps you find a variety business types which meet your healthy eating needs.",
+  description: "Eat Drink Healthy, helps you find a variety of business types which meet your healthy eating needs.",
   author: "Steve Marsh",
   email: "sjm.atl@gmail.com",
   website: "https://www.eatdrinkhealthy.co",
