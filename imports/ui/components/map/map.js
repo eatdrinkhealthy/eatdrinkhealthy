@@ -2,11 +2,11 @@ import "./map.html";
 
 import { $ } from "meteor/jquery";
 import { _ } from "meteor/underscore";
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 import { FlowRouter } from "meteor/kadira:flow-router";
-
 import { Places } from "../../../api/places/client/places";
 
 /* global Geolocation */
@@ -112,6 +112,13 @@ Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callbac
 });
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  if (Meteor.isCordova) {
+    $(".nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+    $(".toggle-filter, .toggle-sidebar").animate({ top: "+=20px" }, 100);
+    $(".filter-header").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+    $(".push-filter-items").animate({ height: "+=20px" }, 100);
+  }
+
   let initialGeolocation = null;
   const googleMaps = google.maps; // eslint-disable-line no-undef
 
@@ -257,7 +264,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   // responsive map
   function resizeHeight() {
     const height = window.innerHeight;
-    $("#map").css("height", height);
+    $(".map").css("height", height);
   }
   window.onresize = function () {
     resizeHeight();
@@ -360,11 +367,24 @@ Template.map.events({
     filter.set(setFilters);
     clearMarkers();
   },
-  "click .close-filter": () => {
-    $(".filter").addClass("filter-closed");
+  "click [data-action=toggle-filter]": () => {
+    if ($(".map-container").hasClass("map-container--open-right")) {
+      $(".map-container").removeClass("map-container--open-right");
+      $(".filter").removeClass("filter--show");
+    } else {
+      $(".map-container").removeClass("map-container--open-left");
+      $(".map-container").addClass("map-container--open-right");
+      $(".filter").addClass("filter--show");
+    }
   },
-  "click .show-filter": () => {
-    $(".filter").removeClass("filter-closed");
+  "click .toggle-sidebar": function () { // eslint-disable-line object-shorthand, func-names
+    if ($(".map-container").hasClass("map-container--open-left")) {
+      $(".map-container").removeClass("map-container--open-left");
+    } else {
+      $(".filter").removeClass("filter--show");
+      $(".map-container").removeClass("map-container--open-right");
+      $(".map-container").addClass("map-container--open-left");
+    }
   },
 });
 
