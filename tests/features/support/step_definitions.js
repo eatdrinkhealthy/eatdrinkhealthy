@@ -36,7 +36,6 @@ function steps() {
     browser.waitForExist(".profile__name");
     expect(browser.getText(".profile__name")).toEqual("Frodo Baggins");
   });
-
 }
 
 module.exports = steps;
