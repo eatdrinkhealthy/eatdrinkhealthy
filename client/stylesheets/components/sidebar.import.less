@@ -5,32 +5,11 @@
   top: 0px;
   left: 0px;
   bottom: 0px;
-  z-index: 1000;
-  box-shadow: 0px 0px 4px rgba(0,0,0,0.4);
+  z-index: 0;
   overflow-y: auto;
   -webkit-transition: all 400ms;
   transition: all 400ms;
-  &.hidden {
-    margin-left: -400px;
-  }
   @media (max-width: @mobile-portrait) {
-    width: 80%;
-  }
-}
-
-.toggle-sidebar {
-  position: fixed;
-  font-size: 22px;
-  top: 12px;
-  left: 10px;
-  z-index: 2000;
-  color: white;
-  padding: 0px 10px;
-  -webkit-transition: all 400ms;
-  transition: all 400ms;
-  .gradient-bg(-40%, 140%);
-  border-radius: 4px;
-  &.closed {
-
+    width: 80vw;
   }
 }

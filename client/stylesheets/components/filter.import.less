@@ -1,34 +1,65 @@
 .filter {
+  .gradient-bg;
+  width: 100%;
+  padding: 0 calc(~"50% - 200px");
   position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 1000;
-  background-color: white;
-  padding: 20px;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
-  height: 519px;
+  top: 0px;
+  left: 100%;
+  bottom: 0px;
+  z-index: 0;
+  color: white;
   overflow: auto;
+  -webkit-transition: all 400ms;
+  transition: all 400ms;
+  @media (max-width: @mobile-portrait) {
+    width: 100vw;
+  }
+  &--show {
+    left: 0;
+  }
+
   .b {
     display: block;
   }
-  .close-filter-container {
-    display: block;
-    height: 30px;
-    position: relative;
+  
+  .filter-header {
+    height: 60px;
+    padding: 15px 20px;
+    position: fixed;
+    z-index: 5;
+    width: 400px;
+    -webkit-backdrop-filter: blur(4px);
+    border-bottom: 1px solid white;
+    @media(max-width: @mobile-portrait){
+      width: 100vw;
+    }
+    h4 {
+      display: inline;
+      float: left;
+    }
     .close-filter {
       width: 15px;
       height: 15px;
-      background-image: url("/images/close-dark.png");
+      background-image: url("/images/close-white.png");
       background-size: 100%;
       float: right;
-      margin-top: 5px;
+      margin-top: 10px;
+      margin-right: 10px;
     }
   }
+
+  .push-filter-items {
+    display: block;
+    height: 80px;
+  }
+
   .filter-item {
     height: 40px;
     display: block;
     position: relative;
     margin-bottom: 15px;
+    font-weight: 200;
+    padding: 0 20px;
     label {
       float: left;
       margin-top: 3px;
@@ -94,42 +125,4 @@
       }
     }
   }
-  &.filter-closed {
-    display: none;
-  }
-}
-
-.show-filter {
-  position: fixed;
-  top: 12px;
-  right: 10px;
-  z-index: 1000;
-  .gradient-bg(-40%, 140%);
-  color: white;
-  padding: 2px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  height: 35px;
-  line-height: 30px
-}
-
-.filter-header {
-  height: 60px;
-  position: fixed;
-  background-color: white;
-  z-index: 2000;
-  width: 267px;
-  margin: -20px;
-  padding: 10px 20px;
-  border-bottom: 1px solid #eee;
-  h4 {
-    display: inline;
-    float: left;
-  }
-}
-
-.push-filter-items {
-  display: block;
-  height: 65px;
 }

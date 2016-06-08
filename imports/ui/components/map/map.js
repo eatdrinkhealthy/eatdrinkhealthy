@@ -1,14 +1,15 @@
 import "./map.html";
 
+import { $ } from "meteor/jquery";
 import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 
-markersArray = [];
+let markersArray = [];
 
 function clearMarkers() {
   // remove all markers
-  for (i = 0; i < markersArray.length; i++) {
+  for (let i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
   }
   markersArray = [];
@@ -247,7 +248,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   // responsive map
   function resizeHeight() {
     const height = window.innerHeight;
-    $("#map").css("height", height);
+    $(".map").css("height", height);
   }
   window.onresize = function () {
     resizeHeight();
@@ -339,13 +340,29 @@ Template.map.events({
     filter.set(setFilters);
     clearMarkers();
   },
-  "click .close-filter": () => {
-    $(".filter").addClass("filter-closed");
+  "click [data-action=toggle-filter]": () => {
+    if ($(".map").hasClass("map--open-right")) {
+      $(".map").removeClass("map--open-right");
+      $(".nav").removeClass("nav--open-right");
+      $(".filter").removeClass("filter--show");
+    } else {
+      $(".map").removeClass("map--open-left");
+      $(".map").addClass("map--open-right");
+      $(".nav").addClass("nav--open-right");
+      $(".filter").addClass("filter--show");
+    }
   },
-  "click .show-filter": () => {
-    $(".filter").removeClass("filter-closed");
-  }
-
+  "click .toggle-sidebar": function () { // eslint-disable-line object-shorthand, func-names
+    if ($(".map").hasClass("map--open-left")) {
+      $(".map").removeClass("map--open-left");
+      $(".nav").removeClass("nav--open-left");
+    } else {
+      $(".filter").removeClass("filter--show");
+      $(".map").removeClass("map--open-right");
+      $(".map").addClass("map--open-left");
+      $(".nav").addClass("nav--open-left");
+    }
+  },
 });
 
 Template.map.helpers({

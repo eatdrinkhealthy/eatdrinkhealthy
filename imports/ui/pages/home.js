@@ -13,7 +13,7 @@ Template.home.events({
   "click .sidebar": () => {
     $(".filter").addClass("filter-closed");
   },
-  "click #map": () => {
+  "click .map": () => {
     $(".filter").addClass("filter-closed");
-  }
+  },
 });

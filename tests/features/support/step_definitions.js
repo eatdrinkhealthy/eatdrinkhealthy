@@ -19,7 +19,7 @@ function steps() {
   });
 
   this.Then(/^I see a map$/, () => {
-    browser.waitForExist("#map");
+    browser.waitForExist(".map");
   });
 
   this.Then(/^I see a sign in button$/, () => {
