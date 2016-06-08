@@ -10,7 +10,7 @@ function steps() {
   });
 
   this.When(/^I sign in$/, () => {
-    browser.waitForExist("span.sign-in-text-facebook");
+    browser.waitForExist("span.sign-in-text-facebook", 1000);
     browser.click("span.sign-in-text-facebook");
   });
 
@@ -19,6 +19,7 @@ function steps() {
   });
 
   this.When(/^I click the menu$/, () => {
+    browser.waitForExist(".burger");
     browser.click(".burger");
   });
 
