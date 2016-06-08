@@ -34,13 +34,12 @@ App.icons({
 
 App.launchScreens({
   // iOS
-  // iphone: "public/splash/splash-320x480.png",
-  // iphone_2x: "public/splash/splash-640x960.png",
-  // iphone5: "public/splash/splash-640x1136.png",
-  // iphone6: "public/splash/splash-750x1334.png",
-  // iphone6p_portrait: "public/splash/splash-1242x2208.png",
-  // ipad_portrait: "public/splash/splash-768x1024.png",
-  // ipad_portrait_2x: "public/splash/splash-1536x2048.png",
+  iphone_2x: "public/splash/splash-640x960.png",
+  iphone5: "public/splash/splash-640x1136.png",
+  iphone6: "public/splash/splash-750x1334.png",
+  iphone6p_portrait: "public/splash/splash-1242x2208.png",
+  ipad_portrait: "public/splash/splash-768x1024.png",
+  ipad_portrait_2x: "public/splash/splash-1536x2048.png",
 
   // Android
   // android_ldpi_portrait: "public/splash/splash-320x426.png",
