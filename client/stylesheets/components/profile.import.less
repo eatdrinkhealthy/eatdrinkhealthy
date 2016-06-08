@@ -1,12 +1,12 @@
 .profile {
   .box-model(400px, 200px, 60px, 0);
-  .gradient-bg(-60%, 160%);
+  .gradient-bg(0%, 140%);
   position: fixed;
   color: white;
   -webkit-transition: all 400ms;
   transition: all 400ms;
   @media (max-width: @mobile-portrait) {
-    .box-model(80%, auto, 60px 0 20px, 0);
+    .box-model(80vw, auto, 60px 0 20px, 0);
     float: none;
     margin: 0 auto;
   }
@@ -43,7 +43,7 @@
     .box-model(20px, 20px, 0, 0);
     position: absolute;
     top: 20px;
-    right: 20px;
+    left: 20px;
     background: url(/images/logout.png) center center no-repeat;
     background-size: contain;
     cursor: pointer;

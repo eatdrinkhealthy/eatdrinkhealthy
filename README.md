@@ -55,6 +55,10 @@ the future, Chimp supports [Appium](http://appium.io/).
 
 Unit tests can be added using files named `*.test.js` and run with `meteor test`.
 
+### Foursquare API (Notes, Behaviours, Idiosyncrasies)
+1. Businesses not showing up with no filter set, but do show up when filtered on their category: The api returns 50 businesses in a priority order. So if no search criteria is set, a butcher might shop not show up. But when filtering for butchers, will be in the top 50 and show up.
+
+
 ### Submitting to iTunes Connect for TestFlight and App Store Submission
 
 1. Under Product -> Edit Scheme

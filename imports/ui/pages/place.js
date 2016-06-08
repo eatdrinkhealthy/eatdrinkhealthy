@@ -9,6 +9,7 @@ import { validationSuccess, validationFail } from "../components/validation.js";
 import { addVenueToList } from "../../api/lists/methods.js";
 import { createStars } from "../components/createStars.js";
 import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
+import { Places } from "../../api/places/client/places";
 
 Template.place.onCreated(function createPlace() {
   this.venueId = FlowRouter.current().params._id;
@@ -16,6 +17,17 @@ Template.place.onCreated(function createPlace() {
     this.subscribe("venue", this.venueId);
     this.subscribe("lists");
   });
+});
+
+Template.place.onRendered(function renderPlace() {
+  let self = this;
+  this.autorun(() => {
+    Template.currentData();
+    if (Meteor.isCordova && Meteor.user()) {
+      self.$(".place__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+      self.$(".place__add, .place__back").animate({ top: "+=20px" }, 100);
+    }
+  })
 });
 
 Template.place.helpers({
@@ -67,13 +79,11 @@ Template.place.events({
   "click .place__back": () => {
     if (Meteor.isCordova) {
       history.back();
+    } else {
+      Meteor.defer(() => {
+        FlowRouter.go("home");
+      });
     }
-  },
-  "click .place__close": () => {
-    // Meteor.defer is here to fix a meteor bug "Error: Must be attached"
-    Meteor.defer(() => {
-      FlowRouter.go("home");
-    });
   },
   "click .place__add": () => {
     $(".add-business").toggle();
