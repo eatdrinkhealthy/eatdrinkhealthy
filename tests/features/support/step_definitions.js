@@ -10,12 +10,25 @@ function steps() {
   });
 
   this.When(/^I sign in$/, () => {
-    browser.waitForExist("span.sign-in-text-facebook");
+    browser.waitForExist("span.sign-in-text-facebook", 5000);
     browser.click("span.sign-in-text-facebook");
   });
 
   this.When(/^I am signed out$/, () => {
     browser.execute("Meteor.logout()");
+  });
+
+  this.When(/^I click the menu$/, () => {
+    browser.waitForExist(".burger");
+    browser.click(".burger");
+  });
+
+  this.When(/^the menu is fully expanded$/, () => {
+    browser.element(".map-container--open-left");
+  });
+
+  this.When(/^I see the facebook button$/, () => {
+    browser.waitForVisible("span.sign-in-text-facebook", 5000);
   });
 
   this.Then(/^I see a map$/, () => {
