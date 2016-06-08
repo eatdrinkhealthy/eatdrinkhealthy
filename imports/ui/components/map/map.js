@@ -1,14 +1,23 @@
 import "./map.html";
 
+import { $ } from "meteor/jquery";
+import { _ } from "meteor/underscore";
 import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
+import { FlowRouter } from "meteor/kadira:flow-router";
 
-markersArray = [];
+import { Places } from "../../../api/places/client/places";
+
+/* global Geolocation */
+
+// store marker objects for reference (ie to clear and construct the pop ups)
+let markersArray = [];
+let markers = {};
 
 function clearMarkers() {
   // remove all markers
-  for (i = 0; i < markersArray.length; i++) {
+  for (let i = 0; i < markersArray.length; i++) {
     markersArray[i].setMap(null);
   }
   markersArray = [];
@@ -18,81 +27,81 @@ function clearMarkers() {
 const Filters = [
   {
     name: "Gluten Free",
-    value: "glutenFree"
+    value: "glutenFree",
   },
   {
     name: "Juice Bars",
-    value: "juiceBar"
+    value: "juiceBar",
   },
   {
     name: "Salad Places",
-    value: "saladPlace"
+    value: "saladPlace",
   },
   {
     name: "Vegan / Vegetarian",
-    value: "veganVegeRestaurant"
+    value: "veganVegeRestaurant",
   },
   {
     name: "Bakeries",
-    value: "bakery"
+    value: "bakery",
   },
   {
     name: "Cafés",
-    value: "cafe"
+    value: "cafe",
   },
   {
     name: "Coffee Shops",
-    value: "coffeeShop"
+    value: "coffeeShop",
   },
   {
     name: "Restaurants",
-    value: "restaurant"
+    value: "restaurant",
   },
   {
     name: "Farmers Markets",
-    value: "farmersMarket"
+    value: "farmersMarket",
   },
   {
     name: "Butchers",
-    value: "butcher"
+    value: "butcher",
   },
   {
     name: "Health Food Stores",
-    value: "healthFoodStore"
+    value: "healthFoodStore",
   },
   {
     name: "Organic Grocery Stores",
-    value: "organicGrocery"
+    value: "organicGrocery",
   },
   {
     name: "Grocery Stores",
-    value: "grocery"
+    value: "grocery",
   },
   {
     name: "Supermarkets",
-    value: "supermarket"
+    value: "supermarket",
   },
   {
     name: "Fruit & Vege Stores",
-    value: "fruitVegeStore"
+    value: "fruitVegeStore",
   },
   {
     name: "Markets",
-    value: "market"
-  }
+    value: "market",
+  },
 ];
 
+const defaultLocation = {
+  // default to downtown Toronto
+  // TODO: default to city set in profile (perhaps facebook location aka city)
+  latitude: 43.650033,
+  longitude: -79.391594,
+};
+
+const mapCenterLocation = new ReactiveVar(defaultLocation);
+const filter = new ReactiveVar([]);
+
 Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
-  const defaultLocation = {
-    // default to downtown Toronto
-    // TODO: default to city set in profile (perhaps facebook location aka city)
-    latitude: 43.650033,
-    longitude: -79.391594
-  };
-
-  mapCenterLocation = new ReactiveVar(defaultLocation);
-  filter = new ReactiveVar([]);
-
   this.autorun(() => {
     this.subscribe("nearbyPlaces",
       mapCenterLocation.get().latitude,
@@ -104,129 +113,130 @@ Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callbac
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
   let initialGeolocation = null;
+  const googleMaps = google.maps; // eslint-disable-line no-undef
 
   // map styling
   // TODO: find out how to import these, seems to break map on iOS only
-  const customMapType = new google.maps.StyledMapType([
+  const customMapType = new googleMaps.StyledMapType([
     {
       featureType: "landscape.man_made",
       elementType: "geometry",
       stylers: [
         {
-          color: "#f7f1df"
-        }
-      ]
+          color: "#f7f1df",
+        },
+      ],
     },
     {
       featureType: "landscape.natural",
       elementType: "geometry",
       stylers: [
         {
-          color: "#d0e3b4"
-        }
-      ]
+          color: "#d0e3b4",
+        },
+      ],
     },
     {
       featureType: "landscape.natural.terrain",
       elementType: "geometry",
       stylers: [
         {
-          visibility: "off"
-        }
-      ]
+          visibility: "off",
+        },
+      ],
     },
     {
       featureType: "poi.business",
       elementType: "all",
       stylers: [
         {
-          visibility: "off"
-        }
-      ]
+          visibility: "off",
+        },
+      ],
     },
     {
       featureType: "poi.medical",
       elementType: "geometry",
       stylers: [
         {
-          color: "#fbd3da"
-        }
-      ]
+          color: "#fbd3da",
+        },
+      ],
     },
     {
       featureType: "poi.park",
       elementType: "geometry",
       stylers: [
         {
-          color: "#bde6ab"
-        }
-      ]
+          color: "#bde6ab",
+        },
+      ],
     },
     {
       featureType: "road",
       elementType: "geometry.stroke",
       stylers: [
         {
-          visibility: "off"
-        }
-      ]
+          visibility: "off",
+        },
+      ],
     },
     {
       featureType: "road.highway",
       elementType: "geometry.fill",
       stylers: [
         {
-          color: "#ffe15f"
-        }
-      ]
+          color: "#ffe15f",
+        },
+      ],
     },
     {
       featureType: "road.highway",
       elementType: "geometry.stroke",
       stylers: [
         {
-          color: "#efd151"
-        }
-      ]
+          color: "#efd151",
+        },
+      ],
     },
     {
       featureType: "road.arterial",
       elementType: "geometry.fill",
       stylers: [
         {
-          color: "#ffffff"
-        }
-      ]
+          color: "#ffffff",
+        },
+      ],
     },
     {
       featureType: "road.local",
       elementType: "geometry.fill",
       stylers: [
         {
-          color: "black"
-        }
-      ]
+          color: "black",
+        },
+      ],
     },
     {
       featureType: "transit.station.airport",
       elementType: "geometry.fill",
       stylers: [
         {
-          color: "#cfb2db"
-        }
-      ]
+          color: "#cfb2db",
+        },
+      ],
     },
     {
       featureType: "water",
       elementType: "geometry",
       stylers: [
         {
-          color: "#a2daf2"
-        }
-      ]
-    }
+          color: "#a2daf2",
+        },
+      ],
+    },
   ], {
-    name: "Custom Style"
+    name: "Custom Style",
   });
 
   const customMapTypeId = "custom_style";
@@ -236,12 +246,12 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     disableDefaultUI: true,
     zoomControl: true,
     zoomControlOptions: {
-      position: google.maps.ControlPosition.RIGHT_BOTTOM
+      position: google.maps.ControlPosition.RIGHT_BOTTOM, // eslint-disable-line no-undef
     },
     center: {
       lat: mapCenterLocation.get().latitude,
-      lng: mapCenterLocation.get().longitude
-    }
+      lng: mapCenterLocation.get().longitude,
+    },
   };
 
   // responsive map
@@ -255,45 +265,56 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   resizeHeight();
 
   // init map, pass in mapOptions, set style and give it an id that we set
-  map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  const map = new googleMaps.Map(
+  document.getElementById("map"),
+  mapOptions);
+
   map.mapTypes.set(customMapTypeId, customMapType);
   map.setMapTypeId(customMapTypeId);
 
   // When a user drags the map - call at end of drag
-  google.maps.event.addListener(map, "dragend", () => {
+  googleMaps.event.addListener(map, "dragend", () => {
     mapCenterLocation.set({ latitude: map.getCenter().lat(), longitude: map.getCenter().lng() });
   });
 
   // Set Marker style
-  markers = {};
   const mapMarker = {
     url: "/images/pinMarker3x.png",
-    size: new google.maps.Size(31, 39),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(15, 39),
-    scaledSize: new google.maps.Size(31, 39)
+    size: new googleMaps.Size(31, 39),
+    origin: new googleMaps.Point(0, 0),
+    anchor: new googleMaps.Point(15, 39),
+    scaledSize: new googleMaps.Size(31, 39),
   };
 
+  const infowindow = new googleMaps.InfoWindow;
+
   // Add a marker to the map and push to the array for comparison.
-  function addMarker(location, name, id) {
+  function addMarker(latLng, name, id, category, location) {
     if (!markers[id]) {
       markers[id] = true;
-      const marker = new google.maps.Marker({
-        position: location,
-        map: map,
+      const marker = new googleMaps.Marker({
+        position: latLng,
+        map,
         title: name,
-        icon: mapMarker
+        icon: mapMarker,
       });
 
       // store markers in array to clear during filter actions
       markersArray.push(marker);
 
       // Set up info window for marker
-      const contentString = `<a href="${FlowRouter.path("/place/:_id", { _id: id })}">${name}</a>`;
-      const infowindow = new google.maps.InfoWindow({
-        content: contentString
-      });
-      google.maps.event.addListener(marker, "click", () => {
+      const contentString = `
+        <div>
+        <a href="${FlowRouter.path("/place/:_id", { _id: id })}">${name}</a>
+        </div>
+        <div class="info-address">
+          ${location.address || ""} ${location.city || ""} ${location.postalCode || ""}
+        </div>
+        <div class="info-category">${category}</div>
+        `;
+
+      googleMaps.event.addListener(marker, "click", () => {
+        infowindow.setContent(contentString);
         infowindow.open(map, marker);
       });
     }
@@ -301,8 +322,8 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   function plotMarkers() {
     _.each(Places.find().fetch(), (place) => {
-      const location = new google.maps.LatLng(place.location.lat, place.location.lng);
-      addMarker(location, place.name, place.id);
+      const latLng = new googleMaps.LatLng(place.location.lat, place.location.lng);
+      addMarker(latLng, place.name, place.id, place.categories[0].name, place.location);
     });
   }
 
@@ -311,9 +332,9 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     const currentGeolocation = Geolocation.latLng();
     if (currentGeolocation !== null && initialGeolocation === null) {
       initialGeolocation = currentGeolocation;
-      location.latitude = Geolocation.latLng().lat;
-      location.longitude = Geolocation.latLng().lng;
-      map.panTo(new google.maps.LatLng(location.latitude, location.longitude));
+      location.latitude = currentGeolocation.lat;
+      location.longitude = currentGeolocation.lng;
+      map.panTo(new googleMaps.LatLng(location.latitude, location.longitude));
       // set mapCenterLocation for the subscription to run again
       mapCenterLocation.set({ latitude: location.latitude, longitude: location.longitude });
     }
@@ -344,10 +365,9 @@ Template.map.events({
   },
   "click .show-filter": () => {
     $(".filter").removeClass("filter-closed");
-  }
-
+  },
 });
 
 Template.map.helpers({
-  filters: () => Filters
+  filters: () => Filters,
 });
