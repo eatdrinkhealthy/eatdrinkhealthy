@@ -14,5 +14,6 @@ Feature: Home Page
   Scenario: Sign in
     When I visit the homepage
     And  I am signed out
+    And  I click the menu
     And  I sign in
     Then I see my name in the profile section

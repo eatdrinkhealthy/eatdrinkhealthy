@@ -18,6 +18,10 @@ function steps() {
     browser.execute("Meteor.logout()");
   });
 
+  this.When(/^I click the menu$/, () => {
+    browser.click(".burger");
+  });
+
   this.Then(/^I see a map$/, () => {
     browser.waitForExist(".map");
   });
@@ -31,6 +35,7 @@ function steps() {
     browser.waitForExist(".profile__name");
     expect(browser.getText(".profile__name")).toEqual("Frodo Baggins");
   });
+
 }
 
 module.exports = steps;
