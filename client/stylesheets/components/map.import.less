@@ -25,10 +25,9 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 100;
   .gradient-bg;
-  -webkit-backdrop-filter: blur(10px);
-  opacity: 0.9;
+  opacity: 0.95;
   -webkit-transition: all 400ms;
   transition: all 400ms;
   &--open-left {
@@ -43,8 +42,12 @@
   &__title {
     text-align: center;
     color: white;
-    font-size: 24px;
+    font-size: 21px;
+    font-weight: bold;
     line-height: 60px;
+    @media (max-width: @mobile-portrait) {
+      font-size: 16px;
+    }
   }
 }
 

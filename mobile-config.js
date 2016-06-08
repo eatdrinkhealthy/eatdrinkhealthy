@@ -4,6 +4,5 @@ App.info({
   version: "0.0.1"
 });
 
-// App.setPreference("StatusBarOverlaysWebView", "true");
+App.setPreference("StatusBarOverlaysWebView", "true");
 App.setPreference("StatusBarStyle", "lightcontent");
-App.setPreference("StatusBarBackgroundColor", "#048ec5");

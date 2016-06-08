@@ -25,6 +25,8 @@
     left: calc(~"50% - 325px");
     right: calc(~"50% - 325px");
     top: 0;
+    height: 60px;
+    padding-top: 5px;
     opacity: 0.95;
     color: white;
     @media (max-width: @mobile-places){
@@ -39,21 +41,20 @@
     margin: 0 auto;
     min-width: 50px;
     .ellipsis;
-    height: 50px;
-    padding: 10px 0;
+    padding: 8px 0;
     font-size: 20px;
+    font-weight: bold;
     text-align: center;
     .ellipsis();
     @media (max-width: 400px){
       font-size: 21px;
       padding: 9px 0;
     }
-  }
-  &__close, 
+  } 
   &__back {
-    .box-model(25px, 25px, 0, 0);
     position: absolute;
     left: calc(~"50% - 305px");
+    top: 16px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -63,21 +64,21 @@
     @media (max-width: 200px){
       left: 10px;
     }
+    &:before {
+      content: "";
+      float: left;
+      background: url(/images/back-white.png) no-repeat;
+      background-size: contain;
+      width: 25px;
+      height: 25px;
+      margin: 4px 6px 0 0;
+    }
   }
-  &__back {
-    background-image: url("/images/back-white.png");
-    top: 17px;
-  }
-  &__close {
-    // please change asset!
-    background-image: url("/images/pinMarker3x.png");
-    top: 12px;
-    left: 24px;
-  }
+
   &__add {
     .box-model(25px, 25px, 0, 0);
     position: absolute;
-    top: 17px;
+    top: 20px;
     right: calc(~"50% - 300px");
     background-image: url("/images/heart-white.png");
     background-size: 100%;

@@ -2,6 +2,7 @@ import "./map.html";
 
 import { $ } from "meteor/jquery";
 import { _ } from "meteor/underscore";
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
@@ -111,6 +112,13 @@ Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callbac
 });
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  if (Meteor.isCordova) {
+    $(".nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+    $(".toggle-filter, .toggle-sidebar").animate({ top: "+=20px" }, 100);
+    $(".filter-header").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+    $(".push-filter-items").animate({ height: "+=20px" }, 100);
+  }
+
   let initialGeolocation = null;
   const googleMaps = google.maps; // eslint-disable-line no-undef
 
