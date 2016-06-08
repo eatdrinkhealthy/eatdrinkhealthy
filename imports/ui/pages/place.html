@@ -1,18 +1,19 @@
 <template name="place">
   <div class="place fade-in">
-    {{#if place}}
-      <div class="place-container fade-in">
-        <div class="place__nav"> 
-          {{#if cordova}}
-            <div class="place__back"></div>
-          {{else}}
-            <div class="place__back">Map</div>
-          {{/if}}
-          <div class="place__title">{{place.name}}</div>
-          {{#if currentUser}}
-            <div class="place__add"></div>
-          {{/if}}
-        </div> 
+    <div class="place-container fade-in">
+      <div class="place__nav"> 
+        {{#if cordova}}
+          <div class="place__back"></div>
+        {{else}}
+          <div class="place__back">Map</div>
+        {{/if}}
+        <div class="place__title">{{place.name}}</div>
+        {{#if currentUser}}
+          <div class="place__add"></div>
+        {{/if}}
+      </div> 
+
+      {{#if place}}
         
         {{#if currentUser}}
         <div class="add-business">
@@ -61,10 +62,10 @@
             </div>
           {{/each}}
         </div>
-      </div>
-    {{else}}
-      {{> loading}}
-    {{/if}} <!-- end if place -->
+      {{else}}
+        {{> loading}}
+      {{/if}} <!-- end if place -->
+    </div>
   </div> 
   {{> validation}} 
 </template>
