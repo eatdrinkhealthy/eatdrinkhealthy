@@ -1,18 +1,11 @@
 import "./map.html";
 
 import { $ } from "meteor/jquery";
-<<<<<<< HEAD
-=======
 import { _ } from "meteor/underscore";
->>>>>>> master
 import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 import { FlowRouter } from "meteor/kadira:flow-router";
-
-<<<<<<< HEAD
-let markersArray = [];
-=======
 import { Places } from "../../../api/places/client/places";
 
 /* global Geolocation */
@@ -20,7 +13,6 @@ import { Places } from "../../../api/places/client/places";
 // store marker objects for reference (ie to clear and construct the pop ups)
 let markersArray = [];
 let markers = {};
->>>>>>> master
 
 function clearMarkers() {
   // remove all markers
