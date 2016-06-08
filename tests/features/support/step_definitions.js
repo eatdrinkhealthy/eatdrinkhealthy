@@ -10,7 +10,7 @@ function steps() {
   });
 
   this.When(/^I sign in$/, () => {
-    browser.waitForExist("span.sign-in-text-facebook", 1000);
+    browser.waitForExist("span.sign-in-text-facebook", 5000);
     browser.click("span.sign-in-text-facebook");
   });
 
