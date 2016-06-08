@@ -23,6 +23,14 @@ function steps() {
     browser.click(".burger");
   });
 
+  this.When(/^the menu is fully expanded$/, () => {
+    browser.element(".map-container--open-left");
+  });
+
+  this.When(/^I see the facebook button$/, () => {
+    browser.waitForVisible("span.sign-in-text-facebook", 5000);
+  });
+
   this.Then(/^I see a map$/, () => {
     browser.waitForExist(".map");
   });

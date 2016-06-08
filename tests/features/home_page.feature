@@ -15,5 +15,7 @@ Feature: Home Page
     When I visit the homepage
     And  I am signed out
     And  I click the menu
+    And  the menu is fully expanded
+    And  I see the facebook button
     And  I sign in
     Then I see my name in the profile section
