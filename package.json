@@ -2,7 +2,7 @@
   "name": "eatdrinkhealthy",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "meteor run --settings settings.json",
     "lint-no-mg": "eslint . --ignore-pattern 'packages/miraclegrow/**'",
     "test": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests",
     "test-watch": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests --watch"
