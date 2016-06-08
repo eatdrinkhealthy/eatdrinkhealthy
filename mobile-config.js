@@ -12,7 +12,6 @@ App.info({
 // Set up resources such as icons and launch screens.
 App.icons({
   // iOS
-  iphone: "public/icons/icon-57x57.png",
   iphone_2x: "public/icons/icon-120x120.png",
   iphone_3x: "public/icons/icon-180x180.png",
   ipad: "public/icons/icon-76x76.png",
@@ -20,7 +19,6 @@ App.icons({
   ipad_pro: "public/icons/icon-167x167.png",
   ios_spotlight: "public/icons/icon-40x40.png",
   ios_spotlight_2x: "public/icons/icon-80x80.png",
-  ios_spotlight_3x: "public/icons/icon-120x120.png",
   ios_settings: "public/icons/icon-29x29.png",
   ios_settings_2x: "public/icons/icon-58x58.png",
   ios_settings_3x: "public/icons/icon-87x87.png",
