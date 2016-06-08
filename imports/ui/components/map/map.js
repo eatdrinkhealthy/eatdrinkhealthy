@@ -368,26 +368,22 @@ Template.map.events({
     clearMarkers();
   },
   "click [data-action=toggle-filter]": () => {
-    if ($(".map").hasClass("map--open-right")) {
-      $(".map").removeClass("map--open-right");
-      $(".nav").removeClass("nav--open-right");
+    if ($(".map-container").hasClass("map-container--open-right")) {
+      $(".map-container").removeClass("map-container--open-right");
       $(".filter").removeClass("filter--show");
     } else {
-      $(".map").removeClass("map--open-left");
-      $(".map").addClass("map--open-right");
-      $(".nav").addClass("nav--open-right");
+      $(".map-container").removeClass("map-container--open-left");
+      $(".map-container").addClass("map-container--open-right");
       $(".filter").addClass("filter--show");
     }
   },
   "click .toggle-sidebar": function () { // eslint-disable-line object-shorthand, func-names
-    if ($(".map").hasClass("map--open-left")) {
-      $(".map").removeClass("map--open-left");
-      $(".nav").removeClass("nav--open-left");
+    if ($(".map-container").hasClass("map-container--open-left")) {
+      $(".map-container").removeClass("map-container--open-left");
     } else {
       $(".filter").removeClass("filter--show");
-      $(".map").removeClass("map--open-right");
-      $(".map").addClass("map--open-left");
-      $(".nav").addClass("nav--open-left");
+      $(".map-container").removeClass("map-container--open-right");
+      $(".map-container").addClass("map-container--open-left");
     }
   },
 });

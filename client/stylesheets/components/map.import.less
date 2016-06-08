@@ -1,4 +1,4 @@
-.map {
+.map-container {
   position: relative;
   width: 100%;
   height: 100%;
@@ -20,7 +20,7 @@
 }
 
 .nav {
-  position: fixed;
+  position: absolute;
   height: 60px;
   width: 100%;
   top: 0;
@@ -28,17 +28,17 @@
   z-index: 100;
   .gradient-bg;
   opacity: 0.95;
-  -webkit-transition: all 400ms;
-  transition: all 400ms;
-  &--open-left {
-    left: 400px;
-    @media (max-width: @mobile-portrait) {
-      left: 80vw;
-    }
-  }
-  &--open-right {
-    left: -100%;
-  }
+  // -webkit-transition: all 400ms;
+  // transition: all 400ms;
+  // &--open-left {
+  //   left: 400px;
+  //   @media (max-width: @mobile-portrait) {
+  //     left: 80vw;
+  //   }
+  // }
+  // &--open-right {
+  //   left: -100%;
+  // }
   &__title {
     text-align: center;
     color: white;
