@@ -19,10 +19,15 @@ Template.place.onCreated(function createPlace() {
   });
 });
 
-Template.place.onRendered(() => {
-  if (Meteor.isCordova) {
-    $(".place").animate({ height: "+=20px" }, 100);
-  }
+Template.place.onRendered(function renderPlace() {
+  let self = this;
+  this.autorun(() => {
+    Template.currentData();
+    if (Meteor.isCordova && Meteor.user()) {
+      self.$(".place__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+      self.$(".place__add, .place__back").animate({ top: "+=20px" }, 100);
+    }
+  })
 });
 
 Template.place.helpers({
