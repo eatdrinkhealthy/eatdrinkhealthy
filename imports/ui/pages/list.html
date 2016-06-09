@@ -7,7 +7,7 @@
         <div class="list__edit">Done</div>
 
         {{else}}
-        <div class="list__edit">Edit</div>
+        <div class="list__edit" data-track="edit-list">Edit</div>
         {{/if}}
 
       {{else}}
@@ -63,9 +63,9 @@
     
     {{#if owner}}
       {{#if editMode}}
-      <button class="list__delete">Delete this list</button>
+      <button class="list__delete" data-track="delete list">Delete this list</button>
       {{else}}
-      <button class="list__share">Share this list</button>
+      <button class="list__share" data-track="share list">Share this list</button>
       {{/if}}
     {{/if}}
 

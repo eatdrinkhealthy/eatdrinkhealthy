@@ -11,6 +11,7 @@ import { Lists } from "../../api/lists/lists.js";
 import { createStars } from "../components/createStars.js";
 import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
 import { Places } from "../../api/places/client/places";
+import { registerAnalyticsHandlers } from "../../api/analytics/analytics";
 
 // components
 import "../components/shareModal.js";
@@ -35,6 +36,9 @@ Template.list.onCreated(function createList() {
 });
 
 Template.list.onRendered(() => {
+
+  registerAnalyticsHandlers();
+
   if (Meteor.isCordova) {
     $(".list__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
   }

@@ -8,6 +8,7 @@ import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 import { FlowRouter } from "meteor/kadira:flow-router";
 import { Places } from "../../../api/places/client/places";
+import { registerAnalyticsHandlers } from "../../../api/analytics/analytics";
 
 /* global Geolocation */
 
@@ -112,6 +113,9 @@ Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callbac
 });
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
+  
+  registerAnalyticsHandlers();
+  
   if (Meteor.isCordova) {
     $(".nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
     $(".toggle-filter, .toggle-sidebar").animate({ top: "+=20px" }, 100);
