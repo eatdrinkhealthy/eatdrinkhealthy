@@ -130,6 +130,9 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   let initialGeolocation = null;
   const googleMaps = google.maps; // eslint-disable-line no-undef
+  // clear objects and arrays on rendered for to plotMarkers() correctly on first load
+  markersArray = [];
+  markers = {};
 
   // map styling
   // TODO: find out how to import these, seems to break map on iOS only

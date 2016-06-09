@@ -31,57 +31,46 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
   const self = this;
   const latLng = `${latitude},${longitude}`;
 
-  let categoryString;
-  let setFirstCategory = false;
+  function getFoursquarePlaces(category) {
+    HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
+      params: {
+        client_id: Meteor.settings.foursquare.client_id,
+        client_secret: Meteor.settings.foursquare.client_secret,
+        v: "20130815", // api version
+        ll: latLng,
+        limit: "50",
+        intent: "browse",
+        radius: "1000", // in meters
+        categoryId: category,
+      },
+    },
+    (error, result) => {
+      if (!error) {
+        const JSONresponse = EJSON.parse(result.content);
+
+        _.each(JSONresponse.response.venues, (venue) => {
+          // console.log(venue);
+          self.added("places", venue.id, venue);
+        });
+        self.ready();
+      }
+    });
+  }
 
   // check if filters are set
   if (filter.length === 0) {
     _.each(categories, (category) => {
-      if (!setFirstCategory) {
-        categoryString = category;
-        setFirstCategory = true;
-      } else {
-        categoryString = `${categoryString},${category}`;
-      }
+      getFoursquarePlaces(category);
     });
   } else {
     // cross reference [filter] with list of all categories.
     _.each(categories, (category, key) => {
       // only add when part of [filter] array
       if (_.indexOf(filter, key) !== -1) {
-        if (!setFirstCategory) {
-          categoryString = category;
-          setFirstCategory = true;
-        } else {
-          categoryString = `${categoryString},${category}`;
-        }
+        getFoursquarePlaces(category);
       }
     });
   }
-
-  HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
-    params: {
-      client_id: Meteor.settings.foursquare.client_id,
-      client_secret: Meteor.settings.foursquare.client_secret,
-      v: "20130815", // api version
-      ll: latLng,
-      limit: "50",
-      intent: "browse",
-      radius: "1000", // in meters
-      categoryId: categoryString,
-    },
-  },
-  (error, result) => {
-    if (!error) {
-      const JSONresponse = EJSON.parse(result.content);
-
-      _.each(JSONresponse.response.venues, (venue) => {
-        // console.log(venue);
-        self.added("places", venue.id, venue);
-      });
-      self.ready();
-    }
-  });
 });
 
 Meteor.publish("listVenues", function listVenues(venueIds) {
