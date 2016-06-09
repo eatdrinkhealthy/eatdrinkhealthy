@@ -28,7 +28,11 @@
         <span>{{name}}</span>
         <div class="toggle-container">
           <div class="toggle">
-            <input type="checkbox" class="check" name="filter" value="{{value}}">
+            {{#if filterSet value}}
+              <input type="checkbox" class="check" name="filter" value="{{value}}" checked>
+            {{else}}
+              <input type="checkbox" class="check" name="filter" value="{{value}}">
+            {{/if}}
             <b class="b switch"></b>
             <b class="b track"></b>
           </div>
