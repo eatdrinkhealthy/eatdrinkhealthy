@@ -117,6 +117,15 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     $(".toggle-filter, .toggle-sidebar").animate({ top: "+=20px" }, 100);
     $(".filter-header").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
     $(".push-filter-items").animate({ height: "+=20px" }, 100);
+
+    // close the sidebar if user starts to drag close
+    setInterval(() => {
+      if (scrollX !== 0) {
+        $(".map-container").removeClass("map-container--open-left");
+      } else {
+        $("body").scrollLeft(0);
+      }
+    }, 1000);
   }
 
   let initialGeolocation = null;
