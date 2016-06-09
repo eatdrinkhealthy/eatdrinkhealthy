@@ -402,4 +402,11 @@ Template.map.events({
 
 Template.map.helpers({
   filters: () => Filters,
+  filterSet: (value) => {
+    let isSet = false;
+    if (_.indexOf(filter.get(), value) !== -1) {
+      isSet = true;
+    }
+    return isSet;
+  },
 });
