@@ -31,10 +31,6 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
   const self = this;
   const latLng = `${latitude},${longitude}`;
 
-  let categoryString;
-  let setFirstCategory = false;
-
-
   function getFoursquarePlaces(category) {
     HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
       params: {
