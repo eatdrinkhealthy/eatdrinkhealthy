@@ -6,16 +6,16 @@ Feature: Home Page
 
   @watch
   Scenario: Visit home page as a signed out user
-    When I visit the homepage
-    And  I am signed out
-    Then I see a map
+    Given I am on the homepage
+    And   I am signed out
+    Then  I see a map
 
   @watch
   Scenario: Sign in
-    When I visit the homepage
-    And  I am signed out
-    And  I click the menu
-    And  the menu is fully expanded
-    And  I see the facebook button
-    And  I sign in
-    Then I see my name in the profile section
+    Given I am on the homepage
+    And   I am signed out
+    And   I click the menu
+    And   the menu is fully expanded
+    And   I see the facebook button
+    And   I sign in
+    Then  I see my name in the profile section
