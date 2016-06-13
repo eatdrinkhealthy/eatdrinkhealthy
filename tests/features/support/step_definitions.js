@@ -94,11 +94,11 @@ function steps() {
     expect(browser.getText(".lists__title")).toEqual("MY LISTS");
   });
 
-  this.Then(/^The last item of the list of lists will be "([^"]*)"$/, (expectedName) => {
+  this.Then(/^The list of lists will constain "([^"]*)"$/, (name) => {
     browser.waitForExist(".lists");
     const listNames = browser.getText(".lists-item__title");
-    const result = listNames[listNames.length - 1];
-    expect(result).toEqual(expectedName);
+    console.log("list names:", listNames);
+    expect(listNames.indexOf(name)).not.toEqual(-1);
   });
 
   this.Then(/^There will not be a list called "([^"]*)"$/, function (name) {
