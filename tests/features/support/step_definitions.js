@@ -94,7 +94,7 @@ function steps() {
     expect(browser.getText(".lists__title")).toEqual("MY LISTS");
   });
 
-  this.Then(/^The list of lists will constain "([^"]*)"$/, (name) => {
+  this.Then(/^The list of lists will contain "([^"]*)"$/, (name) => {
     browser.waitForExist(".lists");
     const listNames = browser.getText(".lists-item__title");
     console.log("list names:", listNames);
@@ -103,8 +103,9 @@ function steps() {
 
   this.Then(/^There will not be a list called "([^"]*)"$/, function (name) {
     actions.toggleSidebar();
-    browser.waitForExist(".lists");
+    browser.waitForExist(".lists", 1500);
     const listNames = browser.getText(".lists-item__title");
+    console.log("list names:", listNames);
     expect(listNames.indexOf(name)).toEqual(-1);
   });
 

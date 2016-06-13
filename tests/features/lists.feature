@@ -14,7 +14,7 @@ Feature: Lists
   Scenario: Create a new list of businesses
     Given I am authenticated
     When  I create a new list called "my test list"
-    Then  The list of lists will constain "my test list"
+    Then  The list of lists will contain "my test list"
 
   @watch
   Scenario: Delete a list of businesses
