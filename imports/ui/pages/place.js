@@ -11,6 +11,8 @@ import { createStars } from "../components/createStars.js";
 import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
 import { Places } from "../../api/places/client/places";
 
+/* global analytics */
+
 Template.place.onCreated(function createPlace() {
   this.venueId = FlowRouter.current().params._id;
   this.autorun(() => {
@@ -20,14 +22,21 @@ Template.place.onCreated(function createPlace() {
 });
 
 Template.place.onRendered(function renderPlace() {
-  let self = this;
+  const self = this;
+
+  const currentUser = Meteor.userId() || "anonymous";
+
+  analytics.track("display venue info", {
+    user: currentUser,
+  });
+
   this.autorun(() => {
     Template.currentData();
     if (Meteor.isCordova && Meteor.user()) {
       self.$(".place__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
       self.$(".place__add, .place__back").animate({ top: "+=20px" }, 100);
     }
-  })
+  });
 });
 
 Template.place.helpers({
