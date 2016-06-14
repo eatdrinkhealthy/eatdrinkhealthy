@@ -10,6 +10,7 @@ import { addVenueToList } from "../../api/lists/methods.js";
 import { createStars } from "../components/createStars.js";
 import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
 import { Places } from "../../api/places/client/places";
+import { currentReportingUser } from "../../api/utils.js";
 
 /* global analytics */
 
@@ -24,10 +25,8 @@ Template.place.onCreated(function createPlace() {
 Template.place.onRendered(function renderPlace() {
   const self = this;
 
-  const currentUser = Meteor.userId() || "anonymous";
-
   analytics.track("display venue info", {
-    user: currentUser,
+    user: currentReportingUser(),
   });
 
   this.autorun(() => {
