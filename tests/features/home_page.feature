@@ -12,10 +12,5 @@ Feature: Home Page
 
   @watch
   Scenario: Sign in
-    Given I am on the homepage
-    And   I am signed out
-    And   I click the menu
-    And   the menu is fully expanded
-    And   I see the facebook button
-    And   I sign in
+    Given I am authenticated
     Then  I see my name in the profile section

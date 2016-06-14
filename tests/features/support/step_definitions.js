@@ -14,6 +14,10 @@ function steps() {
     browser.url(baseUrl);
   });
 
+  this.Given(/^I am signed out$/, () => {
+    browser.execute("Meteor.logout()");
+  });
+
   this.Given(/^I am authenticated$/, () => {
     browser.url(baseUrl);
     actions.toggleSidebar();
@@ -38,21 +42,8 @@ function steps() {
     browser.click("span.sign-in-text-facebook");
   });
 
-  this.When(/^I am signed out$/, () => {
-    browser.execute("Meteor.logout()");
-  });
-
   this.When(/^I click the menu$/, () => {
-    browser.waitForExist(".burger", 1500);
-    browser.click(".burger");
-  });
-
-  this.When(/^the menu is fully expanded$/, () => {
-    browser.element(".map-container--open-left");
-  });
-
-  this.When(/^I see the facebook button$/, () => {
-    browser.waitForVisible("span.sign-in-text-facebook", 5000);
+    actions.toggleSidebar();
   });
 
   this.When(/^I create a new list called "([^"]*)"$/, (listName) => {
@@ -80,16 +71,11 @@ function steps() {
   // Then functions
 
   this.Then(/^I see a map$/, () => {
-    browser.waitForExist(".map");
-  });
-
-  this.Then(/^I see a sign in button$/, () => {
-    browser.waitForExist("span.sign-in-text-facebook");
-    expect(browser.getText("span.sign-in-text-facebook")).toEqual("Sign in with Facebook");
+    browser.waitForExist(".map", 1500);
   });
 
   this.Then(/^I see my name in the profile section$/, () => {
-    browser.waitForExist(".profile__name");
+    browser.waitForExist(".profile__name", 1500);
     expect(browser.getText(".profile__name")).toEqual("Frodo Baggins");
   });
 
@@ -101,7 +87,6 @@ function steps() {
   this.Then(/^The list of lists will contain "([^"]*)"$/, (name) => {
     browser.waitForExist(".lists");
     const listNames = browser.getText(".lists-item__title");
-    console.log("list names:", listNames);
     expect(listNames.indexOf(name)).not.toEqual(-1);
   });
 
@@ -109,7 +94,6 @@ function steps() {
     actions.toggleSidebar();
     browser.waitForExist(".lists", 1500);
     const listNames = browser.getText(".lists-item__title");
-    console.log("list names:", listNames);
     expect(listNames.indexOf(name)).toEqual(-1);
   });
 
