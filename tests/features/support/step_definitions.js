@@ -3,6 +3,7 @@
 /* global expect */
 
 const actions = require("./actions");
+const fixtures = require("./common-fixtures");
 
 const baseUrl = "http://localhost:3000";
 
@@ -23,6 +24,11 @@ function steps() {
       // close the menu again - no login needed.
       actions.toggleSidebar();
     }
+  });
+
+  this.Given(/^I have the demo lists set up$/, function () {
+    const meteorId = browser.execute(() => Meteor.userId()).value;
+    fixtures.common.resetLists(meteorId);
   });
 
   // When functions
@@ -57,8 +63,6 @@ function steps() {
   });
 
   this.When(/^I delete the list "([^"]*)"$/, (listName) => {
-    // Note that this test assumes the existence of a list with the name listName.
-
     actions.toggleSidebar();
 
     // click the list by finding the index of its name

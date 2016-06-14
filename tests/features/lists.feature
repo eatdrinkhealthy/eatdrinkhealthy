@@ -19,8 +19,9 @@ Feature: Lists
   @watch
   Scenario: Delete a list of businesses
     Given I am authenticated
-    When  I delete the list "my test list"
-    Then  There will not be a list called "my test list"
+    And   I have the demo lists set up
+    When  I delete the list "Vegan Shops"
+    Then  There will not be a list called "Vegan Shops"
 
   Scenario: As a signed in user I can remove businesses from a list, or delete a list, I can edit the name, and description https://trello.com/c/Uu6Zmgd8/27-1-edit-a-list
     Then a test needs to be written
