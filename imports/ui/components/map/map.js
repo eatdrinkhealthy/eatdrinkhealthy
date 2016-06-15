@@ -10,8 +10,9 @@ import { FlowRouter } from "meteor/kadira:flow-router";
 import { Places } from "../../../api/places/client/places";
 import { mapStylings } from "./map-style.js";
 import { Filters } from "./map-filters.js";
+import { currentReportingUser } from "../../../api/utils.js";
 
-/* global Geolocation */
+/* global Geolocation, analytics */
 
 // store marker objects for reference (ie to clear and construct the pop ups)
 let markersArray = [];
@@ -35,6 +36,20 @@ const defaultLocation = {
 
 const mapCenterLocation = new ReactiveVar(defaultLocation);
 const filter = new ReactiveVar([]);
+
+function trackFilter() {
+  // TODO: currently this can be called when the filter window is opened and
+  // closed, which will track the filter via analytics, although no change
+  // was made. Consider preventing the duplicate reporting.
+  const currentFilters = filter.get();
+
+  if (currentFilters.length) {
+    analytics.track("Filtered Search", {
+      user: currentReportingUser(),
+      filters: currentFilters,
+    });
+  }
+}
 
 Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
   this.autorun(() => {
@@ -191,12 +206,14 @@ Template.map.events({
       setFilters.pop(event.target.value);
     }
     filter.set(setFilters);
+
     clearMarkers();
   },
   "click [data-action=toggle-filter]": () => {
     if ($(".map-container").hasClass("map-container--open-right")) {
       $(".map-container").removeClass("map-container--open-right");
       $(".filter").removeClass("filter--show");
+      trackFilter();
     } else {
       $(".map-container").removeClass("map-container--open-left");
       $(".map-container").addClass("map-container--open-right");
