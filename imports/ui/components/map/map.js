@@ -9,6 +9,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { FlowRouter } from "meteor/kadira:flow-router";
 import { Places } from "../../../api/places/client/places";
 import { mapStylings } from "./map-style.js";
+import { Filters } from "./map-filters.js";
 
 /* global Geolocation */
 
@@ -24,73 +25,6 @@ function clearMarkers() {
   markersArray = [];
   markers = {};
 }
-
-const Filters = [
-  {
-    name: "Gluten Free",
-    value: "glutenFree",
-  },
-  {
-    name: "Juice Bars",
-    value: "juiceBar",
-  },
-  {
-    name: "Salad Places",
-    value: "saladPlace",
-  },
-  {
-    name: "Vegan / Vegetarian",
-    value: "veganVegeRestaurant",
-  },
-  {
-    name: "Bakeries",
-    value: "bakery",
-  },
-  {
-    name: "Cafés",
-    value: "cafe",
-  },
-  {
-    name: "Coffee Shops",
-    value: "coffeeShop",
-  },
-  {
-    name: "Restaurants",
-    value: "restaurant",
-  },
-  {
-    name: "Farmers Markets",
-    value: "farmersMarket",
-  },
-  {
-    name: "Butchers",
-    value: "butcher",
-  },
-  {
-    name: "Health Food Stores",
-    value: "healthFoodStore",
-  },
-  {
-    name: "Organic Grocery Stores",
-    value: "organicGrocery",
-  },
-  {
-    name: "Grocery Stores",
-    value: "grocery",
-  },
-  {
-    name: "Supermarkets",
-    value: "supermarket",
-  },
-  {
-    name: "Fruit & Vege Stores",
-    value: "fruitVegeStore",
-  },
-  {
-    name: "Markets",
-    value: "market",
-  },
-];
 
 const defaultLocation = {
   // default to downtown Toronto
@@ -167,9 +101,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   resizeHeight();
 
   // init map, pass in mapOptions, set style and give it an id that we set
-  const map = new googleMaps.Map(
-  document.getElementById("map"),
-  mapOptions);
+  const map = new googleMaps.Map(document.getElementById("map"), mapOptions);
 
   map.mapTypes.set(customMapTypeId, customMapType);
   map.setMapTypeId(customMapTypeId);
@@ -248,7 +180,6 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     }
   });
 });
-
 
 // [saladPlace, glutenFree, juiceBar]
 Template.map.events({
