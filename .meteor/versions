@@ -135,6 +135,8 @@ url@1.0.9
 webapp@1.2.8
 webapp-hashing@1.0.9
 wizonesolutions:canonical@0.0.5
+xolvio:backdoor@0.2.0
+xolvio:cleaner@0.3.1
 xolvio:http-interceptor@0.4.2
 zenorocha:clipboard@1.5.10
 zimme:active-route@2.3.2
