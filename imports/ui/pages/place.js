@@ -10,6 +10,9 @@ import { addVenueToList } from "../../api/lists/methods.js";
 import { createStars } from "../components/createStars.js";
 import { loading } from "../components/loading.html"; // eslint-disable-line no-unused-vars
 import { Places } from "../../api/places/client/places";
+import { currentReportingUser } from "../../api/utils.js";
+
+/* global analytics */
 
 Template.place.onCreated(function createPlace() {
   this.venueId = FlowRouter.current().params._id;
@@ -20,14 +23,19 @@ Template.place.onCreated(function createPlace() {
 });
 
 Template.place.onRendered(function renderPlace() {
-  let self = this;
+  const self = this;
+
+  analytics.track("display venue info", {
+    user: currentReportingUser(),
+  });
+
   this.autorun(() => {
     Template.currentData();
     if (Meteor.isCordova && Meteor.user()) {
       self.$(".place__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
       self.$(".place__add, .place__back").animate({ top: "+=20px" }, 100);
     }
-  })
+  });
 });
 
 Template.place.helpers({

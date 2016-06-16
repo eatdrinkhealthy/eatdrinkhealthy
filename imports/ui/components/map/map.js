@@ -8,8 +8,11 @@ import { Tracker } from "meteor/tracker";
 import { ReactiveVar } from "meteor/reactive-var";
 import { FlowRouter } from "meteor/kadira:flow-router";
 import { Places } from "../../../api/places/client/places";
+import { mapStylings } from "./map-style.js";
+import { Filters } from "./map-filters.js";
+import { currentReportingUser } from "../../../api/utils.js";
 
-/* global Geolocation */
+/* global Geolocation, analytics */
 
 // store marker objects for reference (ie to clear and construct the pop ups)
 let markersArray = [];
@@ -24,73 +27,6 @@ function clearMarkers() {
   markers = {};
 }
 
-const Filters = [
-  {
-    name: "Gluten Free",
-    value: "glutenFree",
-  },
-  {
-    name: "Juice Bars",
-    value: "juiceBar",
-  },
-  {
-    name: "Salad Places",
-    value: "saladPlace",
-  },
-  {
-    name: "Vegan / Vegetarian",
-    value: "veganVegeRestaurant",
-  },
-  {
-    name: "Bakeries",
-    value: "bakery",
-  },
-  {
-    name: "Cafés",
-    value: "cafe",
-  },
-  {
-    name: "Coffee Shops",
-    value: "coffeeShop",
-  },
-  {
-    name: "Restaurants",
-    value: "restaurant",
-  },
-  {
-    name: "Farmers Markets",
-    value: "farmersMarket",
-  },
-  {
-    name: "Butchers",
-    value: "butcher",
-  },
-  {
-    name: "Health Food Stores",
-    value: "healthFoodStore",
-  },
-  {
-    name: "Organic Grocery Stores",
-    value: "organicGrocery",
-  },
-  {
-    name: "Grocery Stores",
-    value: "grocery",
-  },
-  {
-    name: "Supermarkets",
-    value: "supermarket",
-  },
-  {
-    name: "Fruit & Vege Stores",
-    value: "fruitVegeStore",
-  },
-  {
-    name: "Markets",
-    value: "market",
-  },
-];
-
 const defaultLocation = {
   // default to downtown Toronto
   // TODO: default to city set in profile (perhaps facebook location aka city)
@@ -100,6 +36,20 @@ const defaultLocation = {
 
 const mapCenterLocation = new ReactiveVar(defaultLocation);
 const filter = new ReactiveVar([]);
+
+function trackFilter() {
+  // TODO: currently this can be called when the filter window is opened and
+  // closed, which will track the filter via analytics, although no change
+  // was made. Consider preventing the duplicate reporting.
+  const currentFilters = filter.get();
+
+  if (currentFilters.length) {
+    analytics.track("Filtered Search", {
+      user: currentReportingUser(),
+      filters: currentFilters,
+    });
+  }
+}
 
 Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
   this.autorun(() => {
@@ -136,125 +86,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   // map styling
   // TODO: find out how to import these, seems to break map on iOS only
-  const customMapType = new googleMaps.StyledMapType([
-    {
-      featureType: "landscape.man_made",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#f7f1df",
-        },
-      ],
-    },
-    {
-      featureType: "landscape.natural",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#d0e3b4",
-        },
-      ],
-    },
-    {
-      featureType: "landscape.natural.terrain",
-      elementType: "geometry",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "poi.business",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "poi.medical",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#fbd3da",
-        },
-      ],
-    },
-    {
-      featureType: "poi.park",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#bde6ab",
-        },
-      ],
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#ffe15f",
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "geometry.stroke",
-      stylers: [
-        {
-          color: "#efd151",
-        },
-      ],
-    },
-    {
-      featureType: "road.arterial",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#ffffff",
-        },
-      ],
-    },
-    {
-      featureType: "road.local",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "black",
-        },
-      ],
-    },
-    {
-      featureType: "transit.station.airport",
-      elementType: "geometry.fill",
-      stylers: [
-        {
-          color: "#cfb2db",
-        },
-      ],
-    },
-    {
-      featureType: "water",
-      elementType: "geometry",
-      stylers: [
-        {
-          color: "#a2daf2",
-        },
-      ],
-    },
-  ], {
+  const customMapType = new googleMaps.StyledMapType(mapStylings, {
     name: "Custom Style",
   });
 
@@ -284,9 +116,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   resizeHeight();
 
   // init map, pass in mapOptions, set style and give it an id that we set
-  const map = new googleMaps.Map(
-  document.getElementById("map"),
-  mapOptions);
+  const map = new googleMaps.Map(document.getElementById("map"), mapOptions);
 
   map.mapTypes.set(customMapTypeId, customMapType);
   map.setMapTypeId(customMapTypeId);
@@ -366,7 +196,6 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   });
 });
 
-
 // [saladPlace, glutenFree, juiceBar]
 Template.map.events({
   "click input[name='filter']": (event) => {
@@ -377,12 +206,14 @@ Template.map.events({
       setFilters.pop(event.target.value);
     }
     filter.set(setFilters);
+
     clearMarkers();
   },
   "click [data-action=toggle-filter]": () => {
     if ($(".map-container").hasClass("map-container--open-right")) {
       $(".map-container").removeClass("map-container--open-right");
       $(".filter").removeClass("filter--show");
+      trackFilter();
     } else {
       $(".map-container").removeClass("map-container--open-left");
       $(".map-container").addClass("map-container--open-right");
