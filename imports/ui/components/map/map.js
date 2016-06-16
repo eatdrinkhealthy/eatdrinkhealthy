@@ -200,12 +200,14 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 Template.map.events({
   "click input[name='filter']": (event) => {
     const setFilters = filter.get();
-    if (event.target.checked && _.indexOf(setFilters, event.target.value) === -1) {
-      setFilters.push(event.target.value);
+
+    if (event.target.checked) {
+      // add the checked filter to current filter list
+      filter.set(_.union(setFilters, event.target.value));
     } else {
-      setFilters.pop(event.target.value);
+      // remove the unchecked filter from current filter list
+      filter.set(_.without(setFilters, event.target.value));
     }
-    filter.set(setFilters);
 
     clearMarkers();
   },
