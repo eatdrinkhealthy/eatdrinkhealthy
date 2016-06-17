@@ -31,5 +31,5 @@ Template.shareModal.events({
 });
 
 Template.shareModal.helpers({
-  listUrl: () => `${window.location.host}/list/${FlowRouter.current().params._id}`
+  listUrl: () => `${Meteor.absoluteUrl()}list/${FlowRouter.current().params._id}`
 });
