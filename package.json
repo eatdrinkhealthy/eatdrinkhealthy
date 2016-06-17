@@ -7,7 +7,7 @@
     "lint-no-mg": "eslint . --ignore-pattern 'packages/miraclegrow/**'",
     "test": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests",
     "test-watch": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests --watch",
-    "build-local": "meteor build ~/Desktop/eatdrinkhealthy-local-builds --server=localhost:3000",
+    "build-local": "meteor build ~/Desktop/eatdrinkhealthy-local-builds --server=http://localhost:3000",
     "build-staging": "meteor build ~/Desktop/eatdrinkhealthy-staging-builds --server=https://eatdrinkhealthy-staging.meteorapp.com:443",
     "build-production": "meteor build ~/Desktop/eatdrinkhealthy-production-builds --server=https://www.eatdrinkhealthy.co:443"
   },
