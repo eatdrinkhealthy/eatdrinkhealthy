@@ -5,7 +5,7 @@
     "start": "meteor run --settings settings.json",
     "start-mobile": "meteor run ios-device --mobile-server localhost:3000 --settings settings.json",
     "lint-no-mg": "eslint . --ignore-pattern 'packages/miraclegrow/**'",
-    "test": "meteor npm run unit-test -- -w",
+    "test": "npm run unit-test -- -w",
     "unit-test": "mocha ./tests/unit-tests --compilers js:babel-register",
     "integration-test": "meteor test --once --port 4000 --driver-package dispatch:mocha-phantomjs",
     "integration-test-watch": "TEST_WATCH=1 meteor test --port 4000 --driver-package dispatch:mocha-phantomjs",
