@@ -6,7 +6,7 @@ App.info({
   author: "Steve Marsh",
   email: "sjm.atl@gmail.com",
   website: "https://www.eatdrinkhealthy.co",
-  version: "0.0.1",
+  version: "0.0.2",
 });
 
 // Set up resources such as icons and launch screens.
