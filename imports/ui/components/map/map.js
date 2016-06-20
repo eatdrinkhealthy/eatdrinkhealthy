@@ -85,7 +85,6 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
   markers = {};
 
   // map styling
-  // TODO: find out how to import these, seems to break map on iOS only
   const customMapType = new googleMaps.StyledMapType(mapStylings, {
     name: "Custom Style",
   });
