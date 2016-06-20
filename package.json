@@ -5,9 +5,10 @@
     "start": "meteor run --settings settings.json",
     "start-mobile": "meteor run ios-device --mobile-server localhost:3000 --settings settings.json",
     "lint-no-mg": "eslint . --ignore-pattern 'packages/miraclegrow/**'",
-    "test": "npm run unit-test && npm run ee-test",
-    "unit-test": "meteor test --once --port 4000 --driver-package dispatch:mocha-phantomjs",
-    "unit-test-watch": "TEST_WATCH=1 meteor test --port 4000 --driver-package dispatch:mocha-phantomjs",
+    "test": "meteor npm run unit-test -- -w",
+    "unit-test": "mocha ./tests/unit-tests --compilers js:babel-register",
+    "integration-test": "meteor test --once --port 4000 --driver-package dispatch:mocha-phantomjs",
+    "integration-test-watch": "TEST_WATCH=1 meteor test --port 4000 --driver-package dispatch:mocha-phantomjs",
     "ee-test": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests",
     "ee-test-watch": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests --watch"
   },
@@ -15,6 +16,12 @@
     "meteor-node-stubs": "~0.2.0"
   },
   "devDependencies": {
-    "chimp": "^0.35.0"
+    "babel-preset-es2015": "^6.9.0",
+    "babel-register": "^6.9.0",
+    "chai": "^3.5.0",
+    "chimp": "^0.35.0",
+    "meteor-node-stubs": "^0.2.3",
+    "mocha": "^2.5.3",
+    "testdouble": "^1.4.2"
   }
 }

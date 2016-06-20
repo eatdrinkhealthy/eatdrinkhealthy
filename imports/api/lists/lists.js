@@ -3,7 +3,7 @@ import { SimpleSchema } from "meteor/aldeed:simple-schema";
 
 export const Lists = new Mongo.Collection("lists");
 
-listsSchema = new SimpleSchema({
+const listsSchema = new SimpleSchema({
   title: {
     type: String
   },
