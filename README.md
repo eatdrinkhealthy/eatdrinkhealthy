@@ -33,7 +33,17 @@ If you want to have some pregenerated lists, simply do the following
 * `addSampleLists(<USER_ID>);` Where `USER_ID` is the id of the user you would like to generate lists for
 
 ### Testing
+In order to run unit and acceptance (end to end) tests, you must first run `npm install` to add supporting packages.
 
+#### Unit Tests
+'Fast' unit tests are running using Mocha, Chai, and Testdouble.  These are run based on Pete Corey's unit test setup. [Unit Testing With Meteor 1.3](http://blog.east5th.co/2015/12/21/unit-testing-with-meteor-1.3/)
+
+To run these unit tests, you can run `npm run unit-test` or `npm run unit-test-watch`
+
+#### Integration Tests (and heavy unit tests)
+Integration and unit tests can be added using files named `*.test.js` and run with `meteor test`.
+
+#### Acceptance Tests
 Acceptance tests (written in [Cucumber](https://chimp.readme.io/docs/cucumberjs),
 run with [Chimp](https://chimp.readme.io/)) run using a browser. All app functionality
 currently works within a browser.
@@ -46,14 +56,21 @@ the docs [here](http://webdriver.io/api.html).
 
 Expectations are using [Jasmine](http://jasmine.github.io/2.3/introduction.html#section-Expectations).
 
+1. Start the app
+1. Run acceptance tests: `npm run ee-test`
+1. Run Chimp in *watch* mode: `npm run ee-test-watch`
+
+NOTE: as of Meteor 1.3, when running chimp based tests, DO NOT run npm via meteor, like 'meteor npm run ee-test'. As this will run a version of node incompatible with chimp, and cause chimp to fail.
+
+#### Mobile App Tests
 We don't currently have mobile app-specific tests, though we could add them in
 the future, Chimp supports [Appium](http://appium.io/).
 
-1. Start the app
-1. Run tests: `npm test`
-1. Run Chimp in *watch* mode: `npm run test-watch`
+#### Full Test Suite / Continuous Integration
+To run the entire test suite (unit, integration, acceptance), run `npm test`.
 
-Unit tests can be added using files named `*.test.js` and run with `meteor test`.
+This should be used in continuous integration to make sure all tests pass in order to complete the build and successfully deploy.
+
 
 ### Foursquare API (Notes, Behaviours, Idiosyncrasies)
 1. Businesses not showing up with no filter set, but do show up when filtered on their category: The api returns 50 businesses in a priority order. So if no search criteria is set, a butcher might shop not show up. But when filtering for butchers, will be in the top 50 and show up.

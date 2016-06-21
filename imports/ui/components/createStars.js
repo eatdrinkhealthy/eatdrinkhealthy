@@ -1,7 +1,7 @@
 export function createStars(score) {
   let stars = "";
   const scoreCount = Math.round(score / 2);
-  for (i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     if (scoreCount > i) {
       stars = stars.concat("<div class='star'></div>");
     } else {
@@ -10,3 +10,4 @@ export function createStars(score) {
   }
   return stars;
 }
+

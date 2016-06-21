@@ -25,5 +25,12 @@ mdg:geolocation
 mdg:validated-method
 zenorocha:clipboard
 dropz:facebook-fake
+
+# testing
 xolvio:backdoor
 xolvio:cleaner
+factory
+dispatch:mocha-phantomjs
+hwillson:stub-collections
+johanbrook:publication-collector
+# practicalmeteor:mocha@2.1.1-rc.1
