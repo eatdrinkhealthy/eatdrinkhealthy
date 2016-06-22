@@ -1,12 +1,9 @@
-import { expect } from "chai";
 import td from "testdouble";
-
 import _ from "underscore";
 
 /* eslint-env node, mocha */
 
-describe("getFilteredFoursquarePlaces()", function() {
-
+describe("getFilteredFoursquarePlaces()", function () {
   const MeteorDouble = {
     publish: () => {},
     settings: {
@@ -32,8 +29,7 @@ describe("getFilteredFoursquarePlaces()", function() {
 
   let getFilteredFoursquarePlaces;
 
-  beforeEach(function() {
-
+  beforeEach(function () {
     td.replace("meteor/meteor", { Meteor });
     td.replace("meteor/http", { HTTP });
     td.replace("meteor/ejson", { EJSON });
@@ -42,15 +38,15 @@ describe("getFilteredFoursquarePlaces()", function() {
     td.replace("../../imports/api/foursquare/server/foursquareApi.js", { getFoursquarePlaces });
     td.replace("../../imports/api/foursquare/categories.js", { categories });
 
-    let publications = require("../../imports/api/foursquare/server/publications.js");
+    const publications = require("../../imports/api/foursquare/server/publications.js");
     getFilteredFoursquarePlaces = publications.getFilteredFoursquarePlaces;
   });
 
-  afterEach(function() {
+  afterEach(function () {
     td.reset();
   });
 
-  it("should select all categories if provided no user chosen filters", function() {
+  it("should select all categories if provided no user chosen filters", function () {
     getFilteredFoursquarePlaces([], null, null, null);
     td.verify(getFoursquarePlaces("1", null, null, null), { times: 1 });
     td.verify(getFoursquarePlaces("2", null, null, null), { times: 1 });
@@ -58,7 +54,7 @@ describe("getFilteredFoursquarePlaces()", function() {
     td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
   });
 
-  it("when passed one filter, it should select the corresponding category", function() {
+  it("when passed one filter, it should select the corresponding category", function () {
     getFilteredFoursquarePlaces(["veganVegeRestaurant"], null, null, null);
 
     td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
@@ -67,8 +63,9 @@ describe("getFilteredFoursquarePlaces()", function() {
     td.verify(getFoursquarePlaces("3", null, null, null), { times: 0 });
   });
 
-  it("when passed three filters, it should select the three corresponding categories", function() {
-    getFilteredFoursquarePlaces(["veganVegeRestaurant", "juiceBar", "glutenFree"], null, null, null);
+  it("when passed three filters, it should select the three corresponding categories", function () {
+    getFilteredFoursquarePlaces(["veganVegeRestaurant", "juiceBar", "glutenFree"],
+      null, null, null);
 
     td.verify(getFoursquarePlaces("1", null, null, null), { times: 1 });
     td.verify(getFoursquarePlaces("2", null, null, null), { times: 1 });
