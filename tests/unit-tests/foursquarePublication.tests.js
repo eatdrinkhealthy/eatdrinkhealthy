@@ -3,7 +3,9 @@ import td from "testdouble";
 
 import _ from "underscore";
 
-describe("foursquare publication", function() {
+/* eslint-env node, mocha */
+
+describe("getFilteredFoursquarePlaces()", function() {
 
   const MeteorDouble = {
     publish: () => {},
@@ -22,15 +24,15 @@ describe("foursquare publication", function() {
   const getFoursquarePlaces = td.function("getFoursquarePlaces");
 
   const categories = {
-    glutenFree: "123",
-    juiceBar: "456",
-    saladPlace: "789",
-    veganVegeRestaurant: "321",
+    glutenFree: "1",
+    juiceBar: "2",
+    saladPlace: "3",
+    veganVegeRestaurant: "4",
   };
 
   let getFilteredFoursquarePlaces;
 
-  before(function() {
+  beforeEach(function() {
 
     td.replace("meteor/meteor", { Meteor });
     td.replace("meteor/http", { HTTP });
@@ -44,16 +46,33 @@ describe("foursquare publication", function() {
     getFilteredFoursquarePlaces = publications.getFilteredFoursquarePlaces;
   });
 
-  after(function() {
+  afterEach(function() {
     td.reset();
   });
 
-  it("should return all categories if provided no user chosen filters", function() {
+  it("should select all categories if provided no user chosen filters", function() {
     getFilteredFoursquarePlaces([], null, null, null);
+    td.verify(getFoursquarePlaces("1", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("2", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("3", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
+  });
 
-    td.verify(getFoursquarePlaces("123", null, null, null));
-    td.verify(getFoursquarePlaces("456", null, null, null));
-    td.verify(getFoursquarePlaces("789", null, null, null));
-    td.verify(getFoursquarePlaces("321", null, null, null));
+  it("when passed one filter, it should select the corresponding category", function() {
+    getFilteredFoursquarePlaces(["veganVegeRestaurant"], null, null, null);
+
+    td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("1", null, null, null), { times: 0 });
+    td.verify(getFoursquarePlaces("2", null, null, null), { times: 0 });
+    td.verify(getFoursquarePlaces("3", null, null, null), { times: 0 });
+  });
+
+  it("when passed three filters, it should select the three corresponding categories", function() {
+    getFilteredFoursquarePlaces(["veganVegeRestaurant", "juiceBar", "glutenFree"], null, null, null);
+
+    td.verify(getFoursquarePlaces("1", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("2", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
+    td.verify(getFoursquarePlaces("3", null, null, null), { times: 0 });
   });
 });
