@@ -1,7 +1,9 @@
 import td from "testdouble";
+import { expect } from "chai";
 import _ from "underscore";
 
 /* eslint-env node, mocha */
+/* eslint-disable prefer-arrow-callback, global-require, func-names */
 
 describe("getFilteredFoursquarePlaces()", function () {
   const MeteorDouble = {
@@ -54,7 +56,7 @@ describe("getFilteredFoursquarePlaces()", function () {
     td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
   });
 
-  it("when passed one filter, it should select the corresponding category", function () {
+  it("should select the corresponding category when passed one filter", function () {
     getFilteredFoursquarePlaces(["veganVegeRestaurant"], null, null, null);
 
     td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
@@ -63,7 +65,7 @@ describe("getFilteredFoursquarePlaces()", function () {
     td.verify(getFoursquarePlaces("3", null, null, null), { times: 0 });
   });
 
-  it("when passed three filters, it should select the three corresponding categories", function () {
+  it("should select the three corresponding categories when passed three filters", function () {
     getFilteredFoursquarePlaces(["veganVegeRestaurant", "juiceBar", "glutenFree"],
       null, null, null);
 
@@ -71,5 +73,17 @@ describe("getFilteredFoursquarePlaces()", function () {
     td.verify(getFoursquarePlaces("2", null, null, null), { times: 1 });
     td.verify(getFoursquarePlaces("4", null, null, null), { times: 1 });
     td.verify(getFoursquarePlaces("3", null, null, null), { times: 0 });
+  });
+
+  it("should throw an error when passed an invalid category", function () {
+    expect(function () {
+      getFilteredFoursquarePlaces(["THIS_NOT_A_REAL_CATEGORY"], null, null, null);
+    }).to.throw(Error);
+  });
+
+  it("should throw an error when filter is undefined", function () {
+    expect(function () {
+      getFilteredFoursquarePlaces(undefined, null, null, null);
+    }).to.throw(Error);
   });
 });

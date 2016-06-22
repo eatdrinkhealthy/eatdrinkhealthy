@@ -1,24 +1,28 @@
 import { EJSON } from "meteor/ejson";
 import { Meteor } from "meteor/meteor";
+import { HTTP } from "meteor/http";
 import { check } from "meteor/check";
 import { _ } from "meteor/underscore";
 import { getFoursquarePlaces } from "./foursquareApi.js";
 import { categories } from "../categories.js";
 
 export function getFilteredFoursquarePlaces(filter, latitude, longitude, callback) {
-  if (filter.length === 0) {
-    _.each(categories, (category) => {
-      getFoursquarePlaces(category, latitude, longitude, callback);
-    });
-  } else {
-    // cross reference [filter] with list of all categories.
-    _.each(categories, (category, key) => {
-      // only add when part of [filter] array
-      if (_.indexOf(filter, key) !== -1) {
-        getFoursquarePlaces(category, latitude, longitude, callback);
-      }
-    });
+  if (!_.isArray(filter)) {
+    throw new Meteor.Error("getFilteredFoursquarePlaces", "expected filter to be an array");
   }
+
+  // If we are passed an empty filter, default search to all categories
+  if (filter.length === 0) {
+    filter = Object.keys(categories); // eslint-disable-line no-param-reassign
+  }
+
+  filter.forEach(categoryName => {
+    if (!categories[categoryName]) {
+      throw new Meteor.Error("getFilteredFoursquarePlaces",
+        `received category name: ${categoryName}`);
+    }
+    getFoursquarePlaces(categories[categoryName], latitude, longitude, callback);
+  });
 }
 
 Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter) {
@@ -37,7 +41,7 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
       });
       self.ready();
     } else {
-      console.error(error.message);
+      console.error(error.message); // eslint-disable-line no-console
     }
   });
 });
