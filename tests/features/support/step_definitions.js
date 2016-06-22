@@ -37,9 +37,9 @@ function steps() {
 
   // When functions
 
-  this.When(/^I sign in$/, () => {
-    browser.waitForExist("span.sign-in-text-facebook", 5000);
-    browser.click("span.sign-in-text-facebook");
+  this.When(/^I view the filter page$/, () => {
+    actions.toggleFilter();
+    browser.waitForExist(".filter-item", 1500);
   });
 
   this.When(/^I click the menu$/, () => {
@@ -67,11 +67,18 @@ function steps() {
     browser.alertAccept();
   });
 
-
   // Then functions
 
   this.Then(/^I see a map$/, () => {
     browser.waitForExist(".map", 1500);
+  });
+
+  this.Then(/^I see "Vegan \/ Vegetarian" & "Juice Bars" filters set$/, () => {
+    // const checkedFilters = browser.getValue(".check");
+    const checkedFilters = browser.element(".check");
+    console.log(checkedFilters);
+    // expect(checkedFilters.indexOf("veganVegeRestaurant")).not.toEqual(-1);
+    // expect(checkedFilters.indexOf("juiceBar")).not.toEqual(-1);
   });
 
   this.Then(/^I see my name in the profile section$/, () => {
