@@ -1,27 +1,29 @@
-import { HTTP } from "meteor/http";
 import { EJSON } from "meteor/ejson";
 import { Meteor } from "meteor/meteor";
+import { HTTP } from "meteor/http";
 import { check } from "meteor/check";
 import { _ } from "meteor/underscore";
+import { getFoursquarePlaces } from "./foursquareApi.js";
+import { categories } from "../categories.js";
 
-const categories = {
-  glutenFree: "4c2cd86ed066bed06c3c5209",
-  juiceBar: "4bf58dd8d48988d112941735",
-  saladPlace: "4bf58dd8d48988d1bd941735",
-  veganVegeRestaurant: "4bf58dd8d48988d1d3941735",
-  bakery: "4bf58dd8d48988d16a941735",
-  cafe: "4bf58dd8d48988d16d941735",
-  coffeeShop: "4bf58dd8d48988d1e0931735",
-  restaurant: "4bf58dd8d48988d1c4941735",
-  farmersMarket: "4bf58dd8d48988d1fa941735",
-  butcher: "4bf58dd8d48988d11d951735",
-  healthFoodStore: "50aa9e744b90af0d42d5de0e",
-  organicGrocery: "52f2ab2ebcbc57f1066b8b45",
-  grocery: "4bf58dd8d48988d118951735",
-  supermarket: "52f2ab2ebcbc57f1066b8b46",
-  fruitVegeStore: "52f2ab2ebcbc57f1066b8b1c",
-  market: "50be8ee891d4fa8dcc7199a7",
-};
+export function getFilteredFoursquarePlaces(filter, latitude, longitude, callback) {
+  if (!_.isArray(filter)) {
+    throw new Meteor.Error("getFilteredFoursquarePlaces", "expected filter to be an array");
+  }
+
+  // If we are passed an empty filter, default search to all categories
+  if (filter.length === 0) {
+    filter = Object.keys(categories); // eslint-disable-line no-param-reassign
+  }
+
+  filter.forEach(categoryName => {
+    if (!categories[categoryName]) {
+      throw new Meteor.Error("getFilteredFoursquarePlaces",
+        `received category name: ${categoryName}`);
+    }
+    getFoursquarePlaces(categories[categoryName], latitude, longitude, callback);
+  });
+}
 
 Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter) {
   check(latitude, Number);
@@ -29,48 +31,19 @@ Meteor.publish("nearbyPlaces", function nearbyPlaces(latitude, longitude, filter
   check(filter, Array);
 
   const self = this;
-  const latLng = `${latitude},${longitude}`;
 
-  function getFoursquarePlaces(category) {
-    HTTP.call("GET", "https://api.foursquare.com/v2/venues/search", {
-      params: {
-        client_id: Meteor.settings.foursquare.client_id,
-        client_secret: Meteor.settings.foursquare.client_secret,
-        v: "20130815", // api version
-        ll: latLng,
-        limit: "50",
-        intent: "browse",
-        radius: "1000", // in meters
-        categoryId: category,
-      },
-    },
-    (error, result) => {
-      if (!error) {
-        const JSONresponse = EJSON.parse(result.content);
+  getFilteredFoursquarePlaces(filter, latitude, longitude, (error, result) => {
+    if (!error) {
+      const JSONresponse = EJSON.parse(result.content);
 
-        _.each(JSONresponse.response.venues, (venue) => {
-          // console.log(venue);
-          self.added("places", venue.id, venue);
-        });
-        self.ready();
-      }
-    });
-  }
-
-  // check if filters are set
-  if (filter.length === 0) {
-    _.each(categories, (category) => {
-      getFoursquarePlaces(category);
-    });
-  } else {
-    // cross reference [filter] with list of all categories.
-    _.each(categories, (category, key) => {
-      // only add when part of [filter] array
-      if (_.indexOf(filter, key) !== -1) {
-        getFoursquarePlaces(category);
-      }
-    });
-  }
+      _.each(JSONresponse.response.venues, (venue) => {
+        self.added("places", venue.id, venue);
+      });
+      self.ready();
+    } else {
+      console.error(error.message); // eslint-disable-line no-console
+    }
+  });
 });
 
 Meteor.publish("listVenues", function listVenues(venueIds) {
