@@ -4,7 +4,7 @@ Feature: Home Page
   I want to see a map
   So I can find businesses near me
 
-  Scenario: Visit home page as a signed out user}
+  Scenario: Visit home page as a signed out user
     Given I am on the homepage
     And   I am signed out
     Then  I see a map
