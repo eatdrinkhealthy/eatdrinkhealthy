@@ -75,33 +75,52 @@ function steps() {
 
   this.Then(/^I see "Vegan \/ Vegetarian" & "Juice Bars" filters set$/, () => {
     // const checkedFilters = browser.getValue(".check");
-    const checkedFilters = browser.element(".check");
-    console.log(checkedFilters);
-    // expect(checkedFilters.indexOf("veganVegeRestaurant")).not.toEqual(-1);
-    // expect(checkedFilters.indexOf("juiceBar")).not.toEqual(-1);
+    // const checkedFilters = browser.element("input[value=juiceBar]");
+    // console.log(checkedFilters);
+    // const attributeList = browser.getAttribute("input[value=juiceBar]", "checked");
+    // console.log(attributeList);
+
+    // NOTE: getAttribute returns a string, not boolean; so here we use chai's
+    //       to.equal to compare to a string of 'true' or not.
+    expect(browser.getAttribute("input[value=glutenFree]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=juiceBar]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=saladPlace]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=veganVegeRestaurant]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=bakery]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=cafe]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=coffeeShop]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=restaurant]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=farmersMarket]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=butcher]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=healthFoodStore]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=organicGrocery]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=grocery]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=supermarket]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=fruitVegeStore]", "checked")).to.not.equal("true");
+    expect(browser.getAttribute("input[value=market]", "checked")).to.not.equal("true");
   });
 
   this.Then(/^I see my name in the profile section$/, () => {
     browser.waitForExist(".profile__name", 1500);
-    expect(browser.getText(".profile__name")).toEqual("Frodo Baggins");
+    expect(browser.getText(".profile__name")).to.equal("Frodo Baggins");
   });
 
   this.Then(/^I see a list of lists$/, () => {
     browser.waitForExist(".lists__title");
-    expect(browser.getText(".lists__title")).toEqual("MY LISTS");
+    expect(browser.getText(".lists__title")).to.equal("MY LISTS");
   });
 
   this.Then(/^The list of lists will contain "([^"]*)"$/, (name) => {
     browser.waitForExist(".lists");
     const listNames = browser.getText(".lists-item__title");
-    expect(listNames.indexOf(name)).not.toEqual(-1);
+    expect(listNames.indexOf(name)).not.to.equal(-1);
   });
 
   this.Then(/^There will not be a list called "([^"]*)"$/, function (name) {
     actions.toggleSidebar();
     browser.waitForExist(".lists", 1500);
     const listNames = browser.getText(".lists-item__title");
-    expect(listNames.indexOf(name)).toEqual(-1);
+    expect(listNames.indexOf(name)).to.equal(-1);
   });
 
   // allow placeholders that don't return errors.
