@@ -1,6 +1,9 @@
 /* eslint new-cap: 0 */
-/* global browser */
-/* global expect */
+/* global browser, expect, pending, Meteor */
+
+import _ from "underscore";
+import { categories as categoryList } from "../../../imports/api/foursquare/categories.js";
+import { defaultFilters } from "../../../imports/ui/components/map/map-filters.js";
 
 const actions = require("./actions");
 const fixtures = require("./common-fixtures");
@@ -8,7 +11,7 @@ const fixtures = require("./common-fixtures");
 const baseUrl = "http://localhost:3000";
 
 function steps() {
-  //Given functions
+  // Given functions
 
   this.Given(/^I am on the homepage$/, () => {
     browser.url(baseUrl);
@@ -30,7 +33,7 @@ function steps() {
     }
   });
 
-  this.Given(/^I have the demo lists set up$/, function () {
+  this.Given(/^I have the demo lists set up$/, () => {
     const meteorId = browser.execute(() => Meteor.userId()).value;
     fixtures.common.resetLists(meteorId);
   });
@@ -73,31 +76,26 @@ function steps() {
     browser.waitForExist(".map", 1500);
   });
 
-  this.Then(/^I see "Vegan \/ Vegetarian" & "Juice Bars" filters set$/, () => {
-    // const checkedFilters = browser.getValue(".check");
-    // const checkedFilters = browser.element("input[value=juiceBar]");
-    // console.log(checkedFilters);
-    // const attributeList = browser.getAttribute("input[value=juiceBar]", "checked");
-    // console.log(attributeList);
+  this.Then(/^I see the default search filters set$/, () => {
+    // NOTE: for checked getAttribute returns the string 'true' or null (not a boolean)
+    //       so here we use chai's to.equal to compare to a string of 'true' or null.
+    const tests = Object.keys(categoryList).map((category) => ({
+      category,
+      shouldBeChecked: null,
+    }));
 
-    // NOTE: getAttribute returns a string, not boolean; so here we use chai's
-    //       to.equal to compare to a string of 'true' or not.
-    expect(browser.getAttribute("input[value=glutenFree]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=juiceBar]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=saladPlace]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=veganVegeRestaurant]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=bakery]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=cafe]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=coffeeShop]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=restaurant]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=farmersMarket]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=butcher]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=healthFoodStore]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=organicGrocery]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=grocery]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=supermarket]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=fruitVegeStore]", "checked")).to.not.equal("true");
-    expect(browser.getAttribute("input[value=market]", "checked")).to.not.equal("true");
+    defaultFilters.forEach((filterName) => {
+      tests[_.findIndex(tests, ({ category }) => category === filterName)]
+        .shouldBeChecked = "true";
+    });
+
+    tests.forEach((test) => {
+      expect(browser.getAttribute(`input[value=${test.category}]`, "checked"))
+        .to.equal(test.shouldBeChecked,
+          `Expected category ${test.category} to be ${test.shouldBeChecked}`);
+    });
+
+    console.log("        Default filters are:", defaultFilters); // eslint-disable-line no-console
   });
 
   this.Then(/^I see my name in the profile section$/, () => {
@@ -116,7 +114,7 @@ function steps() {
     expect(listNames.indexOf(name)).not.to.equal(-1);
   });
 
-  this.Then(/^There will not be a list called "([^"]*)"$/, function (name) {
+  this.Then(/^There will not be a list called "([^"]*)"$/, (name) => {
     actions.toggleSidebar();
     browser.waitForExist(".lists", 1500);
     const listNames = browser.getText(".lists-item__title");

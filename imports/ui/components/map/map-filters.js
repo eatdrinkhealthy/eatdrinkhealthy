@@ -64,3 +64,5 @@ export const Filters = [
     value: "market",
   },
 ];
+
+export const defaultFilters = ["juiceBar", "veganVegeRestaurant"];

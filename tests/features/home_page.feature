@@ -13,7 +13,7 @@ Feature: Home Page
   Scenario: View the filter page as a signed out user
     Given I am on the homepage
     When  I view the filter page
-    Then  I see "Vegan / Vegetarian" & "Juice Bars" filters set
+    Then  I see the default search filters set
 
   Scenario: Sign in
     Given I am authenticated
