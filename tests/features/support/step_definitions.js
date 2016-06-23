@@ -81,18 +81,18 @@ function steps() {
     //       so here we use chai's to.equal to compare to a string of 'true' or null.
     const tests = Object.keys(categoryList).map((category) => ({
       category,
-      shouldBeChecked: null,
+      expectedResult: null,
     }));
 
     defaultFilters.forEach((filterName) => {
       tests[_.findIndex(tests, ({ category }) => category === filterName)]
-        .shouldBeChecked = "true";
+        .expectedResult = "true";
     });
 
     tests.forEach((test) => {
       expect(browser.getAttribute(`input[value=${test.category}]`, "checked"))
-        .to.equal(test.shouldBeChecked,
-          `Expected category ${test.category} to be ${test.shouldBeChecked}`);
+        .to.equal(test.expectedResult,
+          `Expected category ${test.category} to be ${test.expectedResult}`);
     });
 
     console.log("        Default filters are:", defaultFilters); // eslint-disable-line no-console

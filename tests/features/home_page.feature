@@ -9,7 +9,6 @@ Feature: Home Page
     And   I am signed out
     Then  I see a map
 
-  @watch
   Scenario: View the filter page as a signed out user
     Given I am on the homepage
     When  I view the filter page
