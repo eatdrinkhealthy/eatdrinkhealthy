@@ -11,7 +11,7 @@
     "integration-test": "meteor test --once --port 4000 --driver-package dispatch:mocha-phantomjs",
     "integration-test-watch": "TEST_WATCH=1 meteor test --port 4000 --driver-package dispatch:mocha-phantomjs",
     "ee-test": "./node_modules/.bin/chimp --ddp=http://localhost:3000 --path=tests/features --chai",
-    "ee-test-watch": "npm run ee-test -- --watch --browser=phantomjs",
+    "ee-test-watch": "npm run ee-test -- --watch",
     "build-local": "meteor build ~/Desktop/eatdrinkhealthy-local-builds --server=http://localhost:3000",
     "build-staging": "meteor build ~/Desktop/eatdrinkhealthy-staging-builds --server=https://eatdrinkhealthy-staging.meteorapp.com:443",
     "build-production": "meteor build ~/Desktop/eatdrinkhealthy-production-builds --server=https://www.eatdrinkhealthy.co:443"

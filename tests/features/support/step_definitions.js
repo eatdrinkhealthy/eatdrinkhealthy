@@ -42,7 +42,7 @@ function steps() {
 
   this.When(/^I view the filter page$/, () => {
     actions.toggleFilter();
-    browser.waitForExist(".filter-item", 1500);
+    browser.waitForVisible(".filter-item", 1500);
   });
 
   this.When(/^I click the menu$/, () => {
@@ -99,7 +99,7 @@ function steps() {
   });
 
   this.Then(/^I see my name in the profile section$/, () => {
-    browser.waitForExist(".profile__name", 1500);
+    browser.waitForVisible(".profile__name", 1500);
     expect(browser.getText(".profile__name")).to.equal("Frodo Baggins");
   });
 
