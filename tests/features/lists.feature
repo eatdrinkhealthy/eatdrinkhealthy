@@ -4,19 +4,16 @@ Feature: Lists
   I want to be able to see and manage a list of lists
   So I can view the lists I've created
 
-  @watch
   Scenario: Visit home page as a signed in user
     Given I am authenticated
     When  I click the menu
     Then  I see a list of lists
 
-  @watch
   Scenario: Create a new list of businesses
     Given I am authenticated
     When  I create a new list called "my test list"
     Then  The list of lists will contain "my test list"
 
-  @watch
   Scenario: Delete a list of businesses
     Given I am authenticated
     And   I have the demo lists set up

@@ -9,7 +9,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 import { FlowRouter } from "meteor/kadira:flow-router";
 import { Places } from "../../../api/places/client/places";
 import { mapStylings } from "./map-style.js";
-import { Filters } from "./map-filters.js";
+import { defaultFilters, Filters } from "./map-filters.js";
 import { currentReportingUser } from "../../../api/utils.js";
 
 /* global Geolocation, analytics */
@@ -35,7 +35,7 @@ const defaultLocation = {
 };
 
 const mapCenterLocation = new ReactiveVar(defaultLocation);
-const filter = new ReactiveVar([]);
+const filter = new ReactiveVar(defaultFilters);
 
 function trackFilter() {
   // TODO: currently this can be called when the filter window is opened and
