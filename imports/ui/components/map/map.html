@@ -1,6 +1,6 @@
 <template name="map">
 
-  <div class="map-container">
+  <div class="map-container {{mapContainerOpenClass}}">
     <div class="map" id="map"></div>
     
     <div class="nav">
@@ -14,7 +14,7 @@
     </div>
   </div>
   
-  <div class="filter">
+  <div class="filter {{showFilterClass}}">
 
     <div class="filter-header"> 
       <h4>Filter</h4>
