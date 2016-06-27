@@ -4,7 +4,7 @@
   "scripts": {
     "start": "meteor run --settings settings.json",
     "start-mobile": "meteor run ios-device --mobile-server localhost:3000 --settings settings.json",
-    "lint-no-packages": "./node_modules/.bin/eslint . --ignore-pattern 'packages/**'",
+    "lint-exclude-packages": "./node_modules/.bin/eslint . --ignore-pattern 'packages/**'",
     "test": "npm run unit-test && npm run ee-test",
     "unit-test": "./node_modules/.bin/mocha ./tests/unit-tests --compilers js:babel-register",
     "unit-test-watch": "npm run unit-test -- -w",
