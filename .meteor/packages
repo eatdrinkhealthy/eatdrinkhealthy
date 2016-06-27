@@ -17,7 +17,7 @@ standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-okgrow:miraclegrow
+audit-argument-checks
 accounts-ui-unstyled
 less
 accounts-facebook
@@ -25,6 +25,22 @@ mdg:geolocation
 mdg:validated-method
 zenorocha:clipboard
 dropz:facebook-fake
+alanning:roles
+aldeed:autoform
+aldeed:collection2
+aldeed:simple-schema
+browser-policy
+force-ssl
+kadira:flow-router
+kadira:blaze-layout
+kadira:debug
+meteorhacks:kadira
+meteorhacks:zones
+okgrow:analytics
+okgrow:router-autoscroll
+reactive-dict
+underscorestring:underscore.string
+wizonesolutions:canonical
 
 # testing
 xolvio:backdoor
@@ -34,3 +50,4 @@ dispatch:mocha-phantomjs
 hwillson:stub-collections
 johanbrook:publication-collector
 # practicalmeteor:mocha@2.1.1-rc.1
+
