@@ -210,7 +210,7 @@ Template.map.events({
 
     clearMarkers();
   },
-  "click [data-action=toggle-filter]": () => {
+  "click .toggle-filter": () => {
     if ($(".map-container").hasClass("map-container--open-right")) {
       $(".map-container").removeClass("map-container--open-right");
       $(".filter").removeClass("filter--show");
