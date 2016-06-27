@@ -4,7 +4,7 @@
     "react"
   ],
   "extends": [
-    "airbnb/base",
+    "airbnb",
     "plugin:meteor/recommended",
     "plugin:react/recommended"
   ],
@@ -26,15 +26,15 @@
     "semi": 2,
     "no-console": 1,
     "quotes": [
-        2, "double", { "avoidEscape": true, "allowTemplateLiterals": true }
-      ],
+      2, "double", { "avoidEscape": true, "allowTemplateLiterals": true }
+    ],
     "react/no-danger": 1,
     "react/react-in-jsx-scope": 0,
     "meteor/eventmap-params": [
-        2, { "templateInstanceParamName": "instance" }
-      ],
+      2, { "templateInstanceParamName": "instance" }
+    ],
     "import/no-unresolved": [
-        2, { "ignore": ["^meteor/"] }
-      ]
+      2, { "ignore": ["^meteor/"] }
+    ]
   }
 }
