@@ -4,12 +4,12 @@ export const Filters = [
     value: "juiceBar",
   },
   {
-    name: "Salad Places",
-    value: "saladPlace",
-  },
-  {
     name: "Vegan / Vegetarian",
     value: "veganVegeRestaurant",
+  },
+  {
+    name: "Salad Places",
+    value: "saladPlace",
   },
   {
     name: "Fruit & Vege Stores",
