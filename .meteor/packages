@@ -39,7 +39,6 @@ meteorhacks:zones
 okgrow:analytics
 okgrow:router-autoscroll
 reactive-dict
-underscorestring:underscore.string
 wizonesolutions:canonical
 
 # testing
@@ -49,5 +48,3 @@ factory
 dispatch:mocha-phantomjs
 hwillson:stub-collections
 johanbrook:publication-collector
-# practicalmeteor:mocha@2.1.1-rc.1
-
