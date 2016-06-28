@@ -213,7 +213,7 @@ Template.map.events({
 
     clearMarkers();
   },
-  "click [data-action=toggle-filter]": function () { // eslint-disable-line object-shorthand, func-names, max-len
+  "click .toggle-filter": function () { // eslint-disable-line object-shorthand, func-names
     if (mapDisplayState.get() === "map") {
       mapDisplayState.set("filter");
     } else {
