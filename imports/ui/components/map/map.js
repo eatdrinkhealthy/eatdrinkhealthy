@@ -51,6 +51,8 @@ function trackFilter() {
   }
 }
 
+const mapDisplayState = new ReactiveVar("map");
+
 Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callback, func-names
   this.autorun(() => {
     this.subscribe("nearbyPlaces",
@@ -177,6 +179,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
 
   // get device location on first load, and pan map to that location
   Tracker.autorun(() => {
+    // if user changes location, Geolocation.latLng() will cause this to rerun (reactive)
     const currentGeolocation = Geolocation.latLng();
     if (currentGeolocation !== null && initialGeolocation === null) {
       initialGeolocation = currentGeolocation;
@@ -210,31 +213,33 @@ Template.map.events({
 
     clearMarkers();
   },
-  "click .toggle-filter": () => {
-    if ($(".map-container").hasClass("map-container--open-right")) {
-      $(".map-container").removeClass("map-container--open-right");
-      $(".filter").removeClass("filter--show");
-      trackFilter();
+  "click .toggle-filter": function () { // eslint-disable-line object-shorthand, func-names
+    if (mapDisplayState.get() === "map") {
+      mapDisplayState.set("filter");
     } else {
-      $(".map-container").removeClass("map-container--open-left");
-      $(".map-container").addClass("map-container--open-right");
-      $(".filter").addClass("filter--show");
+      mapDisplayState.set("map");
+      trackFilter();
     }
   },
   "click .toggle-sidebar": function () { // eslint-disable-line object-shorthand, func-names
-    if ($(".map-container").hasClass("map-container--open-left")) {
-      $(".map-container").removeClass("map-container--open-left");
+    if (mapDisplayState.get() === "map") {
+      mapDisplayState.set("sideBar");
     } else {
-      $(".filter").removeClass("filter--show");
-      $(".map-container").removeClass("map-container--open-right");
-      $(".map-container").addClass("map-container--open-left");
+      mapDisplayState.set("map");
     }
   },
 });
 
 Template.map.helpers({
   filters: () => Filters,
-  filterIsSet: (value) => {
-    return _.indexOf(filter.get(), value) !== -1;
+  filterIsSet: (value) => _.indexOf(filter.get(), value) !== -1,
+  mapContainerOpenClass: () => {
+    const mapClasses = {
+      map: "",
+      filter: "map-container--open-right",
+      sideBar: "map-container--open-left",
+    };
+    return mapClasses[mapDisplayState.get()];
   },
+  showFilterClass: () => (mapDisplayState.get() === "filter" ? "filter--show" : ""),
 });
