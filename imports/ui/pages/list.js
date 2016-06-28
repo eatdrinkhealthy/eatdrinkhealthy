@@ -94,14 +94,14 @@ Template.list.events({
   },
   "click .list__share": () => {
     $(".list").addClass("list--blur");
-    $(".share-modal").fadeIn(200);
+    $(".share-modal-container").fadeIn(200);
   },
-  "click .list": (event) => {
+  "click .share-modal-container": (event) => {
     const isNotShareModal = !$(event.target).is(".share-modal");
     const isNotShareButton = !$(event.target).is(".list__share");
     if (isNotShareModal && isNotShareButton) {
       $(".list").removeClass("list--blur");
-      $(".share-modal").fadeOut(200);
+      $(".share-modal-container").fadeOut(200);
     }
   },
   "click .list__delete": (event, instance) => {
