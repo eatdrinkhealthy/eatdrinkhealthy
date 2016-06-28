@@ -8,7 +8,6 @@ export const categories = {
   coffeeShop: "4bf58dd8d48988d1e0931735",
   restaurant: "4bf58dd8d48988d1c4941735",
   farmersMarket: "4bf58dd8d48988d1fa941735",
-  butcher: "4bf58dd8d48988d11d951735",
   healthFoodStore: "50aa9e744b90af0d42d5de0e",
   organicGrocery: "52f2ab2ebcbc57f1066b8b45",
   grocery: "4bf58dd8d48988d118951735",

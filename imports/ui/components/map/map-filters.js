@@ -1,19 +1,35 @@
 export const Filters = [
   {
-    name: "Gluten Free",
-    value: "glutenFree",
-  },
-  {
     name: "Juice Bars",
     value: "juiceBar",
+  },
+  {
+    name: "Vegan / Vegetarian",
+    value: "veganVegeRestaurant",
   },
   {
     name: "Salad Places",
     value: "saladPlace",
   },
   {
-    name: "Vegan / Vegetarian",
-    value: "veganVegeRestaurant",
+    name: "Fruit & Vege Stores",
+    value: "fruitVegeStore",
+  },
+  {
+    name: "Health Food Stores",
+    value: "healthFoodStore",
+  },
+  {
+    name: "Organic Grocery Stores",
+    value: "organicGrocery",
+  },
+  {
+    name: "Farmers Markets",
+    value: "farmersMarket",
+  },
+  {
+    name: "Gluten Free",
+    value: "glutenFree",
   },
   {
     name: "Bakeries",
@@ -32,32 +48,12 @@ export const Filters = [
     value: "restaurant",
   },
   {
-    name: "Farmers Markets",
-    value: "farmersMarket",
-  },
-  {
-    name: "Butchers",
-    value: "butcher",
-  },
-  {
-    name: "Health Food Stores",
-    value: "healthFoodStore",
-  },
-  {
-    name: "Organic Grocery Stores",
-    value: "organicGrocery",
-  },
-  {
     name: "Grocery Stores",
     value: "grocery",
   },
   {
     name: "Supermarkets",
     value: "supermarket",
-  },
-  {
-    name: "Fruit & Vege Stores",
-    value: "fruitVegeStore",
   },
   {
     name: "Markets",
