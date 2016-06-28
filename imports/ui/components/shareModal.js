@@ -25,7 +25,7 @@ Template.shareModal.events({
   "click [data-action=copy-to-clipboard]": () => {
     Meteor.setTimeout(() => {
       $(".list").removeClass("list--blur");
-      $(".share-modal").fadeOut(200);
+      $(".share-modal-container").fadeOut(200);
     }, 200);
   }
 });
