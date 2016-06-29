@@ -17,8 +17,8 @@ Template.profile.helpers({
 
 Template.profile.onRendered(() => {
   if (Meteor.isCordova) {
-    $(".profile").animate({ paddingTop: "+=20px" }, 100);
-    $(".profile__settings").animate({ top: "+=20px" }, 100);
+    $(".profile").css({ paddingTop: "+=20px" });
+    $(".profile__settings").css({ top: "+=20px" });
   }
 });
 

@@ -65,10 +65,10 @@ Template.map.onCreated(function () { // eslint-disable-line prefer-arrow-callbac
 
 Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callback, func-names
   if (Meteor.isCordova) {
-    $(".nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
-    $(".toggle-filter, .toggle-sidebar").animate({ top: "+=20px" }, 100);
-    $(".filter-header").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
-    $(".push-filter-items").animate({ height: "+=20px" }, 100);
+    $(".nav").css({ paddingTop: "+=20px", height: "+=20px" });
+    $(".toggle-filter, .toggle-sidebar").css({ top: "+=20px" });
+    $(".filter-header").css({ paddingTop: "+=20px", height: "+=20px" });
+    $(".push-filter-items").css({ height: "+=20px" });
 
     // close the sidebar if user starts to drag close
     setInterval(() => {
