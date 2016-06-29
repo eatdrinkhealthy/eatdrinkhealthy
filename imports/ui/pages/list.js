@@ -36,7 +36,7 @@ Template.list.onCreated(function createList() {
 
 Template.list.onRendered(() => {
   if (Meteor.isCordova) {
-    $(".list__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
+    $(".list__nav").css({ paddingTop: "+=20px", height: "+=20px" });
   }
 });
 

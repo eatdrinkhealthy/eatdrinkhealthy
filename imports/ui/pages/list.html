@@ -1,22 +1,20 @@
 <template name="list">
-  <div class="list fade-in">
-    
+  <div class="list-container">
     <div class="list__nav">
       {{#if owner}}
         {{#if editMode}}
-        <div class="list__edit">Done</div>
-
+          <div class="list__edit">Done</div>
         {{else}}
-        <div class="list__edit">Edit</div>
+          <div class="list__edit">Edit</div>
         {{/if}}
-
       {{else}}
         <h1 class="edh-title" data-action="go-home">Eat Drink Healthy</h1>
       {{/if}}
       <div class="list__close" data-action="go-home"></div>
-
     </div>
-    
+  </div>
+  
+  <div class="list fade-in">
     {{#if owner}}
       {{#autoForm collection=Lists id="updateListInfo" type="update" doc=list}}
         {{> afFieldInput name='title' class="list__title"}}

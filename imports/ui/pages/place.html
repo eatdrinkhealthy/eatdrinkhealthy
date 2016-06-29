@@ -1,18 +1,22 @@
 <template name="place">
+  <div class="place-container">
+    <div class="place__nav"> 
+      {{#if cordova}}
+        <div class="place__back"></div>
+      {{else}}
+        <div class="place__back">Map</div>
+      {{/if}}
+      <div class="place__title fade-in">
+        {{place.name}}
+      </div>
+      {{#if currentUser}}
+        <div class="place__add"></div>
+      {{/if}}
+    </div> 
+  </div>
+
   <div class="place fade-in">
     <div class="place-container fade-in">
-      <div class="place__nav"> 
-        {{#if cordova}}
-          <div class="place__back"></div>
-        {{else}}
-          <div class="place__back">Map</div>
-        {{/if}}
-        <div class="place__title">{{place.name}}</div>
-        {{#if currentUser}}
-          <div class="place__add"></div>
-        {{/if}}
-      </div> 
-
       {{#if currentUser}}
         <div class="add-business">
           {{#if userLists}}
