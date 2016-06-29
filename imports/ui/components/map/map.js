@@ -228,6 +228,9 @@ Template.map.events({
       mapDisplayState.set("map");
     }
   },
+  "click .map-container--open-left": function () { // eslint-disable-line object-shorthand, func-names, max-len
+    mapDisplayState.set("map");
+  },
 });
 
 Template.map.helpers({
