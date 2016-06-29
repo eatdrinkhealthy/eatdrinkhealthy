@@ -13,9 +13,7 @@
         {{/if}}
       </div> 
 
-      {{#if place}}
-        
-        {{#if currentUser}}
+      {{#if currentUser}}
         <div class="add-business">
           {{#if userLists}}
           <div class="add-business__title">Add this to</div>
@@ -29,42 +27,46 @@
             <div class="add-business__woops">You have no lists yet.</div>
           {{/if}}
         </div>
-        {{/if}}
-        
-        {{#if place.photo}}
-          <div class="place__photo"><img src="{{photo place.photo}}"></div>
-        {{else}}
-          <div style="height: 60px"></div>
-        {{/if}}
-        
-        <div class="place__info">
-          <div class="place__heading">Info</div>
-          <p>
-            {{address place.location}}
-            <br>
-            {{place.contact.formattedPhone}}
-          </p>
+      {{/if}}
+
+      <div class="place-content">      
+        {{#if place}}
           
-          {{#if place.page.pageInfo.description}}
-            <div class="place__heading">Description</div>
-            <p>{{place.page.pageInfo.description}}</p>
+          {{#if place.photo}}
+            <div class="place__photo"><img src="{{photo place.photo}}"></div>
+          {{else}}
+            <div style="height: 60px"></div>
           {{/if}}
           
-          <div class="place__heading">Reviews</div>
-          <div class="place__rating">
-            {{{rating place.rating}}}
-            <div class="tips-count">({{tipsCount place.tips}})</div>
-          </div>
-
-          {{#each tip}}
-            <div class="place__tip">
-              <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
+          <div class="place__info">
+            <div class="place__heading">Info</div>
+            <p>
+              {{address place.location}}
+              <br>
+              {{place.contact.formattedPhone}}
+            </p>
+            
+            {{#if place.page.pageInfo.description}}
+              <div class="place__heading">Description</div>
+              <p>{{place.page.pageInfo.description}}</p>
+            {{/if}}
+            
+            <div class="place__heading">Reviews</div>
+            <div class="place__rating">
+              {{{rating place.rating}}}
+              <div class="tips-count">({{tipsCount place.tips}})</div>
             </div>
-          {{/each}}
-        </div>
-      {{else}}
-        {{> loading}}
-      {{/if}} <!-- end if place -->
+
+            {{#each tip}}
+              <div class="place__tip">
+                <img src="{{this.user.photo.prefix}}100x100{{this.user.photo.suffix}}"><span>"{{this.text}}"</span>
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          {{> loading}}
+        {{/if}} <!-- end if place -->
+      </div><!-- end of place-content -->
     </div>
   </div> 
   {{> validation}} 
