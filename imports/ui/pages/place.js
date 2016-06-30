@@ -107,14 +107,17 @@ Template.place.events({
       }
     });
   },
-  "click .place": (event) => {
+  "click .add-business": (event) => {
+    event.stopPropagation();
+  },
+});
+
+Template.layout.events({
+  "click #layout": (event) => {
     const isNotAddBusiness = !$(event.target).is(".add-business");
     const isNotAddButton = !$(event.target).is(".place__add");
     if (isNotAddBusiness && isNotAddButton) {
       $(".add-business").fadeOut(200);
     }
   },
-  "click .add-business": (event) => {
-    event.stopPropagation();
-  }
 });
