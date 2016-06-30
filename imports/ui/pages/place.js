@@ -32,8 +32,8 @@ Template.place.onRendered(function renderPlace() {
   this.autorun(() => {
     Template.currentData();
     if (Meteor.isCordova && Meteor.user()) {
-      self.$(".place__nav").animate({ paddingTop: "+=20px", height: "+=20px" }, 100);
-      self.$(".place__add, .place__back").animate({ top: "+=20px" }, 100);
+      self.$(".place__nav").css({ paddingTop: "+=20px", height: "+=20px" });
+      self.$(".place__add, .place__back").css({ top: "+=20px" });
     }
   });
 });

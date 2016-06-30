@@ -8,14 +8,20 @@
   box-shadow: 0px 0px 40px rgba(0,0,0,0.2);
   -webkit-transition: all 400ms;
   transition: all 400ms;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   &--open-left {
-    left: 400px;
+    -webkit-transform: translate3d(400px, 0, 0);
+    transform: translate3d(400px, 0, 0);
     @media (max-width: @mobile-portrait) {
-      left: 80vw;
+      -webkit-transform: translate3d(80vw, 0, 0);
+      transform: translate3d(80vw, 0, 0);
     }
   }
   &--open-right {
-    left: -100%;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
@@ -28,17 +34,6 @@
   z-index: 100;
   .gradient-bg;
   opacity: 0.95;
-  // -webkit-transition: all 400ms;
-  // transition: all 400ms;
-  // &--open-left {
-  //   left: 400px;
-  //   @media (max-width: @mobile-portrait) {
-  //     left: 80vw;
-  //   }
-  // }
-  // &--open-right {
-  //   left: -100%;
-  // }
   &__title {
     text-align: center;
     color: white;

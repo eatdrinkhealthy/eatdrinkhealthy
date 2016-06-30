@@ -1,8 +1,53 @@
+.filter-header.filter--show {
+  transform: initial;
+  top: 0;
+  width: 100%;
+  opacity: 1;
+  pointer-events: initial;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.filter-header {
+  -webkit-transition: all 400ms;
+  transition: all 400ms;
+  pointer-events: none;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  height: 60px;
+  padding: 15px 20px;
+  position: absolute;
+  z-index: 9100;
+  width: 100%;
+  border-bottom: 1px solid white;
+  background-color: rgb(57, 121, 146);
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+  backface-visibility: hidden;
+  h4 {
+    display: inline;
+    float: left;
+    margin-top: -5px;
+    color: white;
+  }
+  .close-filter {
+    width: 15px;
+    height: 15px;
+    background-image: url("/images/close-white.png");
+    float: right;
+    padding: 29px;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
+}
+
 .filter {
-  .gradient-bg;
+  .gradient-bg();
   width: 100%;
   padding: 0 calc(~"50% - 200px");
-  position: fixed;
+  position: absolute;
   top: 0px;
   left: 100%;
   bottom: 0px;
@@ -11,52 +56,20 @@
   overflow: auto;
   -webkit-transition: all 400ms;
   transition: all 400ms;
-  @media (max-width: @mobile-portrait) {
-    width: 100vw;
-  }
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
   &--show {
-    left: 0;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
   }
-
   .b {
     display: block;
   }
-  
-  .filter-header {
-    height: 60px;
-    padding: 15px 20px;
-    position: fixed;
-    z-index: 9100;
-    width: 400px;
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid white;
-    background-color: rgb(57, 121, 146);
-    @media(max-width: @mobile-portrait){
-      width: 100vw;
-      background-color: transparent;
-    }
-    h4 {
-      display: inline;
-      float: left;
-      margin-top: -5px;
-    }
-    .close-filter {
-      width: 15px;
-      height: 15px;
-      background-image: url("/images/close-white.png");
-      float: right;
-      padding: 29px;
-      background-size: 15px;
-      background-repeat: no-repeat;
-      background-position: 50%;
-    }
-  }
-
   .push-filter-items {
     display: block;
     height: 80px;
   }
-
   .filter-item {
     height: 40px;
     display: block;
