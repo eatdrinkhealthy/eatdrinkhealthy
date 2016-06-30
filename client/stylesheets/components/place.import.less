@@ -205,3 +205,34 @@
   margin-top: -6px;
   margin-left: 10px;
 }
+
+.powered-by-foursquare {
+  position: relative;
+  top: 0;
+  height: 75px;
+  padding-top: 25px;
+  border-top: 1px solid #eee;
+  font-weight: bold;
+  font-size: 12px;
+  .foursquare-logo {
+    background-image: url("Foursquare-iOS.png");
+    background-size: 100%;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    border: 2px solid rgb(249, 80, 124);
+    margin: 0 5px 0 2px;
+    position: absolute;
+    left: calc(~"50% - 12px");
+  }
+  .powered-by-text {
+    position: absolute;
+    padding-top: 4px;
+    &.left-side {
+      left: calc(~"50% - 80px");
+    }
+    &.right-side {
+      right: calc(~"50% - 82px");
+    }
+  }
+}
