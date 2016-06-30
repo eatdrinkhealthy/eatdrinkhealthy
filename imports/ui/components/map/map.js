@@ -196,6 +196,11 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
       plotMarkers();
     }
   });
+
+  // release the launchscreen
+  if (Meteor.isCordova) {
+    navigator.splashscreen.hide();
+  }
 });
 
 // [saladPlace, glutenFree, juiceBar]
