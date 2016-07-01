@@ -85,6 +85,7 @@ This should be used in continuous integration to make sure all tests pass in ord
 1. confirm that `Release` is selected from the dropdown
 1. Click close
 1. Set Target device to "Generic iOS device"
+1. in main window, Select TARGETS, Deployment Info, set Devices dropdown box to iPhone
 1. Under Product -> Archive
 1. click validate, confirm it passes
 1. Upload to App Store
