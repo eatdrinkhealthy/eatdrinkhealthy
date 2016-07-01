@@ -69,15 +69,6 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     $(".toggle-filter, .toggle-sidebar").css({ top: "+=20px" });
     $(".filter-header").css({ paddingTop: "+=20px", height: "+=20px" });
     $(".push-filter-items").css({ height: "+=20px" });
-
-    // close the sidebar if user starts to drag close
-    setInterval(() => {
-      if (scrollX !== 0) {
-        $(".map-container").removeClass("map-container--open-left");
-      } else {
-        $("body").scrollLeft(0);
-      }
-    }, 1000);
   }
 
   let initialGeolocation = null;
