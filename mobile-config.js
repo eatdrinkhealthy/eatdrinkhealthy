@@ -49,6 +49,5 @@ App.launchScreens({
 
 // Set PhoneGap/Cordova preferences
 App.setPreference("Orientation", "portrait");
-App.setPreference("HideKeyboardFormAccessoryBar", true);
 App.setPreference("StatusBarOverlaysWebView", "true");
 App.setPreference("StatusBarStyle", "lightcontent");
