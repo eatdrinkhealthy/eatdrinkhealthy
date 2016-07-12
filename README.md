@@ -77,15 +77,41 @@ This should be used in continuous integration to make sure all tests pass in ord
 ### Foursquare API (Notes, Behaviours, Idiosyncrasies)
 1. Businesses not showing up with no filter set, but do show up when filtered on their category: The api returns 50 businesses in a priority order. So if no search criteria is set, a butcher might shop not show up. But when filtering for butchers, will be in the top 50 and show up.
 
+### Encryption & Export Compliance
+If using any form of encryption, such as https, Apple requires the app to meet U.S. Export Compliance in order to sell the app via App Store.
+
+1. Apply for export compliance documentation [DONE]
+    1. [Apple info on submitting for app review and export compliance](https://developer.apple.com/library/ios/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/SubmittingTheApp.html)
+    1. [helpful blog post](https://pupeno.com/2015/12/15/legally-submit-app-apples-app-store-uses-encryption-obtain-ern/)
+1. Upload / Submit export compliance document via itunes connect [DONE]
+    1. My Apps -> Features -> Encryption
+    1. Once this is reviewed and accepted (was almost instantaneous), the document will be listed on this page along with a document reference **Key Value**
+
 
 ### Submitting to iTunes Connect for TestFlight and App Store Submission
+Once the mobile app has been built, using the npm scripts build-staging or build-production, add the following settings to the project info.plist file.
+```
+in...
+"build-folder"/ios/project/Eat Drink Healthy/Eat Drink Healthy-Info.plist
 
-1. Under Product -> Edit Scheme
+add or confirm exists...
+<key>ITSAppUsesNonExemptEncryption</key><true/>
+<key>ITSEncryptionExportComplianceCode</key><string>[export compliance Key Value]</string>
+```
+
+Complete the following steps using xcode...
+
+1. Under Product -> Scheme -> Edit Scheme...
 1. From the left column click `Archive`
 1. confirm that `Release` is selected from the dropdown
 1. Click close
-1. Set Target device to "Generic iOS device"
-1. in main window, Select TARGETS, Deployment Info, set Devices dropdown box to iPhone
+1. On xcode application title bar, set target device to `Generic iOS device`
+1. Go to 'General' settings (folder icon on menu bar, then Eat Dink Healthy in left pane, General tab in center pane)
+    1. Select 'TARGETS'
+    1. set 'Version' and 'Build' to desired values
+    1. under Deployment Info, set 'Devices' to `iPhone`
+        1. NOTE this setting seemed needed for production, but not for staging, as this indicated which screen shots were required for app review
+    1. set 'Team' to associated development team
 1. Under Product -> Archive
 1. click validate, confirm it passes
 1. Upload to App Store
