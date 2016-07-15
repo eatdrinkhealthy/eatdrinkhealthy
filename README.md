@@ -32,7 +32,7 @@ If you want to have some pregenerated lists, simply do the following
 ### Development
 #### eslint
 An eslintrc file was directly added to this project. The rules in this file are based on AirBnB's style guide, as well are recommended by Meteor guide. Minor rule adjustments, specific to this project can be made in this project's copy of the file (this repo). These rules should be contiually followed.
-Instructions on how to initially add the file to the project are [here](https://github.com/stevenjmarsh/eslint).
+Instructions on how to initially add the file to the project are [here](https://github.com/eatdrinkhealthy/eslint).
 
 ### Testing
 In order to run unit and acceptance (end to end) tests, you must first run `npm install` to add supporting packages.
