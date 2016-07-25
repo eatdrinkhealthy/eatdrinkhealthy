@@ -15,25 +15,25 @@ FlowRouter.route("/", {
   name: "home",
   action() {
     BlazeLayout.render("layout", {
-      yield: "home"
+      yield: "home",
     });
-  }
+  },
 });
 
 FlowRouter.route("/list/:_id", {
   name: "list",
   action() {
     BlazeLayout.render("layout", {
-      yield: "list"
+      yield: "list",
     });
-  }
+  },
 });
 
 FlowRouter.route("/place/:_id", {
   name: "place",
   action() {
     BlazeLayout.render("layout", {
-      yield: "place"
+      yield: "place",
     });
-  }
+  },
 });

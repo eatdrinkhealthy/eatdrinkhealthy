@@ -80,7 +80,7 @@ Template.place.helpers({
       }
     }
     return returnedLists;
-  }
+  },
 });
 
 Template.place.events({
@@ -116,5 +116,5 @@ Template.place.events({
   },
   "click .add-business": (event) => {
     event.stopPropagation();
-  }
+  },
 });
