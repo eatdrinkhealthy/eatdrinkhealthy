@@ -29,7 +29,7 @@ Template.lists.events({
   "click .lists-item__title": function goToList() {
     const newPath = FlowRouter.path("list", { _id: this._id });
     FlowRouter.go(newPath);
-  }
+  },
 });
 
 Template.lists.helpers({
@@ -39,7 +39,7 @@ Template.lists.helpers({
   },
   venueCount() {
     return this.venues.length;
-  }
+  },
 });
 
 AutoForm.hooks({
@@ -53,8 +53,8 @@ AutoForm.hooks({
         newList.dateCreated = new Date();
         newList.venues = [];
         return doc;
-      }
-    }
-  }
+      },
+    },
+  },
 });
 

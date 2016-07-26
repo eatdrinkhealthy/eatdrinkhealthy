@@ -5,25 +5,25 @@ export const Lists = new Mongo.Collection("lists");
 
 const listsSchema = new SimpleSchema({
   title: {
-    type: String
+    type: String,
   },
   description: {
     type: String,
-    optional: true
+    optional: true,
   },
   venues: {
     type: [String],
-    optional: true
+    optional: true,
   },
   author: {
-    type: String
+    type: String,
   },
   userId: {
-    type: String
+    type: String,
   },
   dateCreated: {
-    type: Date
-  }
+    type: Date,
+  },
 });
 
 Lists.attachSchema(listsSchema);
@@ -37,5 +37,5 @@ Lists.allow({
   },
   remove(userId, doc) {
     return doc.userId === userId;
-  }
+  },
 });

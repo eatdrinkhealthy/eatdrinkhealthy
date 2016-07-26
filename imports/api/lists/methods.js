@@ -8,7 +8,7 @@ export const addVenueToList = new ValidatedMethod({
 
   validate: new SimpleSchema({
     listId: { type: String },
-    venueId: { type: String }
+    venueId: { type: String },
   }).validator(),
 
   run({ listId, venueId }) {
@@ -19,9 +19,9 @@ export const addVenueToList = new ValidatedMethod({
     }
 
     Lists.update(listId, {
-      $addToSet: { venues: venueId }
+      $addToSet: { venues: venueId },
     });
-  }
+  },
 });
 
 export const removeVenueFromList = new ValidatedMethod({
@@ -29,7 +29,7 @@ export const removeVenueFromList = new ValidatedMethod({
 
   validate: new SimpleSchema({
     listId: { type: String },
-    venueId: { type: String }
+    venueId: { type: String },
   }).validator(),
 
   run({ listId, venueId }) {
@@ -40,16 +40,16 @@ export const removeVenueFromList = new ValidatedMethod({
     }
 
     Lists.update(listId, {
-      $pull: { venues: venueId }
+      $pull: { venues: venueId },
     });
-  }
+  },
 });
 
 export const removeList = new ValidatedMethod({
   name: "Lists.methods.removeList",
 
   validate: new SimpleSchema({
-    listId: { type: String }
+    listId: { type: String },
   }).validator(),
 
   run({ listId }) {
@@ -60,5 +60,5 @@ export const removeList = new ValidatedMethod({
     }
 
     Lists.remove(listId);
-  }
+  },
 });

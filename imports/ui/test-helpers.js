@@ -1,10 +1,10 @@
-import { _ } from 'meteor/underscore';
-import { Template } from 'meteor/templating';
-import { Blaze } from 'meteor/blaze';
-import { Tracker } from 'meteor/tracker';
+import { _ } from "meteor/underscore";
+import { Template } from "meteor/templating";
+import { Blaze } from "meteor/blaze";
+import { Tracker } from "meteor/tracker";
 
 const withDiv = function withDiv(callback) {
-  const el = document.createElement('div');
+  const el = document.createElement("div");
   document.body.appendChild(el);
   try {
     callback(el);
