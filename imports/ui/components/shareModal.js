@@ -27,9 +27,9 @@ Template.shareModal.events({
       $(".list").removeClass("list--blur");
       $(".share-modal-container").fadeOut(200);
     }, 200);
-  }
+  },
 });
 
 Template.shareModal.helpers({
-  listUrl: () => `${Meteor.absoluteUrl()}list/${FlowRouter.current().params._id}`
+  listUrl: () => `${Meteor.absoluteUrl()}list/${FlowRouter.current().params._id}`,
 });

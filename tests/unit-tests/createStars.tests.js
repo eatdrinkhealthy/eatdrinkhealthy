@@ -1,8 +1,10 @@
+/* eslint-env node, mocha */
+/* eslint-disable prefer-arrow-callback, func-names */
+
+
 import { createStars } from "../../imports/ui/components/createStars";
 
 import { expect } from "chai";
-
-import td from "testdouble";
 
 function howManyStars(starString) {
   // createStars() returns a string that represents 5 divs with some number of
@@ -44,14 +46,14 @@ describe("createStars() calculations", function () {
 
   it("should round up the score/2 stars for even numbers", function () {
     [[1, 1], [3, 2], [5, 3], [7, 4], [9, 5]].forEach(([score, expectedStars]) => {
-      expect(howManyStars(createStars(score))).to.equal( expectedStars,
+      expect(howManyStars(createStars(score))).to.equal(expectedStars,
         `a score of ${score} should get ${expectedStars} stars`);
     });
   });
 
   it("should round down if below the odd number", function () {
     [[0.9, 0], [2.9, 1], [4.9, 2], [6.9, 3], [8.9, 4]].forEach(([score, expectedStars]) => {
-      expect(howManyStars(createStars(score))).to.equal( expectedStars,
+      expect(howManyStars(createStars(score))).to.equal(expectedStars,
         `a score of ${score} should get ${expectedStars} stars`);
     });
   });
@@ -67,6 +69,6 @@ describe("createStars() calculations", function () {
 
   it("should just return 0 stars if handed a non-numerical score", function () {
     expect(howManyStars(createStars("hello"))).to.equal(0, 'passed "hello"');
-    expect(howManyStars(createStars({score: 5}))).to.equal(0, "passed an object");
+    expect(howManyStars(createStars({ score: 5 }))).to.equal(0, "passed an object");
   });
 });

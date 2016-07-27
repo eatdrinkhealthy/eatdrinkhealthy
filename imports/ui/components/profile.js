@@ -25,5 +25,5 @@ Template.profile.onRendered(() => {
 Template.profile.events({
   "click [data-action=logout-user]": () => {
     Meteor.logout();
-  }
+  },
 });
