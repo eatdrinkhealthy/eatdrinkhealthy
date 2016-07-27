@@ -1,4 +1,5 @@
-# eatdrinkhealthy
+# Eat Drink Healthy
+[![Build Status](https://semaphoreci.com/api/v1/projects/44343427-5133-4d87-bc99-a9cdb13f9b72/906512/shields_badge.svg)](https://semaphoreci.com/smarsh/eatdrinkhealthy)
 
 ### Setting up the app
 
