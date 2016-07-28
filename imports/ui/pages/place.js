@@ -48,8 +48,7 @@ Template.place.helpers({
       const street = location.address ? `${location.address.replace(/,/g, "")}, ` : "";
       const postalCode = location.postalCode ? `${location.postalCode}, ` : "";
       const city = location.city || "";
-      const formattedAddress = `${street}${postalCode}${city}`;
-      address = formattedAddress;
+      address = `${street}${postalCode}${city}`;
     }
     return address;
   },
@@ -64,8 +63,7 @@ Template.place.helpers({
   tip: () => {
     const venue = Places.findOne();
     if (venue && venue.tips) {
-      const tips = venue.tips.groups[0].items;
-      return tips;
+      return venue.tips.groups[0].items;
     }
     return false;
   },
