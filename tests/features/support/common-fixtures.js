@@ -1,11 +1,13 @@
+/* global server Lists addSampleLists */
+
 const fixtures = {};
 
 fixtures.common = {
-  resetLists: function (userId) {
-    server.execute(function (userId) {
+  resetLists: userId => {
+    server.execute(id => {
       // Lists is exposed via imports/testing/
-      Lists.remove({ userId });
-      return addSampleLists(userId);
+      Lists.remove({ id });
+      return addSampleLists(id);
     }, userId);
   },
 };

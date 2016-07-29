@@ -1,7 +1,9 @@
 import { Accounts } from "meteor/accounts-base";
 
-Accounts.onCreateUser((options, user) => {
-  options.profile.picture = `https://graph.facebook.com/${user.services.facebook.id}/picture/?type=large`;
-  user.profile = options.profile;
-  return user;
+Accounts.onCreateUser(({ profile }, user) => {
+  const profileWithPicture = profile;
+  const currentUser = user;
+  profileWithPicture.picture = `https://graph.facebook.com/${user.services.facebook.id}/picture/?type=large`;
+  currentUser.profile = profileWithPicture;
+  return currentUser;
 });
