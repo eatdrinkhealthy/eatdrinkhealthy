@@ -15,6 +15,10 @@ import { Places } from "../../api/places/client/places";
 // components
 import "../components/shareModal.js";
 
+let oldForm;
+let oldTitle;
+let editMode;
+
 // helper function
 function isOwner() {
   const list = Lists.findOne();
@@ -105,6 +109,7 @@ Template.list.events({
     }
   },
   "click .list__delete": (event, instance) => {
+    // eslint-disable-next-line no-alert
     if (isOwner() && confirm("Are you sure you want to delete this list?")) {
       removeList.call({ listId: instance.listId });
       // Meteor.defer is here to fix a meteor bug "Error: Must be attached"

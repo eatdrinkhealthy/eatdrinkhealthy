@@ -102,9 +102,7 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     const height = window.innerHeight;
     $(".map").css("height", height);
   }
-  window.onresize = function () {
-    resizeHeight();
-  };
+  window.onresize = resizeHeight;
   resizeHeight();
 
   // init map, pass in mapOptions, set style and give it an id that we set

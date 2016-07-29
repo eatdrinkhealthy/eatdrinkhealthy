@@ -162,7 +162,7 @@ if (Meteor.isServer) {
   });
 
   // Add sample lists to a user
-  addSampleLists = function (id) {
+  global.addSampleLists = id => {
     try {
       const user = Meteor.users.findOne({ _id: id });
       newLists.forEach((list) => {
@@ -176,7 +176,7 @@ if (Meteor.isServer) {
         });
       });
     } catch (e) {
-      console.log(e);
+      console.log(e); // eslint-disable-line no-console
     }
   };
 }

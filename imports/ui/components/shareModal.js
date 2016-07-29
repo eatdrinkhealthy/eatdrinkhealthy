@@ -17,7 +17,8 @@ Template.shareModal.onRendered(() => {
     $("[data-action=copy-to-clipboard]").hide();
     $(".share-modal").css({ height: "140px" });
   } else {
-    new Clipboard("[data-action=copy-to-clipboard]");
+    // copy to clipboard
+    new Clipboard("[data-action=copy-to-clipboard]");  // eslint-disable-line no-new, no-undef
   }
 });
 
