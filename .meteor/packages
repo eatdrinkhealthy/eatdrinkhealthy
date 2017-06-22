@@ -33,9 +33,6 @@ browser-policy
 force-ssl
 kadira:flow-router
 kadira:blaze-layout
-kadira:debug
-meteorhacks:kadira
-meteorhacks:zones
 okgrow:analytics
 okgrow:router-autoscroll
 reactive-dict
