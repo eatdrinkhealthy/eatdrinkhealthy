@@ -5,8 +5,11 @@
 
 When you first clone the repo, follow these steps:
 
+* `npm install`
 * `cp settings.json.example settings.json`
 * `meteor --settings settings.json`
+
+NOTE: as of Meteor 1.3, when installing the npm packages, __DO NOT__ use `meteor npm install`. A later version of node is needed (I believe > v4) for the chimp packages to be successfully installed.
 
 ### Fake Facebook OAuth for testing
 
