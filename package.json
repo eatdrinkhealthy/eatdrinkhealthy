@@ -6,7 +6,7 @@
     "start-mobile": "meteor run ios-device --mobile-server localhost:3000 --settings settings.json",
     "lint-exclude-packages": "./node_modules/.bin/eslint . --ignore-pattern 'packages/**'",
     "pretest": "npm run lint-exclude-packages",
-    "test": "npm run unit-test && npm run ee-test",
+    "test": "npm run unit-test",
     "unit-test": "./node_modules/.bin/mocha ./tests/unit-tests --compilers js:babel-register",
     "unit-test-watch": "npm run unit-test -- -w",
     "integration-test": "meteor test --once --port 4000 --driver-package dispatch:mocha-phantomjs",

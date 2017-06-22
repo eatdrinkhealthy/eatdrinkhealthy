@@ -63,7 +63,12 @@ Expectations are using [Jasmine](http://jasmine.github.io/2.3/introduction.html#
 1. Run acceptance tests: `npm run ee-test`
 1. Run Chimp in *watch* mode: `npm run ee-test-watch`
 
-NOTE: as of Meteor 1.3, when running chimp based tests, DO NOT run npm via meteor, like 'meteor npm run ee-test'. As this will run a version of node incompatible with chimp, and cause chimp to fail.
+__NOTE:__ as of Meteor 1.3, when running chimp based tests, __DO NOT__ run npm via meteor, like 'meteor npm run ee-test'. As this will run a version of node incompatible with chimp, and cause chimp to fail.
+
+__NOTE:__ As of ~ June 2017, a chrome driver update requires chimp to be run using a node version greater than v4 and chimp version 49. Later versions of node / npm however, cause the unit tests to fail while on Meteor 1.3. Until Meteor for this project is updated to a later version, the unit and ee-test will need to be run separately, using different versions of node / npm. The unit tests need to be run with 0.x versions of node (one method to do so `meteor npm ...`).
+
+* Unit tests can be run as part of the npm test script, so they will be included in the continuous integration process
+* End to end tests, __should be run manually__ before each branch push to github, and __especially before merging to master__.
 
 #### Mobile App Tests
 We don't currently have mobile app-specific tests, though we could add them in
