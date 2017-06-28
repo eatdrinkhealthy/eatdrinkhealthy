@@ -45,3 +45,4 @@ factory
 dispatch:mocha-phantomjs
 hwillson:stub-collections
 johanbrook:publication-collector
+mdg:meteor-apm-agent
