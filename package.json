@@ -18,6 +18,7 @@
     "build-production": "meteor build ~/Desktop/eatdrinkhealthy-production-builds --server=https://app.eatdrinkhealthy.co:443"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "meteor-node-stubs": "~0.2.0",
     "underscore": "^1.8.3"
   },
