@@ -1,6 +1,5 @@
 import { Meteor } from "meteor/meteor";
 import { Accounts } from "meteor/accounts-base";
-import { ServiceConfiguration } from "meteor/service-configuration";
 import { Lists } from "../../api/lists/lists.js";
 import { Roles } from "meteor/alanning:roles";
 
@@ -133,16 +132,6 @@ if (Meteor.isServer) {
 
     if (Lists.find().count() === 0) {
       console.log("Inserting seed data..."); // eslint-disable-line no-console
-
-      // Insert a fake Facebook configuration for testing and easy dev setup
-      // On production or staging we will delete this record
-      ServiceConfiguration.configurations.insert({
-        _id: "123fake",
-        service: "facebook",
-        appId: "fake",
-        secret: "delete me if you want to set up real facebook OAuth",
-        loginStyle: "redirect",
-      });
 
       Meteor.users.find().fetch().forEach((user) => {
         if (Lists.find({ userId: user._id }).count() === 0) {
