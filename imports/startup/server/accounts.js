@@ -8,7 +8,7 @@ ServiceConfiguration.configurations.upsert(
     $set: {
       appId: Meteor.settings.oAuth.facebook.appId,
       secret: Meteor.settings.oAuth.facebook.secret,
-      loginStyle: "popup",
+      loginStyle: "redirect",
     },
   }
 );
