@@ -18,13 +18,13 @@
     "build-production": "meteor build ~/Desktop/eatdrinkhealthy-production-builds --server=https://app.eatdrinkhealthy.co:443"
   },
   "dependencies": {
-    "babel-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
     "meteor-node-stubs": "~0.2.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
-    "babel-register": "^6.9.0",
+    "babel-register": "^6.26.0",
     "chai": "^3.5.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
