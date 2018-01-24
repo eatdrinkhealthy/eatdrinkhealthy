@@ -33,6 +33,6 @@
     "eslint-plugin-meteor": "^3.6.0",
     "eslint-plugin-react": "^5.2.2",
     "mocha": "^2.5.3",
-    "testdouble": "^1.4.2"
+    "testdouble": "^3.3.3"
   }
 }
