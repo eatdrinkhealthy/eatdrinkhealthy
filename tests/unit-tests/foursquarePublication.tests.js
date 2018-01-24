@@ -16,7 +16,7 @@ describe("getFilteredFoursquarePlaces()", function () {
     },
   };
 
-  const Meteor = td.object(MeteorDouble);// need settings
+  const Meteor = td.object(MeteorDouble); // need settings
   const HTTP = td.object(["call"]);
   const EJSON = td.object(["parse"]);
   const check = td.function("check");
@@ -37,7 +37,9 @@ describe("getFilteredFoursquarePlaces()", function () {
     td.replace("meteor/ejson", { EJSON });
     td.replace("meteor/check", { check });
     td.replace("meteor/underscore", { _ });
-    td.replace("../../imports/api/foursquare/server/foursquareApi.js", { getFoursquarePlaces });
+    td.replace("../../imports/api/foursquare/server/foursquareApi.js", {
+      getFoursquarePlaces,
+    });
     td.replace("../../imports/api/foursquare/categories.js", { categories });
 
     const publications = require("../../imports/api/foursquare/server/publications.js");
@@ -66,8 +68,9 @@ describe("getFilteredFoursquarePlaces()", function () {
   });
 
   it("should select the three corresponding categories when passed three filters", function () {
-    getFilteredFoursquarePlaces(["veganVegeRestaurant", "juiceBar", "glutenFree"],
-      null, null, null);
+    getFilteredFoursquarePlaces(
+      ["veganVegeRestaurant", "juiceBar", "glutenFree"], null, null, null
+    );
 
     td.verify(getFoursquarePlaces("1", null, null, null), { times: 1 });
     td.verify(getFoursquarePlaces("2", null, null, null), { times: 1 });
