@@ -110,6 +110,7 @@ add or confirm exists...
 <key>ITSAppUsesNonExemptEncryption</key><true/>
 <key>ITSEncryptionExportComplianceCode</key><string>[export compliance Key Value]</string>
 ```
+> NOTE: the value for the compliance key can be found in itunes connect (My Apps > Features > Encryption)
 
 Complete the following steps using xcode...
 
@@ -118,7 +119,7 @@ Complete the following steps using xcode...
 1. confirm that `Release` is selected from the dropdown
 1. Click close
 1. On xcode application title bar, set target device to `Generic iOS device`
-1. Go to 'General' settings (folder icon on menu bar, then Eat Dink Healthy in left pane, General tab in center pane)
+1. Go to 'General' settings (folder icon on menu bar, then Eat Drink Healthy in left pane, General tab in center pane)
     1. Select 'TARGETS'
     1. set 'Version' and 'Build' to desired values
     1. under Deployment Info, set 'Devices' to `iPhone`
