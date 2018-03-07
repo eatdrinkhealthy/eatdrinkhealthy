@@ -18,6 +18,7 @@ import { currentReportingUser } from "../../../api/utils.js";
 // store marker objects for reference (ie to clear and construct the pop ups)
 let markersArray = [];
 let markers = {};
+let messageShownOnce = false;
 
 function clearMarkers() {
   // remove all markers
@@ -192,25 +193,28 @@ Template.map.onRendered(function () { // eslint-disable-line prefer-arrow-callba
     navigator.splashscreen.hide();
   }
 
-  sAlert.warning(`<div>
-    <b>PLEASE NOTE:<b>  Support for this app will be
-    ending as of March 16th, 2018.
-    <br>
-    <br>
-    If you wish to have any user created lists saved and
-    provided to you, visit www.eatdrinkhealthy.co for 
-    details.
-    <br>
-    <br>
-    Thank you for your support.
-    </div>`,
-    {
-      position: "top-left",
-      html: true,
-      offset: 80,
-      timeout: 15000,
-    }
-  );
+  if (!messageShownOnce) {
+    messageShownOnce = true;
+    sAlert.warning(`<div>
+      <b>PLEASE NOTE:<b>  Support for this app will be
+      ending as of March 16th, 2018.
+      <br>
+      <br>
+      If you wish to have any user created lists saved and
+      provided to you, visit www.eatdrinkhealthy.co for 
+      details.
+      <br>
+      <br>
+      Thank you for your support.
+      </div>`,
+      {
+        position: "top-left",
+        html: true,
+        offset: 80,
+        timeout: 20000,
+      }
+    );
+  }
 });
 
 // [saladPlace, glutenFree, juiceBar]
